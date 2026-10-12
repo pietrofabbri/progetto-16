@@ -1,0 +1,28 @@
+/* Progetto 16. Palette comune (traduzione di palette.json).
+   Uso: <link rel="stylesheet" href="../design/palette.css">
+   Le slide sono proiettate su sfondo chiaro (carta) con testo inchiostro;
+   i colori dei gruppi sono accenti, mai sfondi di testo lungo. */
+:root{
+  --p16-carta:#F5F6F8;
+  --p16-bianco:#FFFFFF;
+  --p16-inchiostro:#1B2130;
+  --p16-grigio:#5B6475;
+  --p16-linea:#D5DAE2;
+  --p16-notte:#0D1322;
+
+  --p16-calma:#2FA36B;
+  --p16-attenzione:#E3A008;
+  --p16-blocco:#D9482B;
+
+  --p16-g-rosso:#C8372D;
+  --p16-g-arancio:#DB6A1C;
+  --p16-g-giallo:#E2B007;
+  --p16-g-verde:#3A8A3E;
+  --p16-g-petrolio:#0E7C7B;
+  --p16-g-azzurro:#2C8BC9;
+  --p16-g-blu:#2E4A9B;
+  --p16-g-viola:#6B3FA0;
+  --p16-g-rosa:#C2387F;
+
+  --p16-font:"Atkinson Hyperlegible","Atkinson",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
