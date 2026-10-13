@@ -16,7 +16,9 @@ Tutto funziona **offline** su un PC d'aula con proiettore. Versione online: **ht
 
 ## Pubblicazione web
 
-Il workflow `.github/workflows/pages.yml` pubblica `index.html`, `design/`, `semaforo/` e `slides/` su GitHub Pages a ogni push su `main`. Prerequisito, una volta sola: Settings > Pages > Build and deployment > Source: **GitHub Actions**. Online il microfono funziona (la pagina è servita in https); il browser chiede il permesso.
+Il workflow `.github/workflows/pages.yml` copia `index.html`, `design/`, `semaforo/` e `slides/` nel branch `gh-pages` a ogni push su `main`; GitHub Pages pubblica quel branch su **https://pietrofabbri.github.io/progetto-16/**. Online il microfono funziona (la pagina è servita in https); il browser chiede il permesso. Il branch `gh-pages` non va modificato a mano.
+
+**Privacy:** la repo e il sito sono pubblici. Nessun nome di studente va mai nella repo: gli elenchi restano solo sul PC del docente.
 
 ## Il barattolo del rumore
 

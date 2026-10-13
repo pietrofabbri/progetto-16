@@ -1,7 +1,8 @@
 name: Pubblica su GitHub Pages
 
-# Pubblica il barattolo del rumore (e in futuro le slide) a ogni push su main.
-# Prerequisito, una volta sola: Settings > Pages > Build and deployment > Source: "GitHub Actions".
+# A ogni push su main copia index.html, design/, semaforo/ e slides/ nel branch gh-pages.
+# GitHub Pages pubblica il branch gh-pages su https://pietrofabbri.github.io/progetto-16/
+# (attivato automaticamente alla creazione del branch, 13/10/2026).
 
 on:
   push:
@@ -9,9 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -20,9 +19,6 @@ concurrency:
 jobs:
   pubblica:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - name: Prepara il sito
@@ -30,9 +26,13 @@ jobs:
           mkdir -p _site
           cp index.html _site/
           cp -r design semaforo slides _site/
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: _site
-      - id: deploy
-        uses: actions/deploy-pages@v4
+          touch _site/.nojekyll
+      - name: Aggiorna il branch gh-pages
+        run: |
+          cd _site
+          git init -q -b gh-pages
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Pubblicazione da ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
