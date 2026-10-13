@@ -8,7 +8,7 @@ Tutto funziona **offline** su un PC d'aula con proiettore. Versione online: **ht
 
 | Cartella | Che cosa c'è | Stato |
 |---|---|---|
-| `docs/` | `decisioni.md`: registro delle decisioni (data, motivo, effetto). `progetto16-scelte.md`: quadro completo (specifica, decisioni, ipotesi di ricerca, criticità, domande aperte), leggibile senza altro contesto. `specifica-originale.md`: testo del progetto come ricevuto. | aggiornato |
+| `docs/` | `decisioni.md`: registro delle decisioni (data, motivo, effetto). `lavoro-studenti.md`: il mini-studio degli studenti. `progetto16-scelte.md`: quadro completo (specifica, decisioni, ipotesi di ricerca, criticità, domande aperte), leggibile senza altro contesto. `specifica-originale.md`: testo del progetto come ricevuto. | aggiornato |
 | `design/` | Palette comune (`palette.json` è la fonte unica, `palette.css` la versione per il web) e font Atkinson Hyperlegible (licenza SIL OFL). | v1 |
 | `semaforo/` | **Il barattolo**: segnalatore del rumore da inserire nelle slide HTML (`barattolo.js`) e pagina di prova (`demo.html`). | v1 |
 | `kit/` | Kit di stampa: generatore `genera_kit.py` e un PDF per ogni oggetto in `kit/pdf/`. | v4 |
