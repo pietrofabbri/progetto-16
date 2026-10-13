@@ -2,7 +2,7 @@
 
 Materiali per mettere in pratica il **Progetto 16 "Psicologia e dati"**: 13 incontri da 90 minuti (75 netti) più un incontro bonus (l'8) per classi 4ª e 5ª di istituto tecnico, IIS Copernico-Carpeggiani, Ferrara. Il docente referente è Pietro Fabbri (A041).
 
-Tutto funziona **offline** su un PC d'aula con proiettore. Nessuno strumento registra, salva o trasmette audio o dati degli studenti.
+Tutto funziona **offline** su un PC d'aula con proiettore. Versione online: **https://pietrofabbri.github.io/progetto-16/** (pubblicata da GitHub Actions a ogni push su `main`). Nessuno strumento registra, salva o trasmette audio o dati degli studenti.
 
 ## Contenuto
 
@@ -11,8 +11,12 @@ Tutto funziona **offline** su un PC d'aula con proiettore. Nessuno strumento reg
 | `docs/` | `decisioni.md`: registro delle decisioni (data, motivo, effetto). `progetto16-scelte.md`: quadro completo (specifica, decisioni, ipotesi di ricerca, criticità, domande aperte), leggibile senza altro contesto. `specifica-originale.md`: testo del progetto come ricevuto. | aggiornato |
 | `design/` | Palette comune (`palette.json` è la fonte unica, `palette.css` la versione per il web) e font Atkinson Hyperlegible (licenza SIL OFL). | v1 |
 | `semaforo/` | **Il barattolo**: segnalatore del rumore da inserire nelle slide HTML (`barattolo.js`) e pagina di prova (`demo.html`). | v1 |
-| `kit/` | Kit di stampa: generatore `genera_kit.py` e un PDF per ogni oggetto in `kit/pdf/`. | v3 |
-| `slides/` | Template delle slide HTML (da fare). | da fare |
+| `kit/` | Kit di stampa: generatore `genera_kit.py` e un PDF per ogni oggetto in `kit/pdf/`. | v4 |
+| `slides/` | Template delle slide HTML (da fare). Per ora: `regole-prima-slide.md`, il testo della prima slide di ogni lezione. | da fare |
+
+## Pubblicazione web
+
+Il workflow `.github/workflows/pages.yml` pubblica `index.html`, `design/`, `semaforo/` e `slides/` su GitHub Pages a ogni push su `main`. Prerequisito, una volta sola: Settings > Pages > Build and deployment > Source: **GitHub Actions**. Online il microfono funziona (la pagina è servita in https); il browser chiede il permesso.
 
 ## Il barattolo del rumore
 
@@ -66,8 +70,7 @@ Eventi: `barattolo:blocco` e `barattolo:sblocco` su `document` (il template li u
 
 ```
 pip install weasyprint
-python3 kit/genera_kit.py              # sigle casuali nuove
-python3 kit/genera_kit.py --seed 16    # sigle riproducibili
+python3 kit/genera_kit.py
 ```
 Produce un PDF per ogni oggetto in `kit/pdf/`, senza numeri di pagina:
 
@@ -76,11 +79,8 @@ Produce un PDF per ogni oggetto in `kit/pdf/`, senza numeri di pagina:
 | `istruzioni-e-gruppi.pdf` | Che cosa stampare, quante copie, legenda dei 9 gruppi |
 | `tessere-ruolo.pdf` | 9 set di tessere ruolo, uno per gruppo (colore e simbolo), 100×70 mm per porta-badge A7 |
 | `scheda-gruppo.pdf` | Scheda del gruppo A4 |
-| `scheda-breve.pdf` | Scheda del gruppo breve, A5, 2 per foglio |
-| `fogli-prima-dopo.pdf` | Fogli individuali PRIMA/DOPO con sigle anonime accoppiate |
-| `biglietti-uscita.pdf` | Biglietti di uscita, 4 per foglio |
-| `etichette-scatole.pdf` | Etichette delle due scatole |
-| `poster-regole.pdf` | Poster delle regole |
+| `fogli-prima-dopo.pdf` | Foglio individuale: PRIMA sul fronte, DOPO sul retro; 2 biglietti per A4, stampa fronte-retro sul lato lungo |
+| `etichette-scatole.pdf` | Etichette delle 9 piccole scatole dei gruppi |
 
 ## Palette e gruppi
 
@@ -102,11 +102,11 @@ Base: carta `#F5F6F8`, inchiostro `#1B2130`, grigio `#5B6475`, linea `#D5DAE2`, 
 
 ## Privacy
 
-Il barattolo usa solo il livello sonoro istantaneo, calcolato in memoria e mai salvato. I fogli individuali non hanno nomi: le due parti si collegano con una sigla casuale prestampata. Gli aspetti formali (informativa, consensi) sono gestiti dal docente con il dirigente e non sono trattati qui.
+Il barattolo usa solo il livello sonoro istantaneo, calcolato in memoria e mai salvato. I fogli individuali non hanno nomi né codici: PRIMA e DOPO stanno sul fronte e sul retro dello stesso biglietto. Gli aspetti formali (informativa, consensi) sono gestiti dal docente con il dirigente e non sono trattati qui.
 
 ## Convenzioni
 
-- **Nessun trattino lungo** (lineetta o trattino medio) in nessun testo, materiale, slide, codice o documento. Si usano punto, virgola, due punti o parentesi; per gli intervalli il trattino corto (15-30).
+- **Nessun trattino lungo** (lineetta o trattino medio) in nessun testo, materiale, slide, codice o documento. Si usano punto, virgola, due punti o parentesi; per gli intervalli il trattino corto (15-30). Controllo: `LC_ALL=C.UTF-8 grep -rnP "\x{2014}|\x{2013}" --exclude-dir=.git .`
 - Ogni decisione presa va registrata in `docs/decisioni.md` e riportata nel quadro `docs/progetto16-scelte.md`.
 - Colori solo da `design/palette.json` (o `palette.css`); font Atkinson Hyperlegible.
 

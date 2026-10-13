@@ -4,20 +4,15 @@
 Genera un PDF A4 separato per ogni oggetto, nella cartella kit/pdf/:
   istruzioni-e-gruppi.pdf   che cosa stampare, quante copie, legenda dei 9 gruppi
   tessere-ruolo.pdf         9 set (uno per gruppo): 4 ruoli + tessera accorpata per i gruppi da 3
-  scheda-gruppo.pdf         scheda del gruppo A4 (versione breve / ragionamento / completa)
-  scheda-breve.pdf          scheda del gruppo breve A5, 2 per foglio
-  fogli-prima-dopo.pdf      fogli individuali PRIMA/DOPO con sigle anonime accoppiate
-  biglietti-uscita.pdf      biglietti di uscita, 4 per foglio
-  etichette-scatole.pdf     etichette delle due scatole
-  poster-regole.pdf         poster delle regole
+  scheda-gruppo.pdf         scheda del gruppo A4
+  fogli-prima-dopo.pdf      foglio individuale: PRIMA sul fronte, DOPO sul retro (2 biglietti per A4)
+  etichette-scatole.pdf     etichette delle 9 scatole dei gruppi
 
-Uso:  python3 genera_kit.py [--fogli-individuali N] [--seed S]
+Uso:  python3 genera_kit.py
 Richiede: weasyprint. Colori da design/palette.json, font da design/fonts/
 (se mancano i font, ripiega su un sans-serif di sistema).
 """
-import argparse
 import json
-import random
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -62,28 +57,6 @@ ICONE = {
               'stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
 }
 
-REGOLE = [
-    ("Fatto, interpretazione, ipotesi",
-     "Fatto: si può verificare. Interpretazione: il significato che gli diamo. "
-     "Ipotesi: una spiegazione possibile che va controllata."),
-    ("Prima penso, poi confronto",
-     "Quando serve, scrivo la mia risposta prima di ascoltare il gruppo."),
-    ("Cambiare idea non è una sconfitta",
-     "Posso cambiare idea, oppure diventare meno sicuro. Tutte e due le cose "
-     "possono voler dire che sto ragionando meglio."),
-    ("Si criticano le idee, non le persone",
-     "Prima di contestare, provo a ripetere l'idea dell'altro con parole sue."),
-    ("Partecipare non vuol dire parlare tanto",
-     "Valgono anche scrivere, osservare, fare domande, segnalare un dubbio. "
-     "Nessuno è obbligato a raccontare fatti personali."),
-]
-DOMANDA_FINALE = ("Che cosa, oggi, mi ha fatto cambiare idea, oppure mi ha "
-                  "convinto che devo ancora verificare?")
-SCHERMO_FERMO = ("Quando lo schermo si ferma: smetti di parlare, appoggia quello "
-                 "che hai in mano, fai un respiro. Quando la classe resta in "
-                 "silenzio per qualche secondo, si riparte da dove eravamo.")
-
-ALFABETO = "ACDEFHJKMNPRTUVWXY347"  # niente caratteri ambigui (0/O, 1/I, 5/S, 2/Z, 8/B)
 
 
 # ---------------------------------------------------------------- helpers
@@ -137,17 +110,8 @@ def legenda_gruppi():
     return f'<div class="legenda">{voci}</div>'
 
 
-def intestazione_scheda(titolo, extra=""):
-    return f'''
-<div class="sc-testa">
-  <div class="sc-titolo">{titolo}</div>
-  <div class="campi">
-    <span class="campo">Attività <i style="width:38mm"></i></span>
-    <span class="campo">Codice <i style="width:16mm"></i></span>
-    <span class="campo">Gruppo (colore) <i style="width:18mm"></i></span>
-    <span class="campo">Data <i style="width:20mm"></i></span>
-  </div>{extra}
-</div>'''
+def campo_gruppo(larghezza="40mm"):
+    return f'<span class="campo">Gruppo (colore) <i style="width:{larghezza}"></i></span>'
 
 
 def sezione(num, titolo, domanda, nrighe):
@@ -157,155 +121,113 @@ def sezione(num, titolo, domanda, nrighe):
 
 
 def scheda_completa():
-    versioni = ('<div class="versione">Compilate: '
-                '<span><b class="box"></b>breve (1-2)</span>'
-                '<span><b class="box"></b>ragionamento (1-3)</span>'
-                '<span><b class="box"></b>completa (tutto)</span>'
-                '<em>Bastano parole chiave.</em></div>')
     dopo = f'''
 <div class="sez dopo"><div class="sez-t">DOPO IL CONFRONTO CON GLI ALTRI GRUPPI</div>
 <div class="sez-d">La nostra idea è cambiata?</div>
 <div class="scelte"><span><b class="box"></b>No</span><span><b class="box"></b>Sì</span>
 <span><b class="box"></b>Siamo meno sicuri</span></div>
 <div class="sez-d">Se è cambiata o siamo meno sicuri: che cosa ci ha fatto cambiare?</div>
-{righe(3)}</div>'''
+{righe(4)}</div>'''
     return f'''
 <section class="pag pag-scheda">
-{intestazione_scheda("Scheda del gruppo", versioni)}
-{sezione(1, "LA NOSTRA RISPOSTA", "Che cosa abbiamo deciso o concluso?", 4)}
-{sezione(2, "PERCHÉ?", "Qual è la ragione principale? Quale elemento sostiene la nostra risposta?", 4)}
-{sezione(3, "CHE COSA CI RESTA DA CAPIRE?", "Quale dubbio rimane? Quale informazione manca, o quale alternativa è possibile?", 4)}
+<div class="sc-testa"><div class="sc-titolo">Scheda del gruppo</div>{campo_gruppo()}</div>
+{sezione(1, "LA NOSTRA RISPOSTA", "Che cosa abbiamo deciso o concluso?", 5)}
+{sezione(2, "PERCHÉ?", "Qual è la ragione principale? Quale elemento sostiene la nostra risposta?", 5)}
+{sezione(3, "CHE COSA CI RESTA DA CAPIRE?", "Quale dubbio rimane? Quale informazione manca, o quale alternativa è possibile?", 5)}
 {dopo}
-<div class="sc-piede">Progetto 16 · Scheda del gruppo · Scatola 2 se l'attività lo prevede</div>
+<div class="sc-piede">Progetto 16 · Bastano parole chiave · A fine lezione la scheda va nella scatola del gruppo</div>
 </section>'''
 
 
-def scheda_breve():
-    una = f'''
-<div class="breve">
-{intestazione_scheda("Scheda del gruppo · breve")}
-{sezione(1, "LA NOSTRA RISPOSTA", "Che cosa abbiamo deciso o concluso?", 3)}
-{sezione(2, "PERCHÉ?", "Qual è la ragione principale? Quale elemento la sostiene?", 3)}
+# Foglio individuale: fronte (PRIMA) e retro (DOPO) dello stesso biglietto.
+# Un A4 = 2 biglietti (metà alta e metà bassa). Stampa fronte-retro sul lato lungo:
+# la metà alta del fronte corrisponde alla metà alta del retro. Margini ampi
+# (14 mm da ogni bordo e dalla linea di taglio) perché un taglio impreciso o un
+# fronte-retro non perfettamente allineato non tagli via nessuna informazione.
+def prima():
+    return f'''
+<div class="ind">
+  <div class="ind-testa"><span class="tag">PRIMA</span>{campo_gruppo("34mm")}</div>
+  <div class="ind-d">La mia risposta, prima di parlarne con il gruppo</div>
+  <div class="spazio"></div>
+  <div class="ind-d">Quanto sono sicuro? Segna una casella</div>
+  {scala_sicurezza()}
+  <div class="ind-nota">Non scrivere il tuo nome. Quando hai finito, gira il foglio a faccia in giù: il fronte non si corregge più.</div>
 </div>'''
-    return f'<section class="pag pag-breve">{una}<div class="taglio-h"><span>taglia qui</span></div>{una}</section>'
 
 
-def codice(rng, usati):
-    while True:
-        c = "".join(rng.choice(ALFABETO) for _ in range(4))
-        if c not in usati:
-            usati.add(c)
-            return c
-
-
-def individuale(c):
+def dopo():
     motivi = ["un'informazione nuova", "un ragionamento di un compagno",
-              "quello che pensava la maggioranza", "non so / altro"]
+              "quello che pensava la maggioranza", "non so, oppure altro"]
     motivi_html = "".join(f'<span><b class="box"></b>{m}</span>' for m in motivi)
     return f'''
 <div class="ind">
-  <div class="ind-parte">
-    <div class="ind-testa"><span class="tag">PRIMA</span><span class="cod">{c}</span></div>
-    <div class="ind-campi"><span class="campo">Attività <i style="width:20mm"></i></span>
-      <span class="campo">Gruppo (colore) <i style="width:14mm"></i></span></div>
-    <div class="ind-d">La mia risposta, prima di parlarne</div>
-    <div class="spazio"></div>
-    <div class="ind-d">Quanto sono sicuro? Segna una casella</div>
-    {scala_sicurezza()}
-    <div class="ind-nota">Non scrivere il nome. Stacca questa parte e mettila nella Scatola 2.</div>
-  </div>
-  <div class="strappo"><span>strappa qui</span></div>
-  <div class="ind-parte">
-    <div class="ind-testa"><span class="tag tag-dopo">DOPO</span><span class="cod">{c}</span></div>
-    <div class="ind-d">La mia risposta, dopo il confronto</div>
-    <div class="spazio corto"></div>
-    <div class="ind-d">Quanto sono sicuro adesso?</div>
-    {scala_sicurezza()}
-    <div class="ind-d">Rispetto a prima, la mia risposta è
-      <span class="inline"><b class="box"></b>uguale</span>
-      <span class="inline"><b class="box"></b>cambiata</span></div>
-    <div class="ind-d">Che cosa ha contato di più?</div>
-    <div class="motivi">{motivi_html}</div>
+  <div class="ind-testa"><span class="tag tag-dopo">DOPO</span></div>
+  <div class="dopo-griglia">
+    <div>
+      <div class="ind-d">La mia risposta, dopo il confronto</div>
+      <div class="spazio corto"></div>
+      <div class="ind-d">Quanto sono sicuro adesso?</div>
+      {scala_sicurezza()}
+    </div>
+    <div>
+      <div class="ind-d">Rispetto a prima, la mia risposta è</div>
+      <div class="motivi"><span><b class="box"></b>uguale</span><span><b class="box"></b>cambiata</span></div>
+      <div class="ind-d">Che cosa ha contato di più?</div>
+      <div class="motivi">{motivi_html}</div>
+    </div>
   </div>
 </div>'''
 
 
-def fogli_individuali(n_fogli, rng):
-    usati = set()
-    out = []
-    for _ in range(n_fogli):
-        a, b = codice(rng, usati), codice(rng, usati)
-        out.append(f'<section class="pag pag-ind">{individuale(a)}'
-                   f'<div class="taglio-h"><span>taglia qui</span></div>{individuale(b)}</section>')
-    return "".join(out)
+def segni_taglio():
+    return '<span class="segno sx"></span><span class="segno dx"></span>'
 
 
-def biglietti():
-    uno = f'''
-<div class="big">
-  <div class="big-t">Biglietto di uscita</div>
-  <div class="big-d">{DOMANDA_FINALE}</div>
-  {righe(4)}
-  <div class="big-d piccolo">Una domanda, un dubbio, un'idea <em>(facoltativo)</em></div>
-  {righe(2)}
-  <div class="big-piede">Scatola 1 · non scrivere il tuo nome</div>
+def fogli_individuali():
+    fronte = f'<section class="pag pag-ind">{prima()}{segni_taglio()}{prima()}</section>'
+    retro = f'<section class="pag pag-ind">{dopo()}{segni_taglio()}{dopo()}</section>'
+    return fronte + retro
+
+
+def etichetta(gr):
+    return f'''
+<div class="etic" style="--g:{gr["hex"]}">
+  <div class="etic-banda"></div>
+  <div class="etic-corpo">
+    <div class="etic-t">{forma(gr, "11mm")}<span>Gruppo {gr["nome"]}</span></div>
+    <div class="etic-d">Qui dentro: tessere con cordino, gettone della parola, schede del gruppo,
+    fogli individuali. A fine lezione rimetti tutto qui.</div>
+  </div>
 </div>'''
-    return f'<section class="pag pag-big">{uno * 4}</section>'
 
 
 def etichette():
-    s1 = ("Domande, dubbi e idee",
-          "Biglietti di uscita, domande rimaste aperte, dubbi, proposte, osservazioni. "
-          "Scrivi quello che vuoi, senza il tuo nome.")
-    s2 = ("Risposte delle attività",
-          "Solo i fogli che il docente chiede di consegnare qui: parti PRIMA e DOPO "
-          "dei fogli individuali, schede indicate nella consegna.")
-    blocchi = "".join(
-        f'<div class="etic"><div class="etic-n">Scatola {i}</div>'
-        f'<div class="etic-t">{t}</div><div class="etic-d">{d}</div></div>'
-        for i, (t, d) in enumerate([s1, s2], start=1))
-    return f'<section class="pag pag-etic">{blocchi}</section>'
+    return f'<section class="pag pag-etic">{"".join(etichetta(g) for g in PALETTE["gruppi"])}</section>'
 
 
-def poster():
-    items = "".join(f'<li><div class="p-t">{t}</div><div class="p-d">{d}</div></li>'
-                    for t, d in REGOLE)
-    return f'''
-<section class="pag pag-poster">
-  <div class="p-occhiello">Progetto 16 · Quanto sono veramente tue le scelte che fai?</div>
-  <h1 class="p-h">Come ragioniamo qui</h1>
-  <ol class="p-lista">{items}</ol>
-  <div class="p-schermo"><b>Il semaforo del rumore.</b> {SCHERMO_FERMO}</div>
-  <div class="p-finale"><span>Ogni volta, alla fine</span>{DOMANDA_FINALE}</div>
-</section>'''
-
-
-def istruzioni(n_ind):
+def istruzioni():
     righe_tab = [
         ("tessere-ruolo.pdf", "Tessere ruolo: 9 set, uno per gruppo", "1 copia",
          "Ogni set ha il colore e il simbolo del suo gruppo: 4 ruoli, più 1 tessera Facilitatore + Custode per quando il gruppo è da 3 (raccolte in fondo). 45 tessere in tutto. Cartoncino 160-200 g, a colori. Tessere 100×70 mm: entrano nei porta-badge A7 (105×74 mm) lasciando il margine alla stampante."),
         ("scheda-gruppo.pdf", "Scheda del gruppo (A4)", "8-10 per incontro",
-         "Carta normale. Il docente dice quale versione compilare; il gruppo spunta la casella."),
-        ("scheda-breve.pdf", "Scheda breve (A5, 2 per foglio)", "4-5 fogli per incontro",
-         "Per le attività rapide (solo sezioni 1 e 2)."),
-        ("fogli-prima-dopo.pdf", f"Foglio individuale PRIMA/DOPO (2 per foglio, {n_ind * 2} sigle diverse)", "1 copia del blocco",
-         "Ogni modulo ha la stessa sigla sulle due parti: è il solo collegamento tra prima e dopo, nessun nome. La parte PRIMA va nella Scatola 2 prima della discussione. Riusabile tra incontri: il campo Attività distingue le raccolte."),
-        ("biglietti-uscita.pdf", "Biglietti di uscita (4 per foglio)", "8 fogli per incontro",
-         "Domanda conclusiva fissa. Vanno nella Scatola 1."),
-        ("etichette-scatole.pdf", "Etichette delle scatole", "1 copia", "Incollare sulle due scatole."),
-        ("poster-regole.pdf", "Poster delle regole", "1 copia", "Stampabile anche in A3 (ingrandimento 141%)."),
+         "Carta normale. Il docente dice quali sezioni compilare."),
+        ("fogli-prima-dopo.pdf", "Foglio individuale PRIMA (fronte) e DOPO (retro)", "1 foglio A4 ogni 2 studenti, per ogni raccolta",
+         "Stampa fronte-retro, rilegatura sul lato lungo. Poi taglia ogni A4 a metà, sui segni ai bordi: escono 2 biglietti. Margini ampi: un taglio impreciso non toglie nulla. Nessun nome, nessun codice: fronte e retro stanno sullo stesso biglietto."),
+        ("etichette-scatole.pdf", "Etichette delle 9 scatole dei gruppi", "1 copia",
+         "Una piccola scatola per gruppo, con tutto il materiale del gruppo dentro. Carta adesiva o colla."),
     ]
     tr = "".join(f"<tr><td><b>{b}</b><div class='file'>{a}</div></td><td class='q'>{c}</td><td>{d}</td></tr>"
                  for a, b, c, d in righe_tab)
     return f'''
 <section class="pag pag-istr">
-  <div class="p-occhiello">Progetto 16 · Kit di stampa comune · v3</div>
+  <div class="p-occhiello">Progetto 16 · Kit di stampa comune · v4</div>
   <h1 class="istr-h">Che cosa stampare</h1>
   <table class="istr"><thead><tr><th>Materiale e file</th><th>Quante</th><th>Note</th></tr></thead>
   <tbody>{tr}</tbody></table>
   <p class="istr-nota">Stampa sempre al 100% (senza "adatta alla pagina"), altrimenti le tessere non
   entrano nei porta-badge. Font: Atkinson Hyperlegible, scelto per la leggibilità anche con DSA.
-  Materiali da procurare a parte: 9 gettoni della parola (uno per gruppo), laccetti, due scatole.</p>
+  Materiali da procurare a parte: 9 piccole scatole (una per gruppo), 9 gettoni della parola, 45 porta-badge A7 con cordino.</p>
   <h2 class="istr-h2">I nove gruppi</h2>
   <p class="istr-nota">Colore e simbolo insieme: i gruppi restano distinguibili anche in bianco e nero e per chi
   non distingue bene i colori. Gli stessi colori tornano nelle slide (design/palette.json).</p>
@@ -382,77 +304,42 @@ table.istr{width:100%;border-collapse:collapse;font-size:9.5pt}
 .scelte{display:flex;gap:8mm;margin:2mm 0 1mm;font-size:10.5pt}
 .sc-piede{margin-top:auto;font-size:7.5pt;color:var(--soft)}
 
-/* scheda breve A5 x2 */
-.pag-breve,.pag-ind{display:flex;flex-direction:column}
-.breve{height:148.5mm;padding:10mm 16mm 6mm}
-.breve .sc-titolo{font-size:15pt}
-.taglio-h{position:relative;height:0;border-top:0.6px dashed #9AA3B2}
-.taglio-h span,.strappo span{position:absolute;font-size:6.5pt;color:#8A93A3;background:var(--paper);padding:0 2mm}
-.taglio-h span{left:50%;top:-1.6mm;transform:translateX(-50%)}
-
-/* foglio individuale: due parti affiancate con strappo verticale */
-.ind{height:148.5mm;display:grid;grid-template-columns:1fr 0 1fr;padding:9mm 10mm 7mm}
-.ind-parte{display:block;padding:0 5mm;min-width:0}
-.strappo{width:0;border-left:0.8px dashed #8A93A3;position:relative}
-.strappo span{top:-4mm;left:-7mm;width:14mm;text-align:center;padding:0}
+/* foglio individuale: 2 biglietti per A4, fronte PRIMA e retro DOPO */
+.pag-ind{position:relative}
+.ind{height:148.5mm;padding:14mm 16mm}
 .ind-testa{display:flex;justify-content:space-between;align-items:center;margin-bottom:3mm}
-.tag{font-weight:700;font-size:13pt;letter-spacing:.1em;border:2px solid var(--ink);padding:.6mm 3mm;border-radius:1mm}
+.tag{font-weight:700;font-size:14pt;letter-spacing:.1em;border:2px solid var(--ink);padding:.6mm 3mm;border-radius:1mm}
 .tag-dopo{background:var(--ink);color:var(--paper)}
-.cod{font-size:15pt;font-weight:700;letter-spacing:.18em;font-variant-numeric:tabular-nums}
-.ind-campi{display:flex;gap:4mm;margin-bottom:2mm}
-.ind-d{font-size:9.5pt;font-weight:700;margin-top:2.5mm}
-.spazio{border:1px solid var(--line);border-radius:1.2mm;height:30mm;margin-top:1.2mm}
-.spazio.corto{height:20mm}
+.ind-d{font-size:10pt;font-weight:700;margin-top:3mm}
+.spazio{border:1px solid var(--line);border-radius:1.2mm;height:42mm;margin-top:1.5mm}
+.spazio.corto{height:38mm}
 .scala{margin-top:1.5mm;white-space:nowrap}
 .cella{display:inline-block;width:8.4mm;text-align:center;font-size:7.5pt;color:var(--soft);
        font-variant-numeric:tabular-nums}
 .cella .box{display:block;margin:0 auto .8mm;width:4.4mm;height:4.4mm}
-.inline{margin-left:3mm;font-weight:400}
-.motivi{margin-top:1.2mm;font-size:9pt}.motivi span{display:block;margin-bottom:1.3mm}
-.ind-nota{margin-top:6mm;font-size:8pt;color:var(--soft)}
+.motivi{margin-top:1.5mm;font-size:10pt}.motivi span{display:block;margin-bottom:1.6mm}
+.ind-nota{margin-top:4mm;font-size:8.5pt;color:var(--soft)}
+.dopo-griglia{display:grid;grid-template-columns:96mm 1fr;gap:8mm}
+.segno{position:absolute;top:148.5mm;width:6mm;border-top:0.6px solid #9AA3B2}
+.segno.sx{left:0}.segno.dx{right:0}
 
-/* biglietti 2x2 */
-.pag-big{display:grid;grid-template-columns:105mm 105mm;grid-template-rows:148.5mm 148.5mm}
-.big{border:0.6px dashed #9AA3B2;padding:9mm 8mm 6mm;display:flex;flex-direction:column}
-.big-t{font-size:8pt;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
-.big-d{font-size:12pt;font-weight:700;margin:2mm 0 1mm;line-height:1.3}
-.big-d.piccolo{font-size:9.5pt;margin-top:5mm}
-.big-d em{font-weight:400;color:var(--soft)}
-.big-piede{margin-top:auto;font-size:7.5pt;color:var(--soft)}
-
-/* etichette */
-.pag-etic{display:flex;flex-direction:column}
-.etic{height:148.5mm;padding:22mm 20mm;border-bottom:0.6px dashed #9AA3B2}
-.etic-n{font-size:16pt;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
-.etic-t{font-size:38pt;font-weight:700;line-height:1.05;margin:3mm 0 6mm}
-.etic-d{font-size:14pt;max-width:150mm;color:var(--ink)}
-
-/* poster */
-.pag-poster{padding:18mm 18mm 14mm;display:flex;flex-direction:column}
-.p-h{font-size:34pt;margin:2mm 0 7mm;line-height:1}
-.p-lista{margin:0;padding:0;list-style:none;counter-reset:r}
-.p-lista li{counter-increment:r;display:grid;grid-template-columns:12mm 1fr;padding:3.6mm 0;
-            border-top:1px solid var(--hair)}
-.p-lista li::before{content:counter(r);font-size:20pt;font-weight:700;color:var(--soft);grid-row:span 2;line-height:1}
-.p-t{font-size:15pt;font-weight:700}
-.p-d{font-size:11pt;color:var(--soft);margin-top:1mm;max-width:150mm}
-.p-schermo{margin-top:6mm;padding:4mm 5mm;border:1.5px solid var(--ink);border-radius:2mm;font-size:11pt}
-.p-finale{margin-top:auto;background:var(--ink);color:var(--paper);padding:6mm 7mm;border-radius:2mm;
-          font-size:15pt;font-weight:700;line-height:1.3}
-.p-finale span{display:block;font-size:8.5pt;letter-spacing:.1em;text-transform:uppercase;font-weight:400;
-               opacity:.75;margin-bottom:1.5mm}
+/* etichette delle scatole: 2 colonne x 5 righe, 95x55 mm */
+.pag-etic{display:grid;grid-template-columns:95mm 95mm;grid-auto-rows:55mm;padding:10mm;
+          justify-content:center;align-content:start}
+.etic{border:0.6px dashed #9AA3B2;display:flex;flex-direction:column}
+.etic-banda{height:5mm;background:var(--g)}
+.etic-corpo{padding:5mm 6mm}
+.etic-t{display:flex;align-items:center;gap:3mm;font-size:20pt;font-weight:700;line-height:1}
+.etic-d{font-size:9.5pt;color:var(--soft);margin-top:4mm;line-height:1.35}
 """
 
 
 OGGETTI = [
-    ("istruzioni-e-gruppi", "Istruzioni e gruppi", lambda n, rng: istruzioni(n)),
-    ("tessere-ruolo", "Tessere ruolo", lambda n, rng: fogli_tessere()),
-    ("scheda-gruppo", "Scheda del gruppo", lambda n, rng: scheda_completa()),
-    ("scheda-breve", "Scheda del gruppo breve", lambda n, rng: scheda_breve()),
-    ("fogli-prima-dopo", "Fogli individuali prima e dopo", lambda n, rng: fogli_individuali(n, rng)),
-    ("biglietti-uscita", "Biglietti di uscita", lambda n, rng: biglietti()),
-    ("etichette-scatole", "Etichette delle scatole", lambda n, rng: etichette()),
-    ("poster-regole", "Poster delle regole", lambda n, rng: poster()),
+    ("istruzioni-e-gruppi", "Istruzioni e gruppi", istruzioni),
+    ("tessere-ruolo", "Tessere ruolo", fogli_tessere),
+    ("scheda-gruppo", "Scheda del gruppo", scheda_completa),
+    ("fogli-prima-dopo", "Foglio individuale prima e dopo", fogli_individuali),
+    ("etichette-scatole", "Etichette delle scatole dei gruppi", etichette),
 ]
 
 
@@ -463,16 +350,11 @@ def documento(titolo, corpo):
 
 
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--fogli-individuali", type=int, default=15,
-                    help="fogli PRIMA/DOPO (2 moduli per foglio). Default 15 = 30 moduli")
-    ap.add_argument("--seed", type=int, default=None, help="seme per le sigle (default casuale)")
-    a = ap.parse_args()
     from weasyprint import HTML
-    rng = random.Random(a.seed)
     out = HERE / "pdf"
     out.mkdir(exist_ok=True)
+    for vecchio in out.glob("*.pdf"):
+        vecchio.unlink()
     for nome, titolo, fn in OGGETTI:
-        html = documento(titolo, fn(a.fogli_individuali, rng))
-        HTML(string=html, base_url=str(HERE)).write_pdf(out / f"{nome}.pdf")
+        HTML(string=documento(titolo, fn()), base_url=str(HERE)).write_pdf(out / f"{nome}.pdf")
         print("ok:", out / f"{nome}.pdf")
