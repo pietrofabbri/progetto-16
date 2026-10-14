@@ -1,14 +1,16 @@
 # Progetto 16. Quanto sono veramente tue le scelte che fai?
 
-Materiali per mettere in pratica il **Progetto 16 "Psicologia e dati"**: 13 incontri da 90 minuti (75 netti) più un incontro bonus (l'8) per classi 4ª e 5ª di istituto tecnico, IIS Copernico-Carpeggiani, Ferrara. Il docente referente è Pietro Fabbri (A041).
+Materiali **presentati** in aula e al pubblico per mettere in pratica il **Progetto 16 "Psicologia e dati"**: 13 incontri da 90 minuti (75 netti) più un incontro bonus (l'8) per classi 4ª e 5ª di istituto tecnico, IIS Copernico-Carpeggiani, Ferrara. Il docente referente è Pietro Fabbri (A041).
 
 Tutto funziona **offline** su un PC d'aula con proiettore. Versione online: **https://pietrofabbri.github.io/progetto-16/** (pubblicata da GitHub Actions a ogni push su `main`). Nessuno strumento registra, salva o trasmette audio o dati degli studenti.
 
 ## Contenuto
 
+Questa repo contiene **solo ciò che viene presentato** (slide, strumenti, kit, diari degli incontri). La progettazione, le decisioni e la ricerca stanno in una repo privata collegata.
+
+
 | Cartella | Che cosa c'è | Stato |
 |---|---|---|
-| `docs/` | `decisioni.md`: registro delle decisioni (data, motivo, effetto). `lavoro-studenti.md`: lo studio originale degli studenti. `pubblicazione.md`: che cosa si pubblica, dove e come. `progetto16-scelte.md`: quadro completo (specifica, decisioni, ipotesi di ricerca, criticità, domande aperte), leggibile senza altro contesto. `specifica-originale.md`: testo del progetto come ricevuto. | aggiornato |
 | `design/` | Palette comune (`palette.json` è la fonte unica, `palette.css` la versione per il web) e font Atkinson Hyperlegible (licenza SIL OFL). | v1 |
 | `semaforo/` | **Il barattolo**: segnalatore del rumore da inserire nelle slide HTML (`barattolo.js`) e pagina di prova (`demo.html`). | v1 |
 | `kit/` | Kit di stampa: generatore `genera_kit.py` e un PDF per ogni oggetto in `kit/pdf/`. | v4 |
@@ -115,6 +117,7 @@ Il barattolo usa solo il livello sonoro istantaneo, calcolato in memoria e mai s
 ## Convenzioni
 
 - **Nessun trattino lungo** (lineetta o trattino medio) in nessun testo, materiale, slide, codice o documento. Si usano punto, virgola, due punti o parentesi; per gli intervalli il trattino corto (15-30). Controllo: `LC_ALL=C.UTF-8 grep -rnP "\x{2014}|\x{2013}" --exclude-dir=.git .`
-- Ogni decisione presa va registrata in `docs/decisioni.md` e riportata nel quadro `docs/progetto16-scelte.md`.
+- Le decisioni di progetto si registrano nella repo privata collegata, non qui.
+- Qui non vanno mai soluzioni delle attività, sorprese, ipotesi di ricerca, dati non aggregati o nomi di studenti. Le pagine di un incontro si pubblicano dopo quell'incontro.
 - Colori solo da `design/palette.json` (o `palette.css`); font Atkinson Hyperlegible.
 

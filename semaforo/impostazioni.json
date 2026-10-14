@@ -1,11 +1,11 @@
 {
   "base": -60,
-  "discussione": -45,
+  "discussione": -35,
   "soglie": {
-    "silenzio": { "giallo": 5, "blocco": 9 },
-    "discussione": { "giallo": 18, "blocco": 22 }
+    "silenzio": { "giallo": 20, "blocco": 24 },
+    "discussione": { "giallo": 34, "blocco": 39 }
   },
-  "quiete": 4,
+  "quiete": 6,
   "tenuta": 3,
   "perSbloccare": 5,
   "pausa": 60,
