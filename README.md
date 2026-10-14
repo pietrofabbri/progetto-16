@@ -14,7 +14,7 @@ Questa repo contiene **solo ciò che viene presentato** (slide, strumenti, kit, 
 | `design/` | Palette comune (`palette.json` è la fonte unica, `palette.css` la versione per il web) e font Atkinson Hyperlegible (licenza SIL OFL). | v1 |
 | `semaforo/` | **Il barattolo**: segnalatore del rumore da inserire nelle slide HTML (`barattolo.js`) e pagina di prova (`demo.html`). | v1 |
 | `kit/` | Kit di stampa: generatore `genera_kit.py` e un PDF per ogni oggetto in `kit/pdf/`. | v4 |
-| `slides/` | Template delle slide HTML (da fare). Per ora: `regole-prima-slide.md`, il testo della prima slide di ogni lezione. | da fare |
+| `slides/` | Motore comune delle slide (`motore.js`, `motore.css`): timer visibile, icone fisse delle fasi (da solo, nel gruppo, tutti insieme), barattolo, registro delle slide, "Fine lezione". Le slide dei singoli incontri stanno nella repo privata fino all'incontro. `regole-prima-slide.md`: testo della prima slide di ogni lezione. | v1 |
 
 ## Pubblicazione web
 
@@ -119,5 +119,5 @@ Il barattolo usa solo il livello sonoro istantaneo, calcolato in memoria e mai s
 - **Nessun trattino lungo** (lineetta o trattino medio) in nessun testo, materiale, slide, codice o documento. Si usano punto, virgola, due punti o parentesi; per gli intervalli il trattino corto (15-30). Controllo: `LC_ALL=C.UTF-8 grep -rnP "\x{2014}|\x{2013}" --exclude-dir=.git .`
 - Le decisioni di progetto si registrano nella repo privata collegata, non qui.
 - Qui non vanno mai soluzioni delle attività, sorprese, ipotesi di ricerca, dati non aggregati o nomi di studenti. Le pagine di un incontro si pubblicano dopo quell'incontro.
-- Colori solo da `design/palette.json` (o `palette.css`); font Atkinson Hyperlegible.
+- Colori solo da `design/palette.json` (o `palette.css`, `palette.js` per gli script: dopo una modifica a `palette.json` rigenera `palette.js`); font Atkinson Hyperlegible.
 

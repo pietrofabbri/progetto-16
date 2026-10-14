@@ -26,9 +26,9 @@ RUOLI = [
          testo="Tieni il gruppo sulla consegna e fai uscire tutte le idee. "
                "Non decidi tu chi ha ragione.",
          icona="bussola"),
-    dict(id="cus", nome="Custode dei turni", sotto="",
-         testo="Gestisci gettone e timer: parla uno alla volta. "
-               "Dai la parola a chi non ha ancora parlato.",
+    dict(id="cus", nome="Custode dei turni", sotto="e della scatola",
+         testo="Parla solo chi ha il sasso, col timer. "
+               "5 minuti prima della fine: tutto in scatola.",
          icona="clessidra"),
     dict(id="ver", nome="Verificatore", sotto="",
          testo="Chiedi «Come lo sappiamo?». "
@@ -40,9 +40,9 @@ RUOLI = [
          icona="matita"),
 ]
 RUOLO_ACCORPATO = dict(
-    id="facus", nome="Facilitatore", sotto="+ Custode dei turni (gruppi da 3)",
-    testo="Tieni il gruppo sul compito e gestisci i turni. "
-          "Non decidi tu chi ha ragione.",
+    id="facus", nome="Facilitatore", sotto="+ Custode dei turni e della scatola (gruppi da 3)",
+    testo="Gruppo sul compito, sasso e timer. "
+          "5 minuti prima della fine: tutto in scatola.",
          icona="bussola")
 
 ICONE = {
@@ -196,7 +196,7 @@ def etichetta(gr):
   <div class="etic-banda"></div>
   <div class="etic-corpo">
     <div class="etic-t">{forma(gr, "11mm")}<span>Gruppo {gr["nome"]}</span></div>
-    <div class="etic-d">Qui dentro: tessere con cordino, gettone della parola, schede del gruppo,
+    <div class="etic-d">Qui dentro: tessere con cordino, sasso della parola, schede del gruppo,
     fogli individuali. A fine lezione rimetti tutto qui.</div>
   </div>
 </div>'''
@@ -227,7 +227,7 @@ def istruzioni():
   <tbody>{tr}</tbody></table>
   <p class="istr-nota">Stampa sempre al 100% (senza "adatta alla pagina"), altrimenti le tessere non
   entrano nei porta-badge. Font: Atkinson Hyperlegible, scelto per la leggibilità anche con DSA.
-  Materiali da procurare a parte: 9 piccole scatole (una per gruppo), 9 gettoni della parola, 45 porta-badge A7 con cordino.</p>
+  Materiali da procurare a parte: 9 piccole scatole (una per gruppo), 9 sassi della parola, 45 porta-badge A7 con cordino.</p>
   <h2 class="istr-h2">I nove gruppi</h2>
   <p class="istr-nota">Colore e simbolo insieme: i gruppi restano distinguibili anche in bianco e nero e per chi
   non distingue bene i colori. Gli stessi colori tornano nelle slide (design/palette.json).</p>
