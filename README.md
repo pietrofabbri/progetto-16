@@ -42,6 +42,12 @@ Premi **B** per attivare il barattolo: il browser chiede il permesso del microfo
 3. Se serve, aggiusta a mano le soglie con i cursori: sono in decibel *sopra il silenzio misurato*. La barra in alto mostra il livello in tempo reale con i segni delle soglie.
 4. **Salva e chiudi.** I valori restano memorizzati nel browser e si ripropongono alla lezione successiva, ma la taratura va rifatta ogni volta perché aula, finestre e numero di studenti cambiano.
 
+### Registro del rumore e impostazioni predefinite
+- **Registro:** mentre il barattolo è attivo salva un campione al secondo (livello in dB sopra il silenzio, modalità, stato), i blocchi (inizio, durata, sblocco per silenzio o manuale) e le tarature. Solo numeri, nessun audio. Resta nel browser per 3 ore anche se si ricarica la pagina; dal pannello di taratura si scarica come JSON completo o CSV dei campioni. Serve a documentare la lezione.
+- **Impostazioni predefinite:** "Esporta le impostazioni" scarica `impostazioni.json`. Copiato in `semaforo/impostazioni.json`, diventa il valore predefinito per tutti i browser che non hanno una taratura salvata. "Valori predefiniti" nel pannello riporta a quel file. Le soglie sono relative al silenzio, che si misura a ogni lezione.
+- **Picco:** il pannello mostra il picco raggiunto (utile per una prova di massima confusione) e lo azzera.
+- **Il blocco dura finché c'è rumore:** la lezione riparte solo dopo alcuni secondi continui sotto la soglia di quiete; se il rumore riprende, l'avanzamento torna indietro (verificato in simulazione: 15 secondi di rumore moderato, schermo ancora bloccato).
+
 Tasti: **B** attiva o spegne · **T** riapre la taratura · **U** (o Esc) sblocca subito.
 Per provare senza microfono: apri `semaforo/demo.html?simula` e muovi il cursore "Rumore simulato".
 

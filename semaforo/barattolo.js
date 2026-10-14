@@ -17,6 +17,12 @@
  *
  * Tasti: B attiva/spegne · T apre la taratura · U (o Esc) sblocca subito.
  * URL ?simula : livello simulato con un cursore (per provare senza microfono).
+ *
+ * Impostazioni: priorità 1) taratura salvata nel browser; 2) semaforo/impostazioni.json
+ * (predefinite del progetto, se il file è raggiungibile); 3) PREDEFINITE qui sotto.
+ * Registro del rumore: un campione al secondo (livello in dB sopra il silenzio, modalità,
+ * stato), i blocchi e le tarature. Solo numeri, mai audio. Si scarica dal pannello di
+ * taratura (JSON completo o CSV dei campioni) e serve a documentare la lezione.
  */
 (function () {
   "use strict";
@@ -59,6 +65,33 @@
   }
 
   let cfg = carica();
+  let predefinite = structuredClone(PREDEFINITE);
+  const CARTELLA = (document.currentScript && document.currentScript.src)
+    ? document.currentScript.src.replace(/[^/]*$/, "") : "";
+  fetch(CARTELLA + "impostazioni.json", { cache: "no-store" })
+    .then(r => (r.ok ? r.json() : null))
+    .then(j => {
+      if (!j || !j.soglie) return;
+      predefinite = Object.assign(structuredClone(PREDEFINITE), j);
+      let salvate = null;
+      try { salvate = localStorage.getItem(CHIAVE); } catch (e) {}
+      if (!salvate) cfg = structuredClone(predefinite);
+    })
+    .catch(() => { /* file:// o file assente: restano le PREDEFINITE */ });
+
+  // ------------------------------------------------------------ registro del rumore
+  const CHIAVE_REG = "p16-barattolo-registro";
+  const nuovoRegistro = () => ({ versione: 1, inizio: new Date().toISOString(),
+    nota: "livelli in dB sopra il silenzio misurato; nessun audio registrato",
+    campioni: [], blocchi: [], tarature: [] });
+  let R = nuovoRegistro();
+  try {
+    const r = JSON.parse(localStorage.getItem(CHIAVE_REG) || "null");
+    if (r && r.inizio && Date.now() - Date.parse(r.inizio) < 3 * 3600e3) R = r;
+  } catch (e) {}
+  const tReg = () => +((Date.now() - Date.parse(R.inizio)) / 1000).toFixed(1);
+  let ultimoCampione = 0, ultimoSalvataggioReg = 0;
+  function salvaRegistro() { try { localStorage.setItem(CHIAVE_REG, JSON.stringify(R)); } catch (e) {} }
 
   // ------------------------------------------------------------ stato
   const S = {
@@ -72,6 +105,7 @@
     simula: /[?&]simula\b/.test(location.search),
     simLivello: -58,
     blocchi: 0,
+    picco: -90,
   };
   let actx = null, analyser = null, buf = null, stream = null;
 
@@ -231,6 +265,9 @@
 .p16b-box legend{font-weight:700;padding:0 6px}
 .p16b-riga{display:grid;grid-template-columns:150px 1fr 70px;gap:10px;align-items:center;margin:6px 0}
 .p16b-riga output{font-variant-numeric:tabular-nums;text-align:right}
+.p16b-picco{display:flex;gap:10px;align-items:center;font-size:13px;margin-top:6px;font-variant-numeric:tabular-nums}
+.p16b-picco button{padding:4px 10px;font-size:13px}
+.p16b-azioni-reg{display:flex;flex-wrap:wrap;gap:8px}
 .p16b-pie{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:16px}
 .p16b-pie div{display:flex;gap:10px;flex-wrap:wrap}
 .p16b-nota{font-size:13px;color:#5B6475}
@@ -314,6 +351,7 @@
   // ------------------------------------------------------------ blocco
   function blocca() {
     S.bloccato = true; S.progresso = 0; S.blocchi++;
+    R.blocchi.push({ inizio: tReg(), modo: S.modo }); salvaRegistro();
     sciameVelo = sciameVelo || Sciame(Math.round(Math.min(380, window.innerWidth * window.innerHeight / 5200)), 3, 7);
     for (const q of sciameVelo) { q.x = Math.random(); q.y = 0.6 + Math.random() * 0.4; }
     scuoti(sciameVelo, 3.5);
@@ -323,6 +361,8 @@
   }
   function sblocca(manuale) {
     S.bloccato = false; S.sopra = 0; S.ultimoBlocco = performance.now();
+    const ub = R.blocchi[R.blocchi.length - 1];
+    if (ub && ub.fine === undefined) { ub.fine = tReg(); ub.durata = +(ub.fine - ub.inizio).toFixed(1); ub.sblocco = manuale ? "manuale" : "silenzio"; salvaRegistro(); }
     velo.classList.remove("on");
     veloBarra.style.width = "0";
     if (!manuale) suona("sblocco");
@@ -339,6 +379,13 @@
       S.istantaneo = leggiLivello();
       const tau = 1.0; const a = 1 - Math.exp(-dt / tau);
       S.livello += (S.istantaneo - S.livello) * a;
+    }
+
+    if (S.attivo && S.istantaneo > S.picco) S.picco = S.istantaneo;
+    if (S.attivo && now - ultimoCampione >= 1000) {
+      ultimoCampione = now;
+      R.campioni.push({ t: tReg(), db: +(S.livello - cfg.base).toFixed(1), modo: S.modo, stato: statoNome() });
+      if (now - ultimoSalvataggioReg > 10000) { ultimoSalvataggioReg = now; salvaRegistro(); }
     }
 
     const acceso = S.attivo && S.modo !== "spento";
@@ -367,6 +414,15 @@
   function agitazione() {
     const b = cfg.base, bl = sogliaDb("blocco");
     return Math.max(0, Math.min(1.25, (S.livello - b) / Math.max(3, bl - b)));
+  }
+
+  function statoNome() {
+    if (!S.attivo) return "spento";
+    if (S.bloccato) return "blocco";
+    if (S.modo === "spento") return "pausa";
+    if (S.livello >= sogliaDb("blocco")) return "rosso";
+    if (S.livello >= sogliaDb("giallo")) return "giallo";
+    return "verde";
   }
 
   function colStato() {
@@ -444,6 +500,7 @@
       <p class="sub">Da fare all'inizio di ogni lezione, nell'aula vera. Le soglie sono in decibel sopra il silenzio misurato.</p>
       <div class="p16b-metro" id="p16b-metro"><div class="liv"></div></div>
       <div class="p16b-scala"><span>silenzio</span><span id="p16b-letto"></span><span>forte</span></div>
+      <div class="p16b-picco"><span id="p16b-picco-t"></span> <button id="p16b-picco-z" type="button">Azzera il picco</button></div>
       <div class="p16b-passi">
         <button id="p16b-m1" class="pri">1 · Misura il silenzio (5 s)<br><small>Classe ferma e zitta</small></button>
         <button id="p16b-m2">2 · Misura una discussione normale (5 s)<br><small>Gruppi che lavorano a voce normale</small></button>
@@ -466,7 +523,17 @@
           <label><input type="checkbox" id="p16b-su" ${cfg.suono ? "checked" : ""}> suona al blocco e allo sblocco</label><span></span></div>
       </fieldset>
       <p class="p16b-nota">Nella barra: il tratto <b style="color:#E3A008">giallo</b> e quello <b style="color:#D9482B">rosso</b> sono le soglie della modalità attuale (<span id="p16b-modo"></span>), quello <b style="color:#2FA36B">verde</b> è la quiete per sbloccare. Durante le spiegazioni metti la slide in modalità <i>spento</i>: la tua voce vicino al microfono farebbe scattare il blocco.</p>
-      <div class="p16b-pie"><div><button id="p16b-prova">Prova il blocco</button><button id="p16b-reset">Valori iniziali</button></div>
+      <fieldset><legend>Registro del rumore e impostazioni</legend>
+        <p class="p16b-nota" id="p16b-reg-info"></p>
+        <div class="p16b-azioni-reg">
+          <button id="p16b-reg-json" type="button">Scarica il registro (JSON)</button>
+          <button id="p16b-reg-csv" type="button">Scarica i campioni (CSV)</button>
+          <button id="p16b-reg-nuovo" type="button">Nuovo registro</button>
+          <button id="p16b-esporta" type="button">Esporta le impostazioni</button>
+        </div>
+        <p class="p16b-nota">"Esporta le impostazioni" scarica il file <code>impostazioni.json</code>: messo nella cartella <code>semaforo/</code> del progetto, diventa il valore predefinito per tutti. Il silenzio di base va comunque misurato a ogni lezione.</p>
+      </fieldset>
+      <div class="p16b-pie"><div><button id="p16b-prova">Prova il blocco</button><button id="p16b-reset">Valori predefiniti</button></div>
         <div><button id="p16b-chiudi" class="pri">Salva e chiudi</button></div></div>
     </div>`;
     document.body.appendChild(pannello);
@@ -490,7 +557,19 @@
     $("m1").addEventListener("click", () => misura("base"));
     $("m2").addEventListener("click", () => misura("discussione"));
     $("prova").addEventListener("click", () => { chiudiTaratura(); S.ultimoBlocco = -1e9; blocca(); });
-    $("reset").addEventListener("click", () => { cfg = structuredClone(PREDEFINITE); chiudiTaratura(); apriTaratura(); });
+    $("reset").addEventListener("click", () => { cfg = structuredClone(predefinite); chiudiTaratura(); apriTaratura(); });
+    $("picco-z").addEventListener("click", () => { S.picco = -90; });
+    $("reg-json").addEventListener("click", () => { salvaRegistro(); scarica(nomeFile("json"), JSON.stringify(R, null, 1), "application/json"); });
+    $("reg-csv").addEventListener("click", () => {
+      const righe = ["t_secondi,db_sopra_silenzio,modo,stato"].concat(R.campioni.map(c => [c.t, c.db, c.modo, c.stato].join(",")));
+      scarica(nomeFile("csv"), righe.join("\n"), "text/csv");
+    });
+    $("reg-nuovo").addEventListener("click", () => { R = nuovoRegistro(); salvaRegistro(); avviso("Nuovo registro avviato."); });
+    $("esporta").addEventListener("click", () => {
+      const imp = structuredClone(cfg);
+      scarica("impostazioni.json", JSON.stringify(imp, null, 2), "application/json");
+      try { navigator.clipboard.writeText(JSON.stringify(imp)); } catch (e) {}
+    });
     $("chiudi").addEventListener("click", chiudiTaratura);
     pannello.addEventListener("keydown", e => { if (e.key === "Escape") chiudiTaratura(); });
     $("chiudi").focus();
@@ -519,6 +598,7 @@
       // silenzio: mediana bassa (ignora colpi isolati); discussione: mediana
       const val = cosa === "base" ? campioni[Math.floor(campioni.length * 0.4)]
                                   : campioni[Math.floor(campioni.length * 0.5)];
+      R.tarature.push({ t: tReg(), cosa, valore_dbfs: +val.toFixed(1) });
       if (cosa === "base") { cfg.base = val; }
       else { cfg.discussione = val; }
       ricalcola();
@@ -556,6 +636,11 @@
     segni[2].style.left = pct(cfg.base + cfg.quiete) + "%";
     pannello.querySelector("#p16b-letto").textContent =
       S.attivo ? "+" + Math.max(0, S.istantaneo - cfg.base).toFixed(0) + " dB" : "barattolo spento";
+    pannello.querySelector("#p16b-picco-t").textContent =
+      S.attivo ? "Picco: +" + Math.max(0, S.picco - cfg.base).toFixed(0) + " dB sopra il silenzio" : "";
+    const ri = pannello.querySelector("#p16b-reg-info");
+    if (ri) ri.textContent = "Registro iniziato " + new Date(R.inizio).toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" })
+      + ": " + R.campioni.length + " campioni, " + R.blocchi.length + " blocchi.";
     pannello.querySelector("#p16b-modo").textContent = S.modo === "spento" ? "spento (soglie di discussione)" : S.modo;
   }
 
@@ -565,6 +650,16 @@
     toast = document.createElement("div"); toast.className = "p16b-toast"; toast.textContent = msg;
     document.body.appendChild(toast);
     const t = toast; setTimeout(() => t.remove(), 4000);
+  }
+  function nomeFile(est) {
+    const d = new Date(R.inizio), z = n => String(n).padStart(2, "0");
+    return `rumore-${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}-${z(d.getHours())}${z(d.getMinutes())}.${est}`;
+  }
+  function scarica(nome, testo, tipo) {
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([testo], { type: tipo }));
+    a.download = nome; document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
   }
   function montaSimulatore() {
     const d = document.createElement("div"); d.className = "p16b-sim";
@@ -589,5 +684,6 @@
     attiva, spegni, apriTaratura, blocca: () => { S.ultimoBlocco = -1e9; blocca(); }, sblocca: () => sblocca(true),
     stato: () => ({ attivo: S.attivo, modo: S.modo, bloccato: S.bloccato, livelloSopraBase: +(S.livello - cfg.base).toFixed(1), blocchi: S.blocchi }),
     impostazioni: () => structuredClone(cfg),
+    registro: () => structuredClone(R),
   };
 })();
