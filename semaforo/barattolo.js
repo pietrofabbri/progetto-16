@@ -38,16 +38,16 @@
 
   // ------------------------------------------------------------ impostazioni
   // Le soglie sono in dB SOPRA il livello di silenzio misurato (base).
-  const PREDEFINITE = {
+  const PREDEFINITE = {      // uguali a semaforo/impostazioni.json (D-61): valgono anche aprendo da file://
     base: -60,              // dBFS, misurato in taratura
-    discussione: -45,       // dBFS, misurato in taratura (facoltativo)
+    discussione: -35,       // dBFS, misurato in taratura (facoltativo)
     soglie: {
-      silenzio:    { giallo: 5,  blocco: 9 },
-      discussione: { giallo: 18, blocco: 22 },
+      silenzio:    { giallo: 20, blocco: 26 },
+      discussione: { giallo: 34, blocco: 39 },
     },
-    quiete: 4,              // sotto questa soglia (dB sopra base) i brillantini si posano
+    quiete: 9,              // sotto questa soglia (dB sopra base) i brillantini si posano
     tenuta: 3,              // s sopra la soglia di blocco prima di bloccare
-    perSbloccare: 5,        // s di quiete continua per sbloccare
+    perSbloccare: 10,       // s di quiete continua per sbloccare
     pausa: 60,              // s minimi tra due blocchi
     suono: true,
     volume: 0.5,
