@@ -44,7 +44,7 @@
   testata.append(fase, timer);
   const barra = document.createElement("div"); barra.className = "p16m-barra";
   const aiuto = document.createElement("div"); aiuto.className = "p16m-aiuto"; aiuto.hidden = true;
-  aiuto.innerHTML = "<kbd>→</kbd> avanti · <kbd>←</kbd> indietro · <kbd>spazio</kbd> timer · <kbd>R</kbd> riavvia timer<br><kbd>B</kbd> barattolo · <kbd>T</kbd> taratura · <kbd>U</kbd> sblocca · <kbd>F</kbd> <kbd>F</kbd> fine lezione · <kbd>H</kbd> aiuto";
+  aiuto.innerHTML = "<kbd>→</kbd> avanti · <kbd>←</kbd> indietro · <kbd>spazio</kbd> timer · <kbd>R</kbd> riavvia timer<br><kbd>B</kbd> barattolo · <kbd>T</kbd> taratura · <kbd>U</kbd> sblocca · <kbd>G</kbd> appello e gruppi · <kbd>F</kbd> <kbd>F</kbd> fine lezione · <kbd>H</kbd> aiuto";
   document.body.append(testata, barra, aiuto);
 
   // ---------- timer
@@ -157,6 +157,7 @@
   document.addEventListener("keydown", e => {
     if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
     if (document.querySelector(".p16b-pann")) return;           // pannello del barattolo aperto
+    if (document.querySelector(".p16g-pann")) return;           // pannello dei gruppi aperto
     if (document.querySelector(".p16b-velo.on")) return;        // schermo fermo
     const k = e.key;
     const L = logica[idSlide()];

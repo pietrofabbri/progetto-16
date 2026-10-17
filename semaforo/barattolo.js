@@ -327,6 +327,7 @@
 
   function tasti(e) {
     if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+    if (document.querySelector(".p16g-pann")) return;              // pannello dei gruppi aperto
     const k = e.key.toLowerCase();
     if (k === "b") { S.attivo ? spegni() : attiva(); }
     else if (k === "t") { apriTaratura(); }

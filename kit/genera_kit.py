@@ -27,7 +27,7 @@ RUOLI = [
                "Non decidi tu chi ha ragione.",
          icona="bussola"),
     dict(id="cus", nome="Custode dei turni", sotto="e della scatola",
-         testo="Parla solo chi ha il sasso, col timer. "
+         testo="Parla solo chi ha il maccherone, col timer. "
                "5 minuti prima della fine: tutto in scatola.",
          icona="clessidra"),
     dict(id="ver", nome="Verificatore", sotto="",
@@ -41,7 +41,7 @@ RUOLI = [
 ]
 RUOLO_ACCORPATO = dict(
     id="facus", nome="Facilitatore", sotto="+ Custode dei turni e della scatola (gruppi da 3)",
-    testo="Gruppo sul compito, sasso e timer. "
+    testo="Gruppo sul compito, maccherone e timer. "
           "5 minuti prima della fine: tutto in scatola.",
          icona="bussola")
 
@@ -196,7 +196,7 @@ def etichetta(gr):
   <div class="etic-banda"></div>
   <div class="etic-corpo">
     <div class="etic-t">{forma(gr, "11mm")}<span>Gruppo {gr["nome"]}</span></div>
-    <div class="etic-d">Qui dentro: tessere con cordino, sasso della parola, schede del gruppo,
+    <div class="etic-d">Qui dentro: tessere con cordino, maccherone della parola, schede del gruppo,
     fogli individuali. A fine lezione rimetti tutto qui.</div>
   </div>
 </div>'''
