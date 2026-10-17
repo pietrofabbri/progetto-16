@@ -317,10 +317,17 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   function msg(t) { const m = pann && pann.querySelector("#p16g-msg"); if (m) m.textContent = t; }
 
   function aggiungi(num) {
-    // il ritardatario entra nel gruppo più piccolo e fa il secondo verificatore
+    // Il ritardatario entra nel gruppo più piccolo (D-79). In un gruppo da 3 i ruoli tornano quattro:
+    // chi era facilitatore e custode resta facilitatore, il ritardatario fa il custode.
+    // In un gruppo da 4 fa il secondo verificatore; in un gruppo da 2 il verificatore.
     delete appello.stato[num]; scrivi(K.appello, appello);
     let g = proposta.slice().sort((a, b) => a.membri.length - b.membri.length)[0];
-    g.membri.push({ num, ruolo: g.membri.length >= 4 ? "V2" : (g.membri.length === 3 ? "V2" : "V") });
+    if (g.membri.length === 3) {
+      const fc = g.membri.find(m => m.ruolo === "FC"); if (fc) fc.ruolo = "F";
+      g.membri.push({ num, ruolo: "C" });
+    } else g.membri.push({ num, ruolo: g.membri.length >= 4 ? "V2" : "V" });
+    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4 };
+    g.membri.sort((a, b) => ORD[a.ruolo] - ORD[b.ruolo]);
     if (salvatoOggi()) conferma(); else disegna();
   }
   const salvatoOggi = () => storico.lezioni.some(l => l.data === oggiData());
