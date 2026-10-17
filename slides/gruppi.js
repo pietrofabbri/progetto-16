@@ -10,6 +10,11 @@
  *    e, se si può, nemmeno il segretario o il facilitatore; mai due nello stesso gruppo.
  * 4. "Conferma e mostra": salva i gruppi del giorno nello storico e li mostra nella slide.
  *
+ * Storico persistente (D-76): oltre al browser, lo storico (solo numeri, nessun nome) entra nel
+ * file di "Fine lezione"; nella repo privata un'azione di GitHub lo raccoglie in
+ * incontri/gruppi/storico.json, che le slide rileggono all'avvio (window.P16_STORICO_URL) e
+ * uniscono a quello del browser. Così lo storico sopravvive anche se il browser viene ripulito.
+ *
  * Dati: SOLO nel browser del PC d'aula (localStorage) e nelle copie esportate a mano.
  * Nessun nome entra mai in una repo. I nomi sono facoltativi: senza nomi si usano i numeri
  * del registro. Il riepilogo per "Fine lezione" (p16-gruppi-riepilogo) non contiene nomi.
@@ -21,7 +26,9 @@
   const scrivi = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
 
   const P = window.P16_PALETTE;
-  const COLORI = P ? P.gruppi : [];
+  // Ordine in cui si usano i colori: il giallo sempre per ultimo (D-75).
+  const ORDINE = ["rosso", "arancio", "verde", "petrolio", "azzurro", "blu", "viola", "rosa", "giallo"];
+  const COLORI = P ? ORDINE.map(id => P.gruppi.find(g => g.id === id)).filter(Boolean) : [];
   const RUOLI = {
     F: "Facilitatore", C: "Custode", V: "Verificatore", S: "Segretario",
     FC: "Facilitatore e custode", V2: "Secondo verificatore",
@@ -159,6 +166,23 @@
   let appello = leggi(K.appello, null);
   if (!appello || appello.data !== oggiData()) appello = { data: oggiData(), stato: {} };   // stato[num] = "assente" | "esce"
   let proposta = null;
+  let daFile = 0;
+
+  function unisci(altro) {
+    // unione per data; a parità di data vale quella del browser
+    if (!altro || !Array.isArray(altro.lezioni)) return 0;
+    const date = new Set(storico.lezioni.map(l => l.data));
+    let nuove = 0;
+    for (const l of altro.lezioni) if (l && l.data && Array.isArray(l.gruppi) && !date.has(l.data)) { storico.lezioni.push(l); nuove++; }
+    storico.lezioni.sort((a, b) => a.data < b.data ? -1 : 1);
+    if (nuove) scrivi(K.storico, storico);
+    return nuove;
+  }
+  if (window.P16_STORICO_URL) {
+    fetch(window.P16_STORICO_URL, { cache: "no-store" }).then(r => r.ok ? r.json() : null)
+      .then(j => { daFile = j && j.lezioni ? j.lezioni.length : 0; unisci(j); if (pann) disegna(); })
+      .catch(() => { /* file:// o file assente: resta lo storico del browser */ });
+  }
 
   const nome = num => (classe.nomi && classe.nomi[num]) ? classe.nomi[num] : "N. " + num;
   const numeri = () => Array.from({ length: classe.iscritti }, (_, i) => i + 1);
@@ -225,7 +249,7 @@
 <div class="p16g-riga">
   <button class="prim" type="button" id="p16g-forma">${proposta ? "Rifai i gruppi" : "Forma i gruppi"}</button>
   ${proposta ? '<button class="prim" type="button" id="p16g-conferma">Conferma e mostra</button>' : ""}
-  <span class="nota" style="margin:0">Lezioni nello storico: ${storico.lezioni.length}${ultimaVolta ? " (ultima: " + ultimaVolta + ")" : ""}</span>
+  <span class="nota" style="margin:0">Lezioni nello storico: ${storico.lezioni.length}${ultimaVolta ? " (ultima: " + ultimaVolta + ")" : ""}${daFile ? "; nel file della repo: " + daFile : ""}</span>
 </div>
 <div class="p16g-msg" id="p16g-msg"></div>
 ${proposta ? `<div class="p16g-gruppi">${proposta.map(g => {
@@ -241,7 +265,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   <div class="p16g-riga">
     <button type="button" id="p16g-salvanomi">Salva classe</button>
     <button type="button" id="p16g-esporta">Scarica copia (classe e storico)</button>
-    <label><button type="button" id="p16g-importa-btn">Carica copia</button><input type="file" id="p16g-importa" accept=".json,application/json" hidden></label>
+    <label><button type="button" id="p16g-importa-btn">Carica copia o file di una lezione</button><input type="file" id="p16g-importa" accept=".json,application/json" hidden></label>
   </div>
   <p class="nota">La copia contiene i nomi: tienila sul PC o su una chiavetta, mai in una repo o online.</p>
 </details>`;
@@ -284,6 +308,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       const f = inp.files[0]; if (!f) return;
       f.text().then(t => {
         const j = JSON.parse(t);
+        if (j && j.storico_gruppi) { const n = unisci(j.storico_gruppi); proposta = null; disegna(); msg("Lezioni aggiunte allo storico: " + n + "."); return; }
         if (!j || j.tipo !== "p16-classe-e-storico") throw new Error("file non riconosciuto");
         classe = j.classe; storico = j.storico; scrivi(K.classe, classe); scrivi(K.storico, storico); proposta = null; disegna(); msg("Copia caricata.");
       }).catch(e => msg("Non riesco a leggere il file: " + e.message));
@@ -330,5 +355,5 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     }
   });
 
-  window.Gruppi = { apri, chiudi, dimensioni, descrivi, _forma: forma, _statistiche: statistiche };
+  window.Gruppi = { apri, chiudi, dimensioni, descrivi, colori: COLORI, nomiRuoli: RUOLI, _forma: forma, _statistiche: statistiche };
 })();

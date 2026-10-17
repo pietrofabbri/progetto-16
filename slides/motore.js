@@ -133,11 +133,14 @@
   function fineLezione() {
     const ultimo = registro.slide[registro.slide.length - 1]; if (ultimo && ultimo.uscita === undefined) ultimo.uscita = t();
     let gruppi = null;
+    let storicoGruppi = null;
     try { gruppi = JSON.parse(localStorage.getItem("p16-gruppi-riepilogo") || "null"); } catch (e) {}
+    try { storicoGruppi = JSON.parse(localStorage.getItem("p16-storico") || "null"); } catch (e) {}
     const pacchetto = {
       lezione: registro,
       barattolo: window.Barattolo ? { registro: Barattolo.registro(), impostazioni: Barattolo.impostazioni() } : null,
       gruppi: gruppi,
+      storico_gruppi: storicoGruppi,          // solo numeri del registro e ruoli, nessun nome
       nota: "Raccolta automatica del Progetto 16: nessun nome, nessun audio.",
     };
     const d = inizio, z = n => String(n).padStart(2, "0");
