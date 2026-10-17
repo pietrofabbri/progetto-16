@@ -6,7 +6,7 @@ Genera un PDF A4 separato per ogni oggetto, nella cartella kit/pdf/:
   tessere-ruolo.pdf         9 set (uno per gruppo): 4 ruoli + tessera accorpata per i gruppi da 3
   scheda-gruppo.pdf         scheda del gruppo A4
   fogli-prima-dopo.pdf      foglio individuale: PRIMA sul fronte, DOPO sul retro (2 biglietti per A4)
-  etichette-scatole.pdf     etichette delle 9 scatole dei gruppi
+  etichette-buste.pdf       etichette delle 9 buste dei gruppi
 
 Uso:  python3 genera_kit.py
 Richiede: weasyprint. Colori da design/palette.json, font da design/fonts/
@@ -26,9 +26,9 @@ RUOLI = [
          testo="Tieni il gruppo sulla consegna e fai uscire tutte le idee. "
                "Non decidi tu chi ha ragione.",
          icona="bussola"),
-    dict(id="cus", nome="Custode dei turni", sotto="e della scatola",
+    dict(id="cus", nome="Custode dei turni", sotto="e della busta",
          testo="Parla solo chi ha il maccherone, col timer. "
-               "5 minuti prima della fine: tutto in scatola.",
+               "Alla fine: tessere e schede nella busta.",
          icona="clessidra"),
     dict(id="ver", nome="Verificatore", sotto="",
          testo="Chiedi «Come lo sappiamo?». "
@@ -40,9 +40,9 @@ RUOLI = [
          icona="matita"),
 ]
 RUOLO_ACCORPATO = dict(
-    id="facus", nome="Facilitatore", sotto="+ Custode dei turni e della scatola (gruppi da 3)",
+    id="facus", nome="Facilitatore", sotto="+ Custode dei turni e della busta (gruppi da 3)",
     testo="Gruppo sul compito, maccherone e timer. "
-          "5 minuti prima della fine: tutto in scatola.",
+          "Alla fine: tessere e schede nella busta.",
          icona="bussola")
 
 ICONE = {
@@ -135,7 +135,7 @@ def scheda_completa():
 {sezione(2, "PERCHÉ?", "Qual è la ragione principale? Quale elemento sostiene la nostra risposta?", 5)}
 {sezione(3, "CHE COSA CI RESTA DA CAPIRE?", "Quale dubbio rimane? Quale informazione manca, o quale alternativa è possibile?", 5)}
 {dopo}
-<div class="sc-piede">Progetto 16 · Bastano parole chiave · A fine lezione la scheda va nella scatola del gruppo</div>
+<div class="sc-piede">Progetto 16 · Bastano parole chiave · A fine lezione la scheda va nella busta del gruppo</div>
 </section>'''
 
 
@@ -196,8 +196,8 @@ def etichetta(gr):
   <div class="etic-banda"></div>
   <div class="etic-corpo">
     <div class="etic-t">{forma(gr, "11mm")}<span>Gruppo {gr["nome"]}</span></div>
-    <div class="etic-d">Qui dentro: tessere con cordino, maccherone della parola, schede del gruppo,
-    fogli individuali. A fine lezione rimetti tutto qui.</div>
+    <div class="etic-d">Qui dentro: tessere con cordino e schede del gruppo. Maccherone e fogli
+    stanno a parte. Non togliere mai la linguetta dell'adesivo: la busta si riusa.</div>
   </div>
 </div>'''
 
@@ -214,8 +214,8 @@ def istruzioni():
          "Carta normale. Il docente dice quali sezioni compilare."),
         ("fogli-prima-dopo.pdf", "Foglio individuale PRIMA (fronte) e DOPO (retro)", "1 foglio A4 ogni 2 studenti, per ogni raccolta",
          "Stampa fronte-retro, rilegatura sul lato lungo. Poi taglia ogni A4 a metà, sui segni ai bordi: escono 2 biglietti. Margini ampi: un taglio impreciso non toglie nulla. Nessun nome, nessun codice: fronte e retro stanno sullo stesso biglietto."),
-        ("etichette-scatole.pdf", "Etichette delle 9 scatole dei gruppi", "1 copia",
-         "Una piccola scatola per gruppo, con tutto il materiale del gruppo dentro. Carta adesiva o colla."),
+        ("etichette-buste.pdf", "Etichette delle 9 buste dei gruppi", "1 copia",
+         "Una busta con chiusura adesiva per gruppo (tessere e schede). Carta adesiva o colla. La linguetta dell'adesivo non si toglie mai."),
     ]
     tr = "".join(f"<tr><td><b>{b}</b><div class='file'>{a}</div></td><td class='q'>{c}</td><td>{d}</td></tr>"
                  for a, b, c, d in righe_tab)
@@ -227,7 +227,7 @@ def istruzioni():
   <tbody>{tr}</tbody></table>
   <p class="istr-nota">Stampa sempre al 100% (senza "adatta alla pagina"), altrimenti le tessere non
   entrano nei porta-badge. Font: Atkinson Hyperlegible, scelto per la leggibilità anche con DSA.
-  Materiali da procurare a parte: 9 piccole scatole (una per gruppo), 9 sassi della parola, 45 porta-badge A7 con cordino.</p>
+  Materiali da procurare a parte: 9 buste con chiusura adesiva (una per gruppo), 9 maccheroni, 45 porta-badge A7 con cordino.</p>
   <h2 class="istr-h2">I nove gruppi</h2>
   <p class="istr-nota">Colore e simbolo insieme: i gruppi restano distinguibili anche in bianco e nero e per chi
   non distingue bene i colori. Gli stessi colori tornano nelle slide (design/palette.json).</p>
@@ -323,7 +323,7 @@ table.istr{width:100%;border-collapse:collapse;font-size:9.5pt}
 .segno{position:absolute;top:148.5mm;width:6mm;border-top:0.6px solid #9AA3B2}
 .segno.sx{left:0}.segno.dx{right:0}
 
-/* etichette delle scatole: 2 colonne x 5 righe, 95x55 mm */
+/* etichette delle buste: 2 colonne x 5 righe, 95x55 mm */
 .pag-etic{display:grid;grid-template-columns:95mm 95mm;grid-auto-rows:55mm;padding:10mm;
           justify-content:center;align-content:start}
 .etic{border:0.6px dashed #9AA3B2;display:flex;flex-direction:column}
@@ -339,7 +339,7 @@ OGGETTI = [
     ("tessere-ruolo", "Tessere ruolo", fogli_tessere),
     ("scheda-gruppo", "Scheda del gruppo", scheda_completa),
     ("fogli-prima-dopo", "Foglio individuale prima e dopo", fogli_individuali),
-    ("etichette-scatole", "Etichette delle scatole dei gruppi", etichette),
+    ("etichette-buste", "Etichette delle buste dei gruppi", etichette),
 ]
 
 

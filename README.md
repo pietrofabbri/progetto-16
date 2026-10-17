@@ -90,7 +90,7 @@ Produce un PDF per ogni oggetto in `kit/pdf/`, senza numeri di pagina:
 | `tessere-ruolo.pdf` | 9 set di tessere ruolo, uno per gruppo (colore e simbolo), 100×70 mm per porta-badge A7 |
 | `scheda-gruppo.pdf` | Scheda del gruppo A4 |
 | `fogli-prima-dopo.pdf` | Foglio individuale: PRIMA sul fronte, DOPO sul retro; 2 biglietti per A4, stampa fronte-retro sul lato lungo |
-| `etichette-scatole.pdf` | Etichette delle 9 piccole scatole dei gruppi |
+| `etichette-buste.pdf` | Etichette delle 9 buste dei gruppi |
 
 ## Palette e gruppi
 
