@@ -26,6 +26,7 @@ jobs:
           mkdir -p _site
           cp index.html _site/
           cp -r design semaforo slides _site/
+          if [ -d incontri ]; then cp -r incontri _site/; fi   # slide degli incontri già svolti (D-81)
           touch _site/.nojekyll
       - name: Aggiorna il branch gh-pages
         run: |
