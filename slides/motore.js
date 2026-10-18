@@ -11,7 +11,7 @@
  *
  * Tasti: freccia destra / pagina giù = avanti; freccia sinistra / pagina su = indietro;
  *   spazio = avvia o ferma il timer; R = riavvia il timer; H = aiuto;
- *   F due volte = "Fine lezione" (scarica il file della lezione); B, T, U = barattolo.
+ *   F due volte = "Fine lezione" (scarica il file della lezione); B, T, U, M, K = barattolo.
  *
  * Logiche speciali di una slide: Motore.registra("id-slide", { entra, esci, avanti, indietro, tasto }).
  * avanti() e indietro() restituiscono true se hanno gestito loro il tasto.
@@ -44,7 +44,7 @@
   testata.append(fase, timer);
   const barra = document.createElement("div"); barra.className = "p16m-barra";
   const aiuto = document.createElement("div"); aiuto.className = "p16m-aiuto"; aiuto.hidden = true;
-  aiuto.innerHTML = "<kbd>→</kbd> avanti · <kbd>←</kbd> indietro · <kbd>spazio</kbd> timer · <kbd>R</kbd> riavvia timer<br><kbd>B</kbd> barattolo · <kbd>T</kbd> taratura · <kbd>U</kbd> sblocca · <kbd>G</kbd> appello e gruppi · <kbd>F</kbd> <kbd>F</kbd> fine lezione · <kbd>H</kbd> aiuto";
+  aiuto.innerHTML = "<kbd>→</kbd> avanti · <kbd>←</kbd> indietro · <kbd>spazio</kbd> timer · <kbd>R</kbd> riavvia timer<br><kbd>B</kbd> barattolo · <kbd>T</kbd> taratura · <kbd>U</kbd> sblocca · <kbd>M</kbd> modalità del barattolo (solo questa slide) · <kbd>K</kbd> blocco sì/no<br><kbd>G</kbd> appello e gruppi · <kbd>F</kbd> <kbd>F</kbd> fine lezione · <kbd>H</kbd> aiuto";
   document.body.append(testata, barra, aiuto);
 
   // ---------- timer

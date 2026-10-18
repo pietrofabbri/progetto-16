@@ -16,6 +16,9 @@
  *   il template chiama Barattolo.modalita(...) a ogni cambio slide.
  *
  * Tasti: B attiva/spegne · T apre la taratura · U (o Esc) sblocca subito.
+ * Interventi a mano (D-85): M cambia la modalità solo per la slide attuale
+ * (dalla slide, silenzio, discussione, spento); K disattiva o riattiva il blocco per tutta
+ * la lezione (il barattolo continua a misurare e a colorarsi, ma non ferma lo schermo).
  * URL ?simula : livello simulato con un cursore (per provare senza microfono).
  *
  * Impostazioni: priorità 1) taratura salvata nel browser; 2) semaforo/impostazioni.json
@@ -83,7 +86,7 @@
   const CHIAVE_REG = "p16-barattolo-registro";
   const nuovoRegistro = () => ({ versione: 1, inizio: new Date().toISOString(),
     nota: "livelli in dB sopra il silenzio misurato; nessun audio registrato",
-    campioni: [], blocchi: [], tarature: [] });
+    campioni: [], blocchi: [], tarature: [], interventi: [] });
   let R = nuovoRegistro();
   try {
     const r = JSON.parse(localStorage.getItem(CHIAVE_REG) || "null");
@@ -106,7 +109,11 @@
     simLivello: -58,
     blocchi: 0,
     picco: -90,
+    modoSlide: "discussione", // modalità chiesta dalla slide
+    forzato: null,            // modalità scelta a mano con M (vale fino al cambio di slide)
+    bloccoOff: false,         // K: blocco disattivato per tutta la lezione
   };
+  try { S.bloccoOff = sessionStorage.getItem("p16-blocco-off") === "1"; } catch (e) {}
   let actx = null, analyser = null, buf = null, stream = null;
 
   // ------------------------------------------------------------ audio in
@@ -332,6 +339,8 @@
     if (k === "b") { S.attivo ? spegni() : attiva(); }
     else if (k === "t") { apriTaratura(); }
     else if ((k === "u" || k === "escape") && S.bloccato) { sblocca(true); }
+    else if (k === "m") { cambiaModoAMano(); }
+    else if (k === "k") { bloccoSiNo(); }
     else return;
     e.preventDefault();
   }
@@ -347,6 +356,25 @@
     S.attivo = false; if (S.bloccato) sblocca(true);
     fermaMicrofono();
     avviso("Barattolo spento. Premi B per riattivarlo.");
+  }
+
+  // ------------------------------------------------------------ interventi a mano (D-85)
+  const GIRO = [null, "silenzio", "discussione", "spento"];
+  function applicaModo() { S.modo = S.forzato || S.modoSlide; S.sopra = 0; }
+  function intervento(cosa) { (R.interventi = R.interventi || []).push({ t: tReg(), cosa }); salvaRegistro(); }
+  function cambiaModoAMano() {
+    S.forzato = GIRO[(GIRO.indexOf(S.forzato) + 1) % GIRO.length];
+    applicaModo(); intervento("modo:" + (S.forzato || "slide"));
+    avviso(S.forzato ? "Barattolo in modalità " + S.forzato + " fino alla prossima slide (M per cambiare)."
+      : "Barattolo: modalità della slide (" + S.modoSlide + ").");
+  }
+  function bloccoSiNo() {
+    S.bloccoOff = !S.bloccoOff; S.sopra = 0;
+    try { sessionStorage.setItem("p16-blocco-off", S.bloccoOff ? "1" : "0"); } catch (e) {}
+    if (S.bloccoOff && S.bloccato) sblocca(true);
+    intervento(S.bloccoOff ? "blocco:off" : "blocco:on");
+    avviso(S.bloccoOff ? "Blocco disattivato: il barattolo misura ma non ferma lo schermo. K per riattivarlo."
+      : "Blocco riattivato.");
   }
 
   // ------------------------------------------------------------ blocco
@@ -390,7 +418,7 @@
     }
 
     const acceso = S.attivo && S.modo !== "spento";
-    if (acceso && !S.bloccato) {
+    if (acceso && !S.bloccato && !S.bloccoOff) {
       const pausaOk = (now - S.ultimoBlocco) / 1000 > cfg.pausa;
       if (S.livello > sogliaDb("blocco") && pausaOk) S.sopra += dt;
       else S.sopra = Math.max(0, S.sopra - dt * 2);
@@ -466,7 +494,7 @@
     ctx.beginPath(); ctx.moveTo(jx + 8, jy + 18); ctx.lineTo(jx + 8, jy + jh * 0.45); ctx.stroke();
 
     etichetta.textContent = !S.attivo ? "clic per attivare"
-      : S.modo === "spento" ? "in pausa" : S.modo;
+      : (S.modo === "spento" ? "in pausa" : S.modo) + (S.forzato ? " (M)" : "") + (S.bloccoOff ? " · no blocco" : "");
     etichetta.style.color = acceso ? col : "#5B6475";
   }
 
@@ -681,9 +709,11 @@
   // ------------------------------------------------------------ API
   window.Barattolo = {
     monta,
-    modalita(m) { if (["silenzio", "discussione", "spento"].includes(m)) { S.modo = m; S.sopra = 0; } return S.modo; },
+    modalita(m) { if (["silenzio", "discussione", "spento"].includes(m)) { S.modoSlide = m; S.forzato = null; applicaModo(); } return S.modo; },
+    forza(m) { S.forzato = ["silenzio", "discussione", "spento"].includes(m) ? m : null; applicaModo(); return S.modo; },
+    bloccoAttivo(v) { if (typeof v === "boolean" && v === S.bloccoOff) bloccoSiNo(); return !S.bloccoOff; },
     attiva, spegni, apriTaratura, blocca: () => { S.ultimoBlocco = -1e9; blocca(); }, sblocca: () => sblocca(true),
-    stato: () => ({ attivo: S.attivo, modo: S.modo, bloccato: S.bloccato, livelloSopraBase: +(S.livello - cfg.base).toFixed(1), blocchi: S.blocchi }),
+    stato: () => ({ attivo: S.attivo, modo: S.modo, forzato: S.forzato, bloccoAttivo: !S.bloccoOff, bloccato: S.bloccato, livelloSopraBase: +(S.livello - cfg.base).toFixed(1), blocchi: S.blocchi }),
     impostazioni: () => structuredClone(cfg),
     registro: () => structuredClone(R),
   };
