@@ -190,6 +190,7 @@ html,body{height:100%;background:var(--p16-carta)}
 .foglio-oggi .carta-a4{aspect-ratio:210/297;max-height:56vh;background:var(--p16-bianco);border-radius:8px;box-shadow:0 8px 30px rgba(13,19,34,.18);padding:6% 8%;display:flex;flex-direction:column;gap:4%;font-size:clamp(14px,1.25vw,22px);margin:0 auto;width:auto;height:56vh}
 .foglio-oggi .carta-a4 i{font-style:normal;color:var(--p16-grigio)}
 .foglio-oggi .carta-a4 b{display:block;border-bottom:2px solid var(--p16-linea);padding-bottom:.3em}
+.carta-a4 .passo{transform:translateX(-30px) scale(.8)}.carta-a4 .passo.visto{transform:none;transition:opacity .3s,transform .5s cubic-bezier(.2,1.6,.4,1)}
 
 /* B o 13: tutti i segni con lo stesso tratto */
 .lampo{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3vh;text-align:center}
@@ -323,7 +324,10 @@ html,body{height:100%;background:var(--p16-carta)}
 .regola-oro small{display:block;font-size:.4em;font-weight:400;opacity:.8;margin-top:1.4vh}
 
 /* disegno */
-.tavolo-giro{position:relative;width:min(44vh,34vw);aspect-ratio:1;margin:auto}
+.esempio-f{background:var(--p16-bianco);border:2px solid var(--p16-inchiostro);border-radius:6px;padding:1vh 1vw;display:flex;flex-direction:column;align-items:center;gap:.4vh;font-size:clamp(15px,1.3vw,24px);font-weight:700;transform:rotate(-3deg)}
+.esempio-f svg{width:clamp(110px,10vw,190px);color:var(--p16-inchiostro)}
+.esempio-f small{font-weight:400;color:var(--p16-grigio);font-size:.75em}
+.tavolo-giro{position:relative;width:min(34vh,26vw);aspect-ratio:1;margin:auto}
 .tavolo-giro .t{position:absolute;inset:28%;border-radius:12px;background:var(--p16-linea)}
 .tavolo-giro .p{position:absolute;width:22%;aspect-ratio:1;border-radius:50%;background:var(--p16-inchiostro);color:var(--p16-bianco);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:clamp(18px,1.6vw,30px)}
 .tavolo-giro .f{position:absolute;width:12%;aspect-ratio:3/4;background:var(--p16-bianco);border:2px solid var(--p16-inchiostro);border-radius:3px;animation:passa 3s ease-in-out infinite}
@@ -357,6 +361,7 @@ html,body{height:100%;background:var(--p16-carta)}
 .illusione svg{max-height:56vh;width:auto;max-width:100%;height:56vh}
 .oblio path.c{stroke-dasharray:1400;stroke-dashoffset:1400;transition:stroke-dashoffset 2.4s ease}
 .oblio.on path.c{stroke-dashoffset:0}
+.si-c{color:var(--p16-calma);font-weight:700}.no-c{color:var(--p16-g-rosso);font-weight:700}
 .num-slide{position:fixed;left:14px;bottom:10px;font-size:14px;color:var(--p16-grigio);opacity:.7}
 </style>
 
@@ -399,14 +404,14 @@ html,body{height:100%;background:var(--p16-carta)}
 
 <section class="slide" data-id="foglio" data-rumore="spento" data-fase="solo">
   <div class="occhiello">Il foglio di oggi</div>
-  <h2>Oggi sul foglio scriviamo per punti</h2>
+  <h2>Un foglio, cinque punti</h2>
   <div class="foglio-oggi">
-    <div class="carta-a4"><i>la data di oggi</i><b>1.</b><b>2.</b><b>3.</b><b>4.</b><b>5.</b></div>
-    <ol class="elenco">
-      <li>Prendi un foglio. In alto, la data.</li>
-      <li>Oggi scriverai più volte: ogni volta ti dico <b>il numero del punto</b>.</li>
-      <li>Niente nome: il foglio resta tuo.</li>
-    </ol>
+    <div class="carta-a4 anima" id="foglio-demo"><i class="passo" id="data-oggi">la data</i><b class="passo">1.</b><b class="passo">2.</b><b class="passo">3.</b><b class="passo">4.</b><b class="passo">5.</b></div>
+    <div class="passi-icone" style="--n:1;gap:2vh">
+      <div class="passo" style="flex-direction:row;text-align:left;gap:1.4vw"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Prendi <b>un foglio bianco</b>. In alto scrivi <b>la data</b>. Niente nome.</span></div>
+      <div class="passo" style="flex-direction:row;text-align:left;gap:1.4vw"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h2M5 11h2M5 16h2M10 6h9M10 11h9M10 16h9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span>Scrivi a sinistra i numeri <b>da 1 a 5</b>, uno sotto l'altro, con spazio in mezzo.</span></div>
+      <div class="passo" style="flex-direction:row;text-align:left;gap:1.4vw"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Quando dico <b>"punto 2"</b>, scrivi accanto al 2. Il foglio resta tuo fino alla fine.</span></div>
+    </div>
   </div>
 </section>
 
@@ -517,7 +522,7 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="passi-icone" style="--n:3">
     <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 7h8M8 10h8M8 13h8" stroke="currentColor" stroke-width="1.6"/><rect x="7" y="15" width="10" height="4" rx="1" fill="currentColor"/></svg><b>Due parti</b>In alto, quello che <b>sanno tutti</b>. In basso, nel riquadro, quello che <b>sai solo tu</b>.</div>
     <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b>Si legge ad alta voce</b>Tutta la carta, <b>anche</b> il riquadro "Solo tu sai". Quante volte vuoi.</div>
-    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="6" fill="var(--p16-bianco)" stroke="var(--p16-blocco)" stroke-width="2"/><path d="M13 13l8 8" stroke="var(--p16-blocco)" stroke-width="2"/></svg><b>Resta in mano tua</b>La carta non si passa e non si fa leggere: si racconta.</div>
+    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="6" fill="var(--p16-bianco)" stroke="var(--p16-blocco)" stroke-width="2"/><path d="M13 13l8 8" stroke="var(--p16-blocco)" stroke-width="2"/></svg><b>Resta in mano tua</b>La carta non si passa e non si fa leggere, nemmeno al verificatore: si racconta.</div>
   </div>
   <p class="consegna passo centrato">Prima da soli, poi nel gruppo, poi tutti insieme.</p>
 </section>
@@ -530,11 +535,11 @@ html,body{height:100%;background:var(--p16-carta)}
     <div class="passo"><i>2</i><b>Una carta a testa</b><span id="carte-ruoli"></span></div>
     <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.4-9.3-9A5.2 5.2 0 0 1 12 6a5.2 5.2 0 0 1 9.3 6C19 16.6 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Con cura</b>Le carte non si piegano e non si scrivono. Alla fine tornano alla cattedra, in ordine.</div>
   </div>
-  <p class="consegna passo centrato">Gruppi da 3: carte 1, 2, 3. La carta 4 resta sulla cattedra.</p>
+  <p class="consegna passo centrato">C'è anche una <b>carta 5</b>: la tiene il segretario, <b>coperta</b>, fino a quando lo dico. Gruppi da 3: carte 1, 2, 3 e 5; la carta 4 resta sulla cattedra.</p>
 </section>
 
-<section class="slide centro" data-id="bici-leggi" data-rumore="silenzio" data-fase="solo" data-timer="180">
-  <div class="occhiello">Da soli · 3 minuti · in silenzio</div>
+<section class="slide centro" data-id="bici-leggi" data-rumore="silenzio" data-fase="solo" data-timer="90">
+  <div class="occhiello">Da soli · un minuto e mezzo · in silenzio</div>
   <h1>Leggi tutta la tua carta.</h1>
   <p class="consegna passo">Con calma, anche due volte. Ancora niente da scrivere.</p>
   <p class="consegna passo">Chiediti: <b>secondo la mia carta, chi ha preso la bici?</b></p>
@@ -566,16 +571,31 @@ html,body{height:100%;background:var(--p16-carta)}
   </div>
 </section>
 
-<section class="slide" data-id="bici-gruppo" data-rumore="discussione" data-fase="gruppo" data-timer="720">
-  <div class="occhiello">Nel gruppo · 12 minuti · con il maccherone</div>
+<section class="slide" data-id="bici-gruppo" data-rumore="discussione" data-fase="gruppo" data-timer="600">
+  <div class="occhiello">Nel gruppo · 10 minuti · con il maccherone</div>
   <h2>Chi ha preso la bici? Mettete insieme quello che sapete.</h2>
   <ul class="rilanci">
-    <li class="passo">Ognuno ha letto ad alta voce <b>tutta</b> la sua carta, anche "Solo tu sai"? Il verificatore controlla.</li>
+    <li class="passo">Ognuno ha letto ad alta voce <b>tutta</b> la sua carta, anche "Solo tu sai"? Il verificatore controlla <b>ascoltando</b>: non legge le carte degli altri.</li>
     <li class="passo">Fate la linea del tempo: dalle 8.45 alle 9.40, <b>che cosa succede, minuto per minuto?</b></li>
     <li class="passo">Il lucchetto non è rotto. <b>Chi poteva avere una chiave?</b></li>
     <li class="passo">Per ogni nome: lo accusa <b>un fatto</b> o <b>un racconto</b>? E chi è scagionato?</li>
     <li class="passo">Siete sicuri che sia stata <b>una persona sola</b>?</li>
   </ul>
+</section>
+
+<section class="slide" data-id="bici-verdetto" data-rumore="discussione" data-fase="gruppo" data-timer="180" data-timer-auto>
+  <div class="occhiello">Nel gruppo · 3 minuti · scrive il segretario</div>
+  <h2>Il verdetto del gruppo: al massimo 5 righe</h2>
+  <div class="foglio-oggi">
+    <div class="carta-a4" style="font-size:clamp(14px,1.2vw,21px);height:40vh"><i>Verdetto del gruppo ...</i><b>Chi: ...</b><b>Come è andata: ...</b><b>L'indizio decisivo: ...</b><b>Che cosa non torna: ...</b></div>
+    <ol class="elenco">
+      <li><b>Chi</b> ha preso la bici: uno o più nomi.</li>
+      <li><b>Come</b> è andata, in breve.</li>
+      <li><b>L'indizio</b> che vi ha convinto.</li>
+      <li>Se c'è, che cosa <b>non torna</b>.</li>
+    </ol>
+  </div>
+  <p class="consegna">Sul retro della scheda del gruppo. Fra poco il segretario lo legge a tutti.</p>
 </section>
 
 <section class="slide" data-id="bici-dopo" data-rumore="silenzio" data-fase="solo" data-timer="150" data-timer-auto>
@@ -584,24 +604,35 @@ html,body{height:100%;background:var(--p16-carta)}
   <ol class="elenco">
     <li>Chi ha preso la bici, secondo te, adesso? <b>Uno o più nomi.</b> Quanto sei sicuro?</li>
     <li>La tua risposta è <b>uguale</b> o <b>cambiata</b>? Che cosa ha contato di più?</li>
-    <li>Il custode raccoglie i biglietti del gruppo e li porta alla cattedra.</li>
+    <li>Poi il custode porta <b>alla cattedra</b> i biglietti e le carte 1, 2, 3, 4. La carta 5 resta al segretario, coperta.</li>
   </ol>
 </section>
 
 <section class="slide" data-id="bici-voti" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Tutti insieme · la risposta di ogni gruppo · il segretario dice i nomi</div>
+  <div class="occhiello">Tutti insieme · un gruppo alla volta · 45 secondi per leggere il verdetto</div>
   <div class="turno-gruppo" id="voti-turno"></div>
   <div class="voti" id="voti"></div>
 </section>
 
-<section class="slide" data-id="bici-plenaria" data-rumore="spento" data-fase="tutti" data-timer="300">
-  <div class="occhiello">Tutti insieme · 5 minuti · per parlare, mano alzata</div>
+<section class="slide" data-id="bici-plenaria" data-rumore="spento" data-fase="tutti" data-timer="120">
+  <div class="occhiello">Tutti insieme · 2 minuti per domanda · per parlare, mano alzata</div>
   <h2>Prima della soluzione, parliamone</h2>
   <ul class="rilanci">
     <li class="passo">I gruppi hanno dato risposte diverse. <b>Quale indizio vi ha convinto?</b></li>
     <li class="passo">Chi ha <b>cambiato idea</b> nel gruppo? Grazie a che cosa?</li>
     <li class="passo">Che cosa <b>non torna</b> ancora?</li>
   </ul>
+</section>
+
+<section class="slide" data-id="bici-dettagli" data-rumore="spento" data-fase="tutti">
+  <div class="occhiello">Tutti insieme · i gruppi mettono insieme i loro pezzi</div>
+  <h2>Ogni gruppo ha un dettaglio in più: la carta 5</h2>
+  <div class="passi-icone" style="--n:3">
+    <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16v.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><b>Il segretario</b>gira la carta 5 del gruppo, rimasta coperta fino a ora.</div>
+    <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/></svg><b>La legge a tutti</b>un gruppo alla volta. Gli altri ascoltano.</div>
+    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2a2 2 0 1 0 4 0V4h6v6h-2a2 2 0 1 0 0 4h2v6h-6v-2a2 2 0 1 0-4 0v2H4v-6h2a2 2 0 1 0 0-4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Insieme</b>Un dettaglio solo non basta. Tre gruppi qualsiasi, sì.</div>
+  </div>
+  <p class="consegna passo centrato">Allora: <b>perché</b> hanno preso la bici? Poi anche la carta 5 torna alla cattedra.</p>
 </section>
 
 <!-- ================= 4. IL DISEGNO CHE PASSA DI MANO ================= -->
@@ -619,7 +650,8 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="occhiello">Esperimento 4 · com'è fatto un giro</div>
   <h2>8 giri. Tutti disegnano, sempre.</h2>
   <div class="spiega">
-    <div class="tavolo-giro" id="tavolo-giro"></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2vh"><div class="tavolo-giro" id="tavolo-giro"></div>
+      <div class="esempio-f passo"><span>un pesce · giro 3</span><svg viewBox="0 0 120 70" aria-hidden="true"><path d="M15 35 C35 10 75 10 92 35 C75 60 35 60 15 35 Z M92 35 L112 18 L112 52 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><circle cx="35" cy="31" r="3" fill="currentColor"/></svg><small>Esempio. Nelle vostre carte non c'è.</small></div></div>
     <ol class="elenco">
       <li class="passo"><b>Guarda</b>, 5 secondi: al primo giro la tua carta, poi il foglietto che ti arriva. Poi lo giri.</li>
       <li class="passo"><b>Disegna</b> a memoria su un foglietto nuovo. In alto: il nome dell'oggetto e il numero del giro.</li>
@@ -637,6 +669,17 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="occhiello">Torniamo all'incidente · da soli</div>
   <h1>Nell'incidente di prima, avete visto dei <span class="vetro">vetri rotti</span>?</h1>
   <p class="consegna"><b>Punto 4</b> del foglio: sì o no.</p>
+</section>
+
+<section class="slide" data-id="auto-raccolta" data-rumore="spento" data-fase="tutti">
+  <div class="occhiello">Torniamo all'incidente · che cosa facciamo adesso</div>
+  <h2>Mettiamo insieme le risposte di tutti</h2>
+  <div class="passi-icone" style="--n:3">
+    <div class="passo"><i>1</i><b>Sul foglio avete già</b>il punto 2, la velocità (dopo la carta-domanda), e il punto 4, sì o no.</div>
+    <div class="passo"><i>2</i><b>Nel gruppo</b>il segretario fa due conti: la somma delle velocità, e quanti hanno detto sì.</div>
+    <div class="passo"><i>3</i><b>Tutti insieme</b>chiamo i gruppi uno alla volta e metto i numeri sullo schermo.</div>
+  </div>
+  <div class="cura passo" style="background:var(--p16-bianco);color:var(--p16-inchiostro);box-shadow:0 4px 18px rgba(13,19,34,.12)"><span><b>Esempio</b> di un gruppo da 4: velocità 40, 55, 30, 60. Somma: <b>185</b>. Due sì e due no: <b>2</b>. Il segretario dirà: "185 e 2".</span></div>
 </section>
 
 <section class="slide" data-id="auto-segretario" data-rumore="discussione" data-fase="gruppo" data-timer="120" data-timer-auto>
@@ -674,7 +717,7 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="occhiello">1 minuto · guida il custode</div>
   <h2>Fine: tutto pronto per la prossima volta</h2>
   <ul class="elenco">
-    <li>Carte del caso, in ordine 1, 2, 3, 4, e carte-disegno: <b>alla cattedra</b>.</li>
+    <li>Il custode controlla: sul tavolo non resta <b>nessuna carta</b>. È tutto alla cattedra?</li>
     <li>Tessere e schede nella busta del gruppo. Non togliete la linguetta dell'adesivo.</li>
     <li>Maccherone e fogli a parte, come all'inizio.</li>
   </ul>
@@ -685,16 +728,18 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="occhiello">Se c'è tempo · i nomi, una settimana dopo</div>
   <h2>Sul retro del foglio: i nomi dei compagni degli altri gruppi che ricordi</h2>
   <p class="consegna">Un minuto. Se ricordi anche l'aggettivo della settimana scorsa, scrivilo accanto.</p>
-  <p class="consegna passo">Alzi la mano chi ne ha scritti più di 5. Più di 10? Più di 15?</p>
+  <p class="consegna passo">Alzi la mano chi ne ha scritti <b>più di 5</b>.</p>
+  <p class="consegna passo">Più di <b>10</b>?</p>
+  <p class="consegna passo">Più di <b>15</b>?</p>
 </section>
 
 <section class="slide" data-id="nomi-oblio" data-rumore="spento" data-fase="tutti">
   <div class="occhiello">Che cosa è successo</div>
-  <h2>Si dimentica in fretta. Ma ricordare aiuta a ricordare.</h2>
+  <h2>Si dimentica soprattutto all'inizio. Ma ricordare aiuta a ricordare.</h2>
   <div class="spiega">
-    <svg class="oblio" id="oblio" viewBox="0 0 520 300" aria-hidden="true"><path d="M50 20V260H500" fill="none" stroke="var(--p16-inchiostro)" stroke-width="3"/><path class="c" d="M50 30 C80 160 140 200 220 215 S420 232 500 236" fill="none" stroke="var(--p16-g-rosso)" stroke-width="6"/><path class="c" d="M50 30 C70 90 110 110 160 112 L170 40 C200 90 240 100 300 104 L310 45 C350 80 420 90 500 92" fill="none" stroke="var(--p16-g-verde)" stroke-width="6"/><text x="275" y="292" font-size="20" text-anchor="middle" fill="var(--p16-grigio)">giorni</text><text x="30" y="150" font-size="20" text-anchor="middle" fill="var(--p16-grigio)" transform="rotate(-90 30 150)">quanto ricordiamo</text></svg>
+    <svg class="oblio" id="oblio" viewBox="0 0 520 300" aria-hidden="true"><path d="M50 20V260H500" fill="none" stroke="var(--p16-inchiostro)" stroke-width="3"/><path class="c" d="M50 30 C80 160 140 200 220 215 S420 232 500 236" fill="none" stroke="var(--p16-g-rosso)" stroke-width="6"/><path class="c" d="M50 30 C70 90 110 110 160 112 L170 40 C200 90 240 100 300 104 L310 45 C350 80 420 90 500 92" fill="none" stroke="var(--p16-g-verde)" stroke-width="6"/><rect x="52" y="22" width="88" height="236" fill="var(--p16-g-giallo)" opacity=".22"/><text x="96" y="16" font-size="17" font-weight="700" text-anchor="middle" fill="var(--p16-inchiostro)">le prime ore</text><text x="275" y="292" font-size="20" text-anchor="middle" fill="var(--p16-grigio)">giorni</text><text x="30" y="150" font-size="20" text-anchor="middle" fill="var(--p16-grigio)" transform="rotate(-90 30 150)">quanto ricordiamo</text></svg>
     <div class="testo">
-      <p class="passo"><b style="color:var(--p16-g-rosso)">Senza ripasso</b>, una buona parte di quello che impariamo se ne va nei primi giorni.</p>
+      <p class="passo"><b style="color:var(--p16-g-rosso)">Se non lo richiamiamo</b>, gran parte di quello che impariamo se ne va <b>subito</b>: nelle prime ore la curva scende più ripida che in tutto il resto.</p>
       <p class="passo"><b style="color:var(--p16-g-verde)">Ogni volta che lo richiamiamo</b>, come avete fatto adesso, il ricordo si rinforza e scende più piano.</p>
     </div>
   </div>
@@ -706,23 +751,22 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="parola-drm" id="drm-parola">Pronti?</div>
 </section>
 
-<section class="slide" data-id="vaso" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Se c'è tempo · una figura, due verità</div>
-  <h2>Un vaso o due volti?</h2>
-  <div class="illusione"><svg id="vaso" viewBox="0 0 400 300" aria-hidden="true"></svg></div>
-</section>
-
-<section class="slide" data-id="muller-lyer" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Se c'è tempo</div>
-  <h2>Quale linea è più lunga: quella di sopra o quella di sotto?</h2>
-  <div class="illusione"><svg id="ml" viewBox="0 0 600 300" aria-hidden="true"></svg></div>
-</section>
-
 <section class="slide" data-id="necker" data-rumore="spento" data-fase="tutti">
   <div class="occhiello">Se c'è tempo · guardate il quadrato colorato</div>
   <h2>Il quadrato colorato è davanti o dietro?</h2>
   <div class="illusione"><svg id="necker" viewBox="0 0 320 300" aria-hidden="true"></svg></div>
-  <p class="consegna passo centrato">Tutte e due. Il disegno non cambia: cambia l'ipotesi che il cervello sceglie. E ogni tanto cambia idea da solo.</p>
+  <p class="consegna passo centrato">Tutte e due. Il disegno non cambia: cambia l'ipotesi che il cervello sceglie.</p>
+</section>
+
+<section class="slide" data-id="necker-spiega" data-rumore="spento" data-fase="tutti">
+  <div class="occhiello">Che cosa è successo</div>
+  <h2>Due ipotesi buone, e il cervello ne tiene una sola alla volta</h2>
+  <div class="riquadri">
+    <div class="passo" style="--c:var(--p16-g-azzurro)"><b>Un disegno piatto</b>Sullo schermo ci sono solo linee. La profondità la aggiunge il cervello.</div>
+    <div class="passo" style="--c:var(--p16-g-arancio)"><b>Due soluzioni</b>Le linee vanno bene per due cubi diversi. Il cervello non le vede insieme: ne sceglie una.</div>
+    <div class="passo" style="--c:var(--p16-g-verde)"><b>Poi si stanca</b>I neuroni che sostengono una versione si affaticano, e dopo qualche secondo vince l'altra. Si chiama percezione bistabile.</div>
+  </div>
+  <p class="fonte">Per chi vuole approfondire: L. A. Necker (1832); D. A. Leopold e N. K. Logothetis (1999), sulla percezione bistabile.</p>
 </section>
 
 <script>
@@ -2212,6 +2256,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   const col = id => (P.gruppi.find(g => g.id === id) || {}).hex;
   const chips = lista => '<div class="chips">' + lista.map(p => C.chip(p.g)).join("") + "</div>";
 
+  if ($("data-oggi")) $("data-oggi").textContent = new Date().toLocaleDateString("it-IT", { day: "numeric", month: "long" });
   // ---------- buste chiuse dell'apertura (nessun indizio sugli esperimenti)
   document.querySelectorAll("#buste4 div").forEach(d => d.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 100 75" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0L50 42L100 0" fill="none" stroke="var(--p16-carta)" stroke-width="2.5" opacity=".7"/></svg>'));
 
@@ -2234,7 +2279,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   const svgT = (w, corpo, cls) => `<svg ${cls ? 'class="' + cls + '"' : ""} viewBox="0 0 ${w} 100" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="${TRATTO}" stroke-linejoin="round">${corpo}</g></svg>`;
   const segno = (ch, cls) => svgT(70, G[ch], cls);
   // numeri e segno ambiguo: asta a sinistra e cifra molto vicina, con le stesse misure
-  const numero = c => svgT(84, '<path d="M12 6V94"/><g transform="translate(30 0)">' + G[c] + "</g>");
+  const numero = c => svgT(78, '<path d="M12 6V94"/><g transform="translate(25 0)">' + G[c] + "</g>");
   const ambiguo = () => numero("3");
   let metaA = C.presenti.filter(p => C.meta(p.g) === "A"), metaB = C.presenti.filter(p => C.meta(p.g) === "B");
   const unSolo = metaB.length === 0;                                  // un solo gruppo: si divide per ruoli
@@ -2376,7 +2421,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   });
   const rilanci = s => setTimeout(() => { const v = [...s.querySelectorAll(".rilanci .visto")]; v.forEach((li, k) => li.classList.toggle("vecchio", k < v.length - 1)); s.querySelectorAll(".rilanci li:not(.visto)").forEach(li => li.classList.remove("vecchio")); }, 0);
   Motore.registra("bici-gruppo", { avanti(s) { rilanci(s); Motore.evento("rilancio"); return false; }, indietro(s) { rilanci(s); return false; } });
-  Motore.registra("bici-plenaria", { avanti(s) { rilanci(s); return false; }, indietro(s) { rilanci(s); return false; } });
+  Motore.registra("bici-plenaria", { avanti(s) { const nuovo = s.querySelectorAll(".rilanci li:not(.visto)").length > 0; rilanci(s); if (nuovo) Motore.timer.imposta(120, true); return false; }, indietro(s) { rilanci(s); return false; } });
 
   // ---------- la risposta di ogni gruppo: tasti 1-6 accendono o spengono un nome; → gruppo dopo
   {
@@ -2386,7 +2431,8 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     function disegna() {
       box.innerHTML = ORDINE_SOSP.map((s, n) => `<div class="${(risposte[k] || []).includes(s) ? "scelto" : ""}" style="--c:${AVATAR[s].c}">${avatar(s)}<b>${n + 1}. ${AVATAR[s].nome}</b><div class="pila">${C.presenti.map((p, j) => (j <= k && risposte[j].includes(s)) ? C.chip(p.g) : "").join("")}</div></div>`).join("");
       const g = C.presenti[k];
-      turno.innerHTML = g ? `Gruppo ${C.chip(g.g)}: chi ha preso la bici? Anche più di un nome.` : "Tutti i gruppi hanno risposto.";
+      turno.innerHTML = g ? `Gruppo ${C.chip(g.g)}: il segretario legge il verdetto.` : "Tutti i gruppi hanno letto il verdetto.";
+      Motore.timer.imposta(g ? 45 : 0, false);
     }
     Motore.registra("bici-voti", {
       entra() { disegna(); },
@@ -2560,22 +2606,6 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
         return stato === 1;
       },
     });
-  }
-  {
-    const v = $("vaso");
-    const prof = "M300 0 C262 2 250 40 252 62 C254 78 240 86 236 100 C246 104 252 108 250 116 C246 122 252 128 250 134 C244 140 252 146 252 152 C254 166 262 174 262 190 C262 220 250 260 240 300 L400 300 L400 0 Z";
-    v.innerHTML = `<rect class="sfondo" x="0" y="0" width="400" height="300" fill="var(--p16-inchiostro)"/><path class="figura" d="${prof}" fill="var(--p16-carta)"/><path class="figura" d="${prof}" transform="translate(400 0) scale(-1 1)" fill="var(--p16-carta)"/>`;
-    let t = null;
-    Motore.registra("vaso", {
-      entra() { let k = 0; clearInterval(t); t = setInterval(() => { k = 1 - k; v.querySelector(".sfondo").setAttribute("fill", k ? "var(--p16-carta)" : "var(--p16-inchiostro)"); v.querySelectorAll(".figura").forEach(f => f.setAttribute("fill", k ? "var(--p16-inchiostro)" : "var(--p16-carta)")); }, 3000); },
-      esci() { clearInterval(t); },
-    });
-  }
-  {
-    const s = $("ml"), y1 = 90, y2 = 220, x1 = 170, x2 = 430, a = 34;
-    const freccia = (y, fuori) => fuori ? `M${x1} ${y}l${-a} ${-a}M${x1} ${y}l${-a} ${a}M${x2} ${y}l${a} ${-a}M${x2} ${y}l${a} ${a}` : `M${x1} ${y}l${a} ${-a}M${x1} ${y}l${a} ${a}M${x2} ${y}l${-a} ${-a}M${x2} ${y}l${-a} ${a}`;
-    s.innerHTML = `<g stroke="var(--p16-inchiostro)" stroke-width="8" stroke-linecap="round" fill="none"><path d="M${x1} ${y1}H${x2}"/><path d="${freccia(y1, false)}"/><path d="M${x1} ${y2}H${x2}"/><path d="${freccia(y2, true)}"/></g><g id="ml-guide" stroke="var(--p16-g-rosso)" stroke-width="4" stroke-dasharray="10 8" opacity="0" style="transition:opacity .8s"><path d="M${x1} 30V280M${x2} 30V280"/></g>`;
-    Motore.registra("muller-lyer", { entra() { s.querySelector("#ml-guide").setAttribute("opacity", "0"); }, avanti() { const g = s.querySelector("#ml-guide"); if (g.getAttribute("opacity") === "1") return false; g.setAttribute("opacity", "1"); return true; } });
   }
   {
     const s = $("necker"), d = 70;
