@@ -191,7 +191,7 @@
 
   // ------------------------------------------------------------ interfaccia
   const css = `
-.p16g-pann{position:fixed;inset:0;z-index:1000;background:var(--p16-carta,#F5F6F8);color:var(--p16-inchiostro,#1B2130);overflow:auto;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;padding:24px max(16px,3vw) 40px}
+.p16g-pann{position:fixed;inset:0;z-index:9600;background:var(--p16-carta,#F5F6F8);color:var(--p16-inchiostro,#1B2130);overflow:auto;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;padding:24px max(16px,3vw) 40px}
 .p16g-pann h2{margin:0 0 4px;font-size:28px}
 .p16g-pann .nota{color:var(--p16-grigio,#5B6475);font-size:15px;margin:0 0 14px;max-width:70ch}
 .p16g-riga{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
@@ -343,7 +343,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       data, presenti: presenti().length, escono_prima: uscite().length,
       gruppi: proposta.map(g => ({ id: g.id, n: g.membri.length, ruoli: g.membri.map(m => m.ruolo) })),
     });
-    try { sessionStorage.setItem("p16-vai", "gruppi"); } catch (e) {}
+    try { sessionStorage.setItem("p16-vai", window.P16_DOPO_GRUPPI || "gruppi"); } catch (e) {}   // le slide possono scegliere dove ripartire
     location.reload();                              // le slide rileggono i gruppi del giorno
   }
 

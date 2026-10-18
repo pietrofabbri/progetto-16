@@ -27,8 +27,8 @@ RUOLI = [
                "Non decidi tu chi ha ragione.",
          icona="bussola"),
     dict(id="cus", nome="Custode dei turni", sotto="e della busta",
-         testo="Parla solo chi ha il maccherone, col timer. "
-               "Alla fine: tessere e schede nella busta.",
+         testo="Maccherone e clessidra: un minuto a testa. "
+               "Alla fine: tessere e schede in busta.",
          icona="clessidra"),
     dict(id="ver", nome="Verificatore", sotto="",
          testo="Chiedi «Come lo sappiamo?». "
@@ -41,8 +41,8 @@ RUOLI = [
 ]
 RUOLO_ACCORPATO = dict(
     id="facus", nome="Facilitatore", sotto="+ Custode dei turni e della busta (gruppi da 3)",
-    testo="Gruppo sul compito, maccherone e timer. "
-          "Alla fine: tessere e schede nella busta.",
+    testo="Gruppo sul compito, maccherone e clessidra. "
+          "Alla fine: tessere e schede in busta.",
          icona="bussola")
 
 ICONE = {
@@ -196,7 +196,7 @@ def etichetta(gr):
   <div class="etic-banda"></div>
   <div class="etic-corpo">
     <div class="etic-t">{forma(gr, "11mm")}<span>Gruppo {gr["nome"]}</span></div>
-    <div class="etic-d">Qui dentro: tessere con cordino e schede del gruppo. Maccherone e fogli
+    <div class="etic-d">Qui dentro: tessere con cordino, schede del gruppo e clessidra da un minuto. Maccherone e fogli
     stanno a parte. Non togliere mai la linguetta dell'adesivo: la busta si riusa.</div>
   </div>
 </div>'''
@@ -227,7 +227,7 @@ def istruzioni():
   <tbody>{tr}</tbody></table>
   <p class="istr-nota">Stampa sempre al 100% (senza "adatta alla pagina"), altrimenti le tessere non
   entrano nei porta-badge. Font: Atkinson Hyperlegible, scelto per la leggibilità anche con DSA.
-  Materiali da procurare a parte: 9 buste con chiusura adesiva (una per gruppo), 9 maccheroni, 45 porta-badge A7 con cordino.</p>
+  Materiali da procurare a parte: 9 buste con chiusura adesiva (una per gruppo), 9 clessidre da un minuto, 9 maccheroni, 45 porta-badge A7 con cordino.</p>
   <h2 class="istr-h2">I nove gruppi</h2>
   <p class="istr-nota">Colore e simbolo insieme: i gruppi restano distinguibili anche in bianco e nero e per chi
   non distingue bene i colori. Gli stessi colori tornano nelle slide (design/palette.json).</p>
