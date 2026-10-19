@@ -28,7 +28,8 @@
     V: '<circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M14.5 14.5 L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
     S: '<path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z M14 6 L18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   };
-  const PIANTA_PRED = { colonne: 3, righe: 3, pos: { rosso: [0, 0], arancio: [1, 0], verde: [2, 0], petrolio: [0, 1], azzurro: [1, 1], blu: [2, 1], viola: [0, 2], rosa: [1, 2], giallo: [2, 2] } };
+  // Aula vera (D-91): 4 isole davanti (vicino alla lavagna) e 3 dietro, centrate. Rosa e giallo servirebbero solo oltre 28 presenti.
+  const PIANTA_PRED = { colonne: 4, righe: 2, pos: { rosso: [0, 0], arancio: [1, 0], verde: [2, 0], petrolio: [3, 0], azzurro: [0.5, 1], blu: [1.5, 1], viola: [2.5, 1], rosa: [3.5, 1], giallo: [-0.5, 1] } };
 
   function avvia(opz) {
     opz = opz || {};

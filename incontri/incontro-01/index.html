@@ -440,18 +440,18 @@ table.conta input:focus{outline:3px solid var(--p16-g-azzurro);border-color:tran
 /* pianta dell'aula */
 .pianta{position:relative;flex:1;min-height:0;border:4px solid var(--p16-inchiostro);border-radius:10px;background:var(--p16-bianco);margin-top:.5vh}
 .lavagna{position:absolute;left:30%;right:30%;top:-4px;height:18px;background:var(--p16-inchiostro);color:var(--p16-bianco);font-size:16px;text-align:center;line-height:18px;border-radius:0 0 6px 6px;letter-spacing:.1em;text-transform:uppercase}
-.isola-p{position:absolute;transform:translate(-50%,-50%) scale(.6);opacity:0;transition:opacity .5s,transform .6s cubic-bezier(.2,1.6,.4,1);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;width:var(--w)}
+.isola-p{position:absolute;transform:translate(-50%,-50%) scale(.6);opacity:0;transition:opacity .5s,transform .6s cubic-bezier(.2,1.6,.4,1);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:5px;width:var(--w)}
 .isola-p .lato{display:flex;flex-direction:column;gap:clamp(14px,3vh,34px)}
 .isola-p .lato.sx .nome{justify-content:flex-end}
 .isola-p.on{opacity:1;transform:translate(-50%,-50%)}
 .isola-p .fila{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%}
-.isola-p .nome{display:flex;align-items:center;gap:6px;font-size:clamp(15px,1.2vw,24px);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .4s}
+.isola-p .nome{display:flex;align-items:center;gap:4px;font-size:clamp(13px,1.02vw,22px);letter-spacing:-.01em;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .4s}
 .isola-p .nome.on{opacity:1;transform:none}
 .isola-p .fila .nome:nth-child(2){justify-content:flex-end}
-.isola-p .nome svg{width:1.1em;height:1.1em;flex:none;color:var(--p16-inchiostro)}
-.banchi{position:relative;display:grid;grid-template-rows:1fr 1fr;gap:3px;width:clamp(60px,5.2vw,100px);height:clamp(90px,15vh,170px);border-radius:6px;padding:3px;background:var(--g)}
+.isola-p .nome svg{width:.95em;height:.95em;flex:none;color:var(--p16-inchiostro)}
+.banchi{position:relative;display:grid;grid-template-rows:1fr 1fr;gap:3px;width:clamp(46px,3.9vw,84px);height:clamp(90px,15vh,170px);border-radius:6px;padding:3px;background:var(--g)}
 .banchi i{border:2px solid rgba(255,255,255,.55);border-radius:4px}
-.banchi .etg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--p16-bianco);font-weight:700;font-size:clamp(15px,1.25vw,24px);z-index:1;text-align:center}
+.banchi .etg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--p16-bianco);font-weight:700;font-size:clamp(11px,.95vw,20px);z-index:1;text-align:center}
 .banchi .etg svg{width:1.2em;height:1.2em;fill:var(--p16-bianco)}
 .centrato{text-align:center;margin-left:auto;margin-right:auto}
 /* respiro */
@@ -2151,7 +2151,7 @@ window.P16_PALETTE = {
 
   // ------------------------------------------------------------ stato
   const oggiData = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
-  let classe = leggi(K.classe, { iscritti: 30, nomi: {} });
+  let classe = leggi(K.classe, { iscritti: 25, nomi: {} });   // iscritti del corso 2026/27 (D-91); i nomi si incollano nel pannello, mai in una repo
   let storico = leggi(K.storico, { lezioni: [] });
   let appello = leggi(K.appello, null);
   if (!appello || appello.data !== oggiData()) appello = { data: oggiData(), stato: {} };   // stato[num] = "assente" | "esce"
@@ -2758,7 +2758,8 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   }
 
   // ---------- pianta dell'aula: posizione fissa di ogni isola (colonna, riga). Da adattare all'aula vera.
-  const PIANTA = { colonne: 3, righe: 3, pos: { rosso: [0, 0], arancio: [1, 0], verde: [2, 0], petrolio: [0, 1], azzurro: [1, 1], blu: [2, 1], viola: [0, 2], rosa: [1, 2], giallo: [2, 2] } };
+  // Aula vera (19/10, D-91): rettangolo con il lato lungo orizzontale, 4 isole davanti e 3 dietro (al massimo 7 gruppi).
+  const PIANTA = window.P16_PIANTA || { colonne: 4, righe: 2, pos: { rosso: [0, 0], arancio: [1, 0], verde: [2, 0], petrolio: [3, 0], azzurro: [0.5, 1], blu: [1.5, 1], viola: [2.5, 1], rosa: [3.5, 1], giallo: [-0.5, 1] } };
   const SIGLA_RUOLO = n => /^Facilitatore e/.test(n) ? "F" : /^Facilitatore/.test(n) ? "F" : /^Custode/.test(n) ? "C" : /erificatore/.test(n) ? "V" : "S";
   const ICONE_RUOLO = {F: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 5 L15 12 L12 19 L9 12 Z" fill="currentColor"/>', C: '<path d="M6 3 H18 M6 21 H18 M7 3 C7 9 17 9 17 12 C17 15 7 15 7 21 M17 3 C17 9 7 9 7 12 C7 15 17 15 17 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>', V: '<circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M14.5 14.5 L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>', S: '<path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z M14 6 L18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'};
   {
@@ -2778,7 +2779,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
         const [c, r] = PIANTA.pos[el.dataset.g] || [0, 0];
         el.style.left = (W * (c + 0.5) / PIANTA.colonne) + "px";
         el.style.top = (18 + (H - 18) * (r + 0.5) / PIANTA.righe) + "px";
-        el.style.setProperty("--w", (W / PIANTA.colonne - 16) + "px");
+        el.style.setProperty("--w", (W / PIANTA.colonne - 6) + "px");
       });
     }
     let tt = [];

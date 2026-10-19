@@ -161,7 +161,7 @@
 
   // ------------------------------------------------------------ stato
   const oggiData = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
-  let classe = leggi(K.classe, { iscritti: 30, nomi: {} });
+  let classe = leggi(K.classe, { iscritti: 25, nomi: {} });   // iscritti del corso 2026/27 (D-91); i nomi si incollano nel pannello, mai in una repo
   let storico = leggi(K.storico, { lezioni: [] });
   let appello = leggi(K.appello, null);
   if (!appello || appello.data !== oggiData()) appello = { data: oggiData(), stato: {} };   // stato[num] = "assente" | "esce"

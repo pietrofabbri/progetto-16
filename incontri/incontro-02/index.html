@@ -131,16 +131,16 @@ h2{font-size:clamp(28px,3.4vw,60px);line-height:1.08;margin:0;max-width:18em;tex
 /* pianta dell'aula */
 .pianta{position:relative;flex:1;min-height:0;border:4px solid var(--p16-inchiostro);border-radius:10px;background:var(--p16-bianco);margin-top:.5vh}
 .lavagna{position:absolute;left:30%;right:30%;top:-4px;height:18px;background:var(--p16-inchiostro);color:var(--p16-bianco);font-size:16px;text-align:center;line-height:18px;border-radius:0 0 6px 6px;letter-spacing:.1em;text-transform:uppercase}
-.isola-p{position:absolute;transform:translate(-50%,-50%) scale(.6);opacity:0;transition:opacity .5s,transform .6s cubic-bezier(.2,1.6,.4,1);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;width:var(--w)}
+.isola-p{position:absolute;transform:translate(-50%,-50%) scale(.6);opacity:0;transition:opacity .5s,transform .6s cubic-bezier(.2,1.6,.4,1);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:5px;width:var(--w)}
 .isola-p .lato{display:flex;flex-direction:column;gap:clamp(14px,3vh,34px)}
 .isola-p .lato.sx .nome{justify-content:flex-end}
 .isola-p.on{opacity:1;transform:translate(-50%,-50%)}
-.isola-p .nome{display:flex;align-items:center;gap:6px;font-size:clamp(15px,1.2vw,24px);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .4s}
+.isola-p .nome{display:flex;align-items:center;gap:4px;font-size:clamp(13px,1.02vw,22px);letter-spacing:-.01em;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .4s}
 .isola-p .nome.on{opacity:1;transform:none}
-.isola-p .nome svg{width:1.1em;height:1.1em;flex:none;color:var(--p16-inchiostro)}
-.banchi{position:relative;display:grid;grid-template-rows:1fr 1fr;gap:3px;width:clamp(60px,5.2vw,100px);height:clamp(90px,15vh,170px);border-radius:6px;padding:3px;background:var(--g)}
+.isola-p .nome svg{width:.95em;height:.95em;flex:none;color:var(--p16-inchiostro)}
+.banchi{position:relative;display:grid;grid-template-rows:1fr 1fr;gap:3px;width:clamp(46px,3.9vw,84px);height:clamp(90px,15vh,170px);border-radius:6px;padding:3px;background:var(--g)}
 .banchi i{border:2px solid rgba(255,255,255,.55);border-radius:4px}
-.banchi .etg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--p16-bianco);font-weight:700;font-size:clamp(15px,1.25vw,24px);z-index:1;text-align:center}
+.banchi .etg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--p16-bianco);font-weight:700;font-size:clamp(11px,.95vw,20px);z-index:1;text-align:center}
 .banchi .etg svg{width:1.2em;height:1.2em;fill:var(--p16-bianco)}
 
 /* riquadri che compaiono con un salto */
@@ -1949,7 +1949,7 @@ window.P16_PALETTE = {
 
   // ------------------------------------------------------------ stato
   const oggiData = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
-  let classe = leggi(K.classe, { iscritti: 30, nomi: {} });
+  let classe = leggi(K.classe, { iscritti: 25, nomi: {} });   // iscritti del corso 2026/27 (D-91); i nomi si incollano nel pannello, mai in una repo
   let storico = leggi(K.storico, { lezioni: [] });
   let appello = leggi(K.appello, null);
   if (!appello || appello.data !== oggiData()) appello = { data: oggiData(), stato: {} };   // stato[num] = "assente" | "esce"
@@ -2185,7 +2185,8 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     V: '<circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M14.5 14.5 L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
     S: '<path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z M14 6 L18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   };
-  const PIANTA_PRED = { colonne: 3, righe: 3, pos: { rosso: [0, 0], arancio: [1, 0], verde: [2, 0], petrolio: [0, 1], azzurro: [1, 1], blu: [2, 1], viola: [0, 2], rosa: [1, 2], giallo: [2, 2] } };
+  // Aula vera (D-91): 4 isole davanti (vicino alla lavagna) e 3 dietro, centrate. Rosa e giallo servirebbero solo oltre 28 presenti.
+  const PIANTA_PRED = { colonne: 4, righe: 2, pos: { rosso: [0, 0], arancio: [1, 0], verde: [2, 0], petrolio: [3, 0], azzurro: [0.5, 1], blu: [1.5, 1], viola: [2.5, 1], rosa: [3.5, 1], giallo: [-0.5, 1] } };
 
   function avvia(opz) {
     opz = opz || {};
@@ -2393,11 +2394,11 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
 
   // ---------- i sei sospettati
   const AVATAR = {
-    davide: { nome: "Davide", c: col("arancio"), cosa: "barista in un bar della piazza",
+    matteo: { nome: "Matteo", c: col("arancio"), cosa: "barista in un bar della piazza",
       acc: '<path d="M34 70h32v34H34z" fill="var(--p16-inchiostro)" opacity=".9"/><path d="M70 66h12v10c0 4-3 6-6 6h-6" fill="none" stroke="var(--p16-inchiostro)" stroke-width="3"/>' },
     elena: { nome: "Elena", c: col("viola"), cosa: "lavora in libreria con Marta",
       acc: '<path d="M28 26c4-12 40-12 44 0v20c-4-14-40-14-44 0z" fill="var(--p16-inchiostro)"/><rect x="58" y="80" width="22" height="16" rx="2" fill="var(--p16-bianco)"/><path d="M69 80v16" stroke="var(--p16-inchiostro)" stroke-width="2"/>' },
-    giulia: { nome: "Giulia", c: col("rosa"), cosa: "lavora in una gelateria lì vicino",
+    chiara: { nome: "Chiara", c: col("rosa"), cosa: "lavora in una gelateria lì vicino",
       acc: '<path d="M30 24c4-10 36-10 40 0v14c-6-8-34-8-40 0z" fill="var(--p16-inchiostro)"/><path d="M72 98 64 76h16z" fill="#E8C9A8" stroke="var(--p16-inchiostro)" stroke-width="2"/><circle cx="72" cy="72" r="8" fill="var(--p16-bianco)"/>' },
     tommaso: { nome: "Tommaso", c: col("verde"), cosa: "fa le consegne con un furgoncino",
       acc: '<path d="M30 28a20 18 0 0 1 40 0z" fill="var(--p16-inchiostro)"/><path d="M68 26h12" stroke="var(--p16-inchiostro)" stroke-width="5" stroke-linecap="round"/><rect x="56" y="76" width="26" height="22" rx="3" fill="var(--p16-inchiostro)"/>' },
@@ -2406,7 +2407,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     sergio: { nome: "Sergio", c: col("petrolio"), cosa: "il postino della zona",
       acc: '<path d="M32 22h36l-2 8H34z" fill="var(--p16-inchiostro)"/><path d="M30 64l40 40" stroke="var(--p16-inchiostro)" stroke-width="4"/><rect x="58" y="86" width="22" height="18" rx="3" fill="var(--p16-inchiostro)"/>' },
   };
-  const ORDINE_SOSP = ["davide", "elena", "giulia", "tommaso", "franco", "sergio"];
+  const ORDINE_SOSP = ["matteo", "elena", "chiara", "tommaso", "franco", "sergio"];
   const avatar = k => { const a = AVATAR[k]; return `<svg class="av" viewBox="0 0 100 110" aria-hidden="true"><circle cx="50" cy="36" r="20" fill="#E8C9A8"/><path d="M14 110c0-26 16-44 36-44s36 18 36 44z" fill="${a.c}"/>${a.acc}</svg>`; };
   const scheda = (k, cls) => `<div class="${cls || ""}" data-s="${k}" style="--c:${AVATAR[k].c}">${avatar(k)}<b>${AVATAR[k].nome}</b><span>${AVATAR[k].cosa}</span><span class="timbro"></span></div>`;
   if ($("sosp")) $("sosp").innerHTML = ORDINE_SOSP.map(k => scheda(k, "passo")).join("");
