@@ -378,6 +378,56 @@ html,body{height:100%;background:var(--p16-carta)}
 .oblio.on path.c{stroke-dashoffset:0}
 .si-c{color:var(--p16-calma);font-weight:700}.no-c{color:var(--p16-g-rosso);font-weight:700}
 .num-slide{position:fixed;left:14px;bottom:10px;font-size:14px;color:var(--p16-grigio);opacity:.7}
+
+/* ===== ondate, ultim'ora, lenti, messaggeri (D-97) ===== */
+.ondata-velo{position:fixed;inset:0;z-index:50;background:var(--p16-notte);color:var(--p16-carta);display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;opacity:0}
+.ondata-velo.on{animation:ondata-vela 2.2s ease forwards}
+@keyframes ondata-vela{0%{opacity:0}12%,72%{opacity:1}100%{opacity:0}}
+.ondata-velo b{font-size:clamp(70px,11vw,220px);line-height:1;letter-spacing:.04em;transform:scale(.4);opacity:0}
+.ondata-velo.on b{animation:p16-boom .7s .15s cubic-bezier(.2,1.6,.4,1) forwards}
+.ondata-velo span{font-size:clamp(22px,2.4vw,46px);margin-top:2vh;opacity:0}
+.ondata-velo.on span{animation:p16-pop .5s .6s forwards}
+.ondata-velo svg{position:absolute;left:0;bottom:0;width:200%;height:42vh}
+.ondata-velo.on svg{animation:ondata-scorre 2.2s linear forwards}
+@keyframes ondata-scorre{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.ultimora{display:flex;align-items:center;gap:1.4vw}
+.ultimora .bollino{flex:none;background:var(--p16-blocco);color:var(--p16-bianco);font-weight:700;font-size:clamp(28px,3vw,58px);padding:.2em .6em;border-radius:10px;letter-spacing:.06em;animation:lampeggia 1s steps(2,start) infinite}
+@keyframes lampeggia{to{visibility:hidden}}
+.ultimora .bollino{animation:pulsa-b 1.1s ease-in-out infinite}
+@keyframes pulsa-b{50%{transform:scale(1.08);box-shadow:0 0 30px 6px rgba(217,72,43,.7)}}
+.ultimora h2{margin:0}
+.notizie{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6vh 1.4vw}
+.notizie>div{background:var(--p16-bianco);color:var(--p16-inchiostro);border-radius:14px;padding:1.4vh 1.2vw;font-size:clamp(19px,1.85vw,36px);line-height:1.3;border-left:14px solid var(--c);box-shadow:0 8px 26px rgba(0,0,0,.35)}
+.notizie>div small{display:block;font-size:.72em;color:var(--p16-grigio);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.4vh}
+.notizie>div.passo{transform:scale(1.8) rotate(-6deg);opacity:0;transition:transform .45s cubic-bezier(.2,1.6,.4,1),opacity .2s}
+.notizie>div.passo.visto{transform:none;opacity:1}
+.flash{position:fixed;inset:0;background:var(--p16-bianco);pointer-events:none;opacity:0;z-index:40}
+.flash.on{animation:flash .45s ease-out}
+@keyframes flash{0%{opacity:.85}100%{opacity:0}}
+.ticker{position:absolute;left:0;right:0;bottom:0;background:var(--p16-blocco);color:var(--p16-bianco);font-weight:700;font-size:clamp(15px,1.3vw,24px);white-space:nowrap;overflow:hidden;padding:.6vh 0}
+.ticker span{display:inline-block;padding-left:100%;animation:ticker 26s linear infinite}
+@keyframes ticker{to{transform:translateX(-100%)}}
+.lente{overflow:hidden}
+.lente-sfondo{position:absolute;right:3vw;bottom:3vh;width:46vh;height:46vh;border-radius:50%;overflow:hidden;opacity:.18;pointer-events:none}
+.lente-sfondo::before{content:"";position:absolute;inset:0;border-radius:50%;border:3vh dashed var(--p16-g-giallo);box-sizing:border-box;animation:lente-gira 30s linear infinite}
+.lente-sfondo::after{content:"";position:absolute;inset:6vh;border-radius:50%;border:1.4vh solid var(--p16-g-azzurro)}
+@keyframes lente-gira{to{transform:rotate(360deg)}}
+.lente-domanda{font-size:clamp(30px,3.3vw,64px);line-height:1.15;max-width:24em;min-height:2.3em}
+.lente-domanda .cursore{display:inline-block;width:.08em;height:1em;background:var(--p16-g-giallo);margin-left:.06em;vertical-align:-.1em;animation:lampeggia .8s steps(2,start) infinite}
+.interpretazioni{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.6vh 1.4vw}
+.interpretazioni>div{position:relative;background:#1B2130;border:3px solid var(--c);border-radius:16px;padding:1.6vh 1.2vw 1.6vh 4.2vw;font-size:clamp(18px,1.7vw,32px);line-height:1.3}
+.interpretazioni>div i{position:absolute;left:1vw;top:1.2vh;font-style:normal;font-weight:700;font-size:1.6em;color:var(--c)}
+.interpretazioni>div.passo{transform:rotateX(90deg);opacity:0;transition:transform .6s cubic-bezier(.2,1.4,.4,1),opacity .3s}
+.interpretazioni>div.passo.visto{transform:none;opacity:1}
+.messaggeri{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:2vw;flex:1;min-height:0;align-items:stretch}
+.messaggeri .elenco{font-size:clamp(20px,2vw,38px)}
+.anello{position:relative;min-height:0}
+.anello svg.frecce{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.anello svg.frecce path{fill:none;stroke:var(--p16-inchiostro);stroke-width:4;stroke-dasharray:14 10;animation:formiche 1.2s linear infinite}
+@keyframes formiche{to{stroke-dashoffset:-24}}
+.anello .chip{position:absolute;transform:translate(-50%,-50%);font-size:clamp(18px,1.6vw,30px)}
+.anello .msg{position:absolute;transform:translate(-50%,-50%);width:clamp(28px,2.6vw,50px);height:auto;animation:messaggero 3s ease-in-out infinite}
+@keyframes messaggero{0%{offset-distance:0%}100%{offset-distance:100%}}
 </style>
 
 
@@ -539,7 +589,7 @@ html,body{height:100%;background:var(--p16-carta)}
     <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b>Si legge ad alta voce</b>Tutta la carta, <b>anche</b> il riquadro "Solo tu sai". Quante volte vuoi.</div>
     <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="6" fill="var(--p16-bianco)" stroke="var(--p16-blocco)" stroke-width="2"/><path d="M13 13l8 8" stroke="var(--p16-blocco)" stroke-width="2"/></svg><b>Resta in mano tua</b>La carta non si passa e non si fa leggere, nemmeno al verificatore: si racconta.</div>
   </div>
-  <p class="consegna passo centrato">Prima da soli, poi nel gruppo, poi tutti insieme.</p>
+  <p class="consegna passo centrato">Gli indizi arrivano a <b>ondate</b>: le vostre carte, le notizie dell'ultima ora, il dettaglio del gruppo. Dopo ogni ondata, ci confrontiamo.</p>
 </section>
 
 <section class="slide" data-id="bici-materiale" data-rumore="spento" data-fase="tutti">
@@ -586,17 +636,72 @@ html,body{height:100%;background:var(--p16-carta)}
   </div>
 </section>
 
-<section class="slide" data-id="bici-gruppo" data-rumore="discussione" data-fase="gruppo" data-timer="600"
+<section class="slide" data-id="bici-gruppo" data-rumore="discussione" data-fase="gruppo" data-timer="300" data-ondata="1" data-ondata-testo="Le vostre carte"
   data-ruoli="F:Dà la parola a turno, con il maccherone. Se c'è silenzio: «Che cosa non ti torna?»|C:Guarda il tempo. A ogni nuova domanda: «Passiamo avanti».|V:A ogni accusa chiede: «Come lo sai? È scritto su una carta?»|S:Scrive orari e nomi, in colonna, sul foglio del gruppo.">
-  <div class="occhiello">Nel gruppo · 10 minuti · cinque domande, una alla volta</div>
-  <h2>Chi ha preso la bici? Mettete insieme quello che sapete.</h2>
+  <div class="occhiello">Ondata 1 · nel gruppo · 5 minuti · tre domande</div>
+  <h2>Chi ha preso la bici? Mettete insieme le vostre carte.</h2>
   <ul class="rilanci">
     <li class="passo" data-dopo="0" data-guida="F">Giro delle carte: ognuno legge <b>tutta</b> la sua carta, anche "Solo tu sai". Gli altri ascoltano.</li>
     <li class="passo" data-dopo="120" data-guida="S">La linea del tempo: dalle 8.45 alle 9.40, <b>che cosa succede, minuto per minuto?</b></li>
-    <li class="passo" data-dopo="270" data-guida="V">Il lucchetto non è rotto. <b>Chi poteva avere una chiave?</b> Come lo sappiamo?</li>
-    <li class="passo" data-dopo="390" data-guida="V">Per ogni nome: lo accusa <b>un fatto</b> o <b>un racconto</b>? Chi è scagionato, e da che cosa?</li>
-    <li class="passo" data-dopo="510" data-guida="F">Siete sicuri che sia stata <b>una persona sola</b>? A turno, ognuno dice i suoi nomi.</li>
+    <li class="passo" data-dopo="210" data-guida="V">Il lucchetto non è rotto: <b>chi poteva avere una chiave?</b> Per ogni nome: lo accusa un fatto o un racconto?</li>
   </ul>
+</section>
+
+<section class="slide" data-id="bici-flash1" data-rumore="spento" data-fase="tutti">
+  <div class="occhiello">Tutti insieme · un gruppo alla volta · 15 secondi</div>
+  <div class="turno-gruppo" id="flash1-turno"></div>
+  <div class="voti" id="flash1"></div>
+</section>
+
+<section class="slide scena lente" data-id="lente-1" data-rumore="spento" data-fase="tutti">
+  <div class="lente-sfondo" aria-hidden="true"></div>
+  <div class="occhiello">Lente · una domanda aperta</div>
+  <h2 class="lente-domanda">Gruppi diversi, nomi diversi. Allora qualcuno sbaglia?</h2>
+  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>Sì: la bici l'ha presa qualcuno. La risposta giusta è una sola.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>Non per forza: ogni gruppo ha messo insieme pezzi diversi.</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Forse sbagliamo tutti: nessuno ha ancora tutti i pezzi.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>Forse abbiamo ragione tutti, ognuno su un pezzo.</div></div>
+  <p class="consegna passo centrato">Non c'è una risposta giusta. Quale ti convince di più? Tienila a mente: fra poco arrivano notizie nuove.</p>
+</section>
+
+<section class="slide scena" data-id="bici-ultimora" data-rumore="spento" data-fase="tutti" data-ondata="2" data-ondata-testo="Notizie dell'ultima ora">
+  <div class="ultimora"><span class="bollino">ULTIM'ORA</span><h2>Bici gialla: arrivano nuove voci</h2></div>
+  <div class="notizie">
+    <div class="passo" style="--c:var(--p16-g-azzurro)"><small>Un ragazzo che passava in bici in via Mazzini</small>«Alle 9.15 uno vestito di scuro armeggiava con una bici gialla. Sembrava che la stesse forzando. Io andavo veloce.»</div>
+    <div class="passo" style="--c:var(--p16-g-verde)"><small>Un vigile</small>«Alle 9.19 un furgoncino bianco è ripartito dalla fine del Listone. Dal vetro dietro si vedeva qualcosa di giallo.»</div>
+    <div class="passo" style="--c:var(--p16-g-viola)"><small>L'amica di Marta, alle 9.25</small>«Alla finestra di Franco c'era qualcuno. Guardava giù, verso la rastrelliera, e rideva.»</div>
+    <div class="passo" style="--c:var(--p16-g-giallo)"><small>Una foto del lucchetto, alle 9.40</small>Il lucchetto è aperto, appeso alla rastrelliera. Qualcuno ci ha legato intorno un nastrino giallo.</div>
+  </div>
+  <div class="ticker" aria-hidden="true"><span>FERRARA · PIAZZA TRENTO E TRIESTE · SPARITA UNA BICI GIALLA DAVANTI ALLA LIBRERIA · IL LUCCHETTO NON È ROTTO · NUOVE TESTIMONIANZE · LE INDAGINI CONTINUANO · </span></div>
+</section>
+
+<section class="slide" data-id="bici-gruppo2" data-rumore="discussione" data-fase="gruppo" data-timer="180"
+  data-ruoli="F:Fa parlare prima chi ha parlato meno.|C:Guarda il tempo: 3 minuti.|V:Per ogni notizia chiede: «È un fatto o un'impressione?»|S:Aggiunge le notizie nuove alla linea del tempo.">
+  <div class="occhiello">Ondata 2 · nel gruppo · 3 minuti · due domande</div>
+  <h2>Le notizie nuove cambiano qualcosa?</h2>
+  <ul class="rilanci">
+    <li class="passo" data-dopo="0" data-guida="F">Qualcuno <b>cambia idea</b>? Qualcuno ne è <b>ancora più sicuro</b>? Perché?</li>
+    <li class="passo" data-dopo="90" data-guida="V">Per ogni notizia: chi l'ha vista, <b>da dove</b>, e quanto bene? È un fatto o un'impressione?</li>
+  </ul>
+</section>
+
+<section class="slide scena lente" data-id="lente-2" data-rumore="spento" data-fase="tutti" data-timer="120">
+  <div class="lente-sfondo" aria-hidden="true"></div>
+  <div class="occhiello">Lente · una domanda aperta</div>
+  <h2 class="lente-domanda">La signora: «apriva il lucchetto con calma, con una chiave». Il ragazzo in bici: «sembrava che la forzasse». Chi ha ragione?</h2>
+  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>La signora: era seduta, ferma, vicina.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>Il ragazzo: ha visto un gesto strano e l'ha detto.</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Tutti e due: hanno visto la stessa scena da posti diversi.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>Nessuno dei due: ognuno ci ha messo qualcosa di suo.</div></div>
+  <p class="consegna passo centrato">Per parlare, mano alzata. C'è un'altra interpretazione possibile?</p>
+</section>
+
+<section class="slide" data-id="bici-messaggeri" data-rumore="discussione" data-fase="gruppo" data-timer="150" data-ondata="3" data-ondata-testo="Il dettaglio del gruppo"
+  data-ruoli="F:Fa ascoltare il messaggero che arriva.|C:È il messaggero: racconta il vostro dettaglio al gruppo dopo.|V:Controlla che il messaggero abbia capito bene, prima che parta.|S:Gira la carta 5 e la legge al gruppo.">
+  <div class="occhiello">Ondata 3 · la carta 5 · 2 minuti e mezzo</div>
+  <h2>Ogni gruppo ha un dettaglio. E lo regala al gruppo dopo.</h2>
+  <div class="messaggeri">
+    <ol class="elenco">
+      <li class="passo">Il <b>segretario</b> gira la carta 5 e la legge al gruppo.</li>
+      <li class="passo">Il <b>custode</b> va al gruppo dopo (in senso orario) e racconta il dettaglio <b>a voce</b>, senza la carta. Poi torna.</li>
+      <li class="passo">Ora avete <b>due dettagli</b>: il vostro e quello arrivato.</li>
+    </ol>
+    <div class="anello" id="anello"></div>
+  </div>
 </section>
 
 <section class="slide" data-id="bici-verdetto" data-rumore="discussione" data-fase="gruppo" data-timer="180" data-timer-auto
@@ -604,10 +709,10 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="occhiello">Nel gruppo · 3 minuti · scrive il segretario</div>
   <h2>Il verdetto del gruppo: al massimo 5 righe</h2>
   <div class="foglio-oggi">
-    <div class="carta-a4" style="font-size:clamp(14px,1.2vw,21px);height:40vh"><i>Verdetto del gruppo ...</i><b>Chi: ...</b><b>Come è andata: ...</b><b>L'indizio decisivo: ...</b><b>Che cosa non torna: ...</b></div>
+    <div class="carta-a4" style="font-size:clamp(14px,1.2vw,21px);height:40vh"><i>Verdetto del gruppo ...</i><b>Chi: ...</b><b>Come è andata: ...</b><b>Perché: ...</b><b>L'indizio decisivo: ...</b><b>Che cosa non torna: ...</b></div>
     <ol class="elenco">
       <li><b>Chi</b> ha preso la bici: uno o più nomi.</li>
-      <li><b>Come</b> è andata, in breve.</li>
+      <li><b>Come</b> è andata, in breve. E <b>perché</b>.</li>
       <li><b>L'indizio</b> che vi ha convinto.</li>
       <li>Se c'è, che cosa <b>non torna</b>.</li>
     </ol>
@@ -625,31 +730,12 @@ html,body{height:100%;background:var(--p16-carta)}
   </ol>
 </section>
 
+
+
 <section class="slide" data-id="bici-voti" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Tutti insieme · un gruppo alla volta · 30 secondi per leggere il verdetto</div>
+  <div class="occhiello">Tutti insieme · il verdetto, un gruppo alla volta · 20 secondi</div>
   <div class="turno-gruppo" id="voti-turno"></div>
   <div class="voti" id="voti"></div>
-</section>
-
-<section class="slide" data-id="bici-plenaria" data-rumore="spento" data-fase="tutti" data-timer="90">
-  <div class="occhiello">Tutti insieme · un minuto e mezzo per domanda · per parlare, mano alzata</div>
-  <h2>Prima della soluzione, parliamone</h2>
-  <ul class="rilanci">
-    <li class="passo">I gruppi hanno dato risposte diverse. <b>Quale indizio vi ha convinto?</b></li>
-    <li class="passo">Chi ha <b>cambiato idea</b> nel gruppo? Grazie a che cosa?</li>
-    <li class="passo">Che cosa <b>non torna</b> ancora?</li>
-  </ul>
-</section>
-
-<section class="slide" data-id="bici-dettagli" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Tutti insieme · i gruppi mettono insieme i loro pezzi</div>
-  <h2>Ogni gruppo ha un dettaglio in più: la carta 5</h2>
-  <div class="passi-icone" style="--n:3">
-    <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 8v5M12 16v.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><b>Il segretario</b>gira la carta 5 del gruppo, rimasta coperta fino a ora.</div>
-    <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/></svg><b>La legge a tutti</b>un gruppo alla volta. Gli altri ascoltano.</div>
-    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2a2 2 0 1 0 4 0V4h6v6h-2a2 2 0 1 0 0 4h2v6h-6v-2a2 2 0 1 0-4 0v2H4v-6h2a2 2 0 1 0 0-4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Insieme</b>Un dettaglio solo non basta. Tre gruppi qualsiasi, sì.</div>
-  </div>
-  <p class="consegna passo centrato">Allora: <b>perché</b> hanno preso la bici? Poi anche la carta 5 torna alla cattedra.</p>
 </section>
 
 <!-- ================= 2. L'INCIDENTE (seconda parte) ================= -->
@@ -682,6 +768,14 @@ html,body{height:100%;background:var(--p16-carta)}
 </section>
 
 <!-- ================= CHIUSURA ================= -->
+<section class="slide scena lente" data-id="lente-fine" data-rumore="spento" data-fase="tutti">
+  <div class="lente-sfondo" aria-hidden="true"></div>
+  <div class="occhiello">Lente · una domanda aperta</div>
+  <h2 class="lente-domanda">Quattro versioni, tutte vere. Allora la verità non esiste?</h2>
+  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>Esiste: chi ha preso la bici è un fatto, e lo abbiamo trovato.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>Esistono i fatti, ma il significato cambia: furto o regalo?</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Ognuno ha la sua verità, e vale quanto quella degli altri.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>La verità si costruisce insieme, mettendo in fila i pezzi.</div></div>
+  <p class="consegna passo centrato">Nessuna è la risposta giusta. Quale ti convince oggi? Ce lo richiederemo nei prossimi incontri.</p>
+</section>
+
 <section class="slide" data-id="tesi" data-rumore="spento" data-fase="tutti">
   <div class="occhiello">Che cosa abbiamo visto oggi</div>
   <div class="riquadri tesi2" style="--col:3">
@@ -2549,27 +2643,28 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       const prossima = s.querySelector(".rilanci li.passo:not(.visto)");
       if (prossima && durata - resto >= +prossima.dataset.dopo) { Motore.avanti(); if (+prossima.dataset.dopo > 0) Motore.campanella(); }
     };
-    Motore.registra("bici-gruppo", {
+    ["bici-gruppo", "bici-gruppo2"].forEach(id => Motore.registra(id, {
       entra(s) { clearInterval(giro); giro = setInterval(() => aggiorna(s), 500); },
       esci() { clearInterval(giro); giro = null; },
       avanti(s) { rilanci(s); Motore.evento("rilancio"); return false; },
       indietro(s) { rilanci(s); return false; },
-    });
+    }));
   }
-  Motore.registra("bici-plenaria", { avanti(s) { const nuovo = s.querySelectorAll(".rilanci li:not(.visto)").length > 0; rilanci(s); if (nuovo) Motore.timer.imposta(90, true); return false; }, indietro(s) { rilanci(s); return false; } });
 
   // ---------- la risposta di ogni gruppo: tasti 1-6 accendono o spengono un nome; → gruppo dopo
   {
-    const box = $("voti"), turno = $("voti-turno");
+    const creaVoti = (idSlide, idBox, idTurno, sec, frase, evento) => {
+    const box = $(idBox), turno = $(idTurno);
+    if (!box) return;
     let k = 0;
     const risposte = C.presenti.map(() => []);
     function disegna() {
       box.innerHTML = ORDINE_SOSP.map((s, n) => `<div class="${(risposte[k] || []).includes(s) ? "scelto" : ""}" style="--c:${AVATAR[s].c}">${avatar(s)}<b>${n + 1}. ${AVATAR[s].nome}</b><div class="pila">${C.presenti.map((p, j) => (j <= k && risposte[j].includes(s)) ? C.chip(p.g) : "").join("")}</div></div>`).join("");
       const g = C.presenti[k];
-      turno.innerHTML = g ? `Gruppo ${C.chip(g.g)}: il segretario legge il verdetto.` : "Tutti i gruppi hanno letto il verdetto.";
-      Motore.timer.imposta(g ? 30 : 0, false);
+      turno.innerHTML = g ? `Gruppo ${C.chip(g.g)}: ${frase}` : "Tutti i gruppi hanno parlato.";
+      Motore.timer.imposta(g ? sec : 0, false);
     }
-    Motore.registra("bici-voti", {
+    Motore.registra(idSlide, {
       entra() { disegna(); },
       tasto(t) {
         const n = "123456".indexOf(t);
@@ -2581,11 +2676,53 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       avanti() {
         if (k >= C.presenti.length) return false;
         k++; disegna();
-        if (k === C.presenti.length) Motore.evento("bici-risposte-gruppi", { risposte: C.presenti.map((p, j) => ({ gruppo: p.g.id, risposta: risposte[j].slice().sort() })) });
+        if (k === C.presenti.length) Motore.evento(evento, { risposte: C.presenti.map((p, j) => ({ gruppo: p.g.id, risposta: risposte[j].slice().sort() })) });
         return true;
       },
       indietro() { if (k > 0) { k--; disegna(); return true; } return false; },
     });
+    };
+    creaVoti("bici-voti", "voti", "voti-turno", 20, "il segretario legge il verdetto.", "bici-risposte-gruppi");
+    creaVoti("bici-flash1", "flash1", "flash1-turno", 15, "un nome (o più) e un perché, in una frase.", "bici-flash1-gruppi");
+  }
+
+  // ---------- ondate (D-97): velo animato all'ingresso della prima slide di ogni ondata
+  {
+    const velo = document.createElement("div"); velo.className = "ondata-velo"; velo.setAttribute("aria-hidden", "true");
+    velo.innerHTML = '<b></b><span></span><svg viewBox="0 0 2000 300" preserveAspectRatio="none"><path d="M0 160 Q125 60 250 160 T500 160 T750 160 T1000 160 T1250 160 T1500 160 T1750 160 T2000 160 V300 H0Z" fill="var(--p16-g-azzurro)" opacity=".55"/><path d="M0 200 Q125 120 250 200 T500 200 T750 200 T1000 200 T1250 200 T1500 200 T1750 200 T2000 200 V300 H0Z" fill="var(--p16-g-petrolio)"/></svg>';
+    document.body.appendChild(velo);
+    const flash = document.createElement("div"); flash.className = "flash"; document.body.appendChild(flash);
+    const osserva = (sel, fn) => document.querySelectorAll(sel).forEach(sl => {
+      let era = false;
+      new MutationObserver(() => { const ora = sl.classList.contains("attiva"); if (ora && !era) fn(sl); era = ora; }).observe(sl, { attributes: true, attributeFilter: ["class"] });
+    });
+    osserva("section[data-ondata]", sl => {
+      if (sl._vista) return; sl._vista = true;                     // una volta sola: tornando indietro non si ripete
+      velo.querySelector("b").textContent = "ONDATA " + sl.dataset.ondata;
+      velo.querySelector("span").textContent = sl.dataset.ondataTesto || "";
+      velo.classList.remove("on"); void velo.offsetWidth; velo.classList.add("on");
+    });
+    // ultim'ora: lampo bianco a ogni notizia
+    Motore.registra("bici-ultimora", { avanti() { if (document.querySelector('section.attiva .notizie .passo:not(.visto)')) { flash.classList.remove("on"); void flash.offsetWidth; flash.classList.add("on"); } return false; } });
+    // lenti: la domanda si scrive lettera per lettera
+    osserva("section.lente", sl => {
+      const h = sl.querySelector(".lente-domanda"); if (!h) return;
+      const testo = h.dataset.testo || (h.dataset.testo = h.textContent);
+      clearInterval(h._t); let n = 0; h.innerHTML = '<span class="cursore"></span>';
+      h._t = setInterval(() => { n += 2; h.innerHTML = testo.slice(0, n) + '<span class="cursore"></span>'; if (n >= testo.length) { clearInterval(h._t); h.textContent = testo; } }, 28);
+    });
+    // messaggeri: anello dei gruppi presenti, ognuno manda il custode al gruppo dopo
+    const an = $("anello");
+    if (an) {
+      const pres = C.presenti, n = pres.length;
+      if (n < 2) an.innerHTML = '<p class="consegna centrato">Un gruppo solo: il segretario legge la carta 5 a tutti.</p>';
+      else {
+        const pos = pres.map((_, k) => { const a = -Math.PI / 2 + 2 * Math.PI * k / n; return [50 + 40 * Math.cos(a), 50 + 38 * Math.sin(a)]; });
+        const curva = (a, b) => { const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2, dx = mx - 50, dy = my - 50; return `M${a[0]} ${a[1]} Q${mx + dx * .35} ${my + dy * .35} ${b[0]} ${b[1]}`; };
+        an.innerHTML = `<svg class="frecce" viewBox="0 0 100 100" preserveAspectRatio="none">${pos.map((p, k) => `<path vector-effect="non-scaling-stroke" d="${curva(p, pos[(k + 1) % n])}"/>`).join("")}</svg>`
+          + pres.map((p, k) => C.chip(p.g).replace('class="chip"', `class="chip" style="left:${pos[k][0]}%;top:${pos[k][1]}%"`)).join("");
+      }
+    }
   }
 
   // ---------- la soluzione minuto per minuto
