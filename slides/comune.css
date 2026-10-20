@@ -76,3 +76,14 @@
 .legenda-ruoli{display:flex;flex-wrap:wrap;justify-content:center;gap:.6vh 2.4vw;font-size:clamp(16px,1.4vw,28px);font-weight:700;color:var(--p16-inchiostro)}
 .legenda-ruoli span{display:inline-flex;align-items:center;gap:.35em}
 .legenda-ruoli svg{width:1.3em;height:1.3em}
+
+/* pirotecnia d'ingresso per tutte le slide (D-99): occhiello che scorre, titolo che arriva, icone che rimbalzano */
+@keyframes p16-occhiello{from{opacity:0;transform:translateX(-40px);letter-spacing:.4em}to{opacity:1;transform:none}}
+@keyframes p16-titolo{from{opacity:0;transform:translateY(26px) scale(.96);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes p16-sottolinea{from{background-size:0 .14em}to{background-size:100% .14em}}
+@keyframes p16-rimbalzo{0%{transform:scale(.4) rotate(-15deg)}60%{transform:scale(1.15) rotate(4deg)}100%{transform:none}}
+.slide.attiva>.occhiello{animation:p16-occhiello .6s cubic-bezier(.2,1,.3,1) both}
+.slide.attiva>h2:not(.lente-domanda),.slide.attiva>h1:not(.titolone){animation:p16-titolo .7s .1s cubic-bezier(.2,1.2,.4,1) both}
+.slide.attiva>h2:not(.lente-domanda){background-image:linear-gradient(var(--p16-g-giallo),var(--p16-g-giallo));background-repeat:no-repeat;background-position:0 100%;background-size:0 .14em;animation:p16-titolo .7s .1s cubic-bezier(.2,1.2,.4,1) both,p16-sottolinea .8s .7s ease-out forwards;width:fit-content;max-width:100%}
+.passi-icone>div.passo.visto svg{animation:p16-rimbalzo .6s cubic-bezier(.2,1.6,.4,1) both}
+@media (prefers-reduced-motion:reduce){.slide.attiva>.occhiello,.slide.attiva>h2,.slide.attiva>h1,.passi-icone svg{animation:none!important}}
