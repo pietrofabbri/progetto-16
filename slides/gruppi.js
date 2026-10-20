@@ -181,6 +181,15 @@
     if (nuove) scrivi(K.storico, storico);
     return nuove;
   }
+  // Pulizia una tantum (20/10/2026, richiesta di Pietro): le lezioni fatte per prova prima della
+  // prima lezione vera si cancellano dallo storico del browser, una sola volta, e solo prima delle 12.
+  try {
+    if (!localStorage.getItem("p16-pulizia-prove") && new Date() < new Date("2026-10-20T12:00:00+02:00")) {
+      storico = { lezioni: [] }; scrivi(K.storico, storico);
+      localStorage.removeItem(K.oggi); localStorage.removeItem(K.riep);
+      localStorage.setItem("p16-pulizia-prove", "1");
+    } else if (!localStorage.getItem("p16-pulizia-prove")) localStorage.setItem("p16-pulizia-prove", "1");
+  } catch (e) {}
   if (window.P16_STORICO) { daFile = (window.P16_STORICO.lezioni || []).length; unisci(window.P16_STORICO); }
   // nomi della classe dal file della repo privata (D-92): valgono se nel browser non ci sono nomi
   if (window.P16_CLASSE && window.P16_CLASSE.nomi && !Object.keys(classe.nomi || {}).length) {
