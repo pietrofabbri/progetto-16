@@ -1969,6 +1969,18 @@ window.P16_PALETTE = {
     if (nuove) scrivi(K.storico, storico);
     return nuove;
   }
+  // Link con i nomi (D-92): .../incontro-NN/#classe=<base64url di {"iscritti","nomi"}>. Il frammento dopo #
+  // non arriva mai al server: i nomi passano solo dal link (privato, di Pietro) al browser, che li salva
+  // e toglie il frammento dall'indirizzo. Basta aprirlo una volta per ogni browser.
+  try {
+    const m = /^#classe=([A-Za-z0-9_-]+)$/.exec(location.hash);
+    if (m) {
+      const b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+      const j = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(b64), c => c.charCodeAt(0))));
+      if (j && j.nomi) { classe = { iscritti: j.iscritti || classe.iscritti, nomi: j.nomi }; scrivi(K.classe, classe); }
+      history.replaceState(null, "", location.pathname + location.search);
+    }
+  } catch (e) {}
   // Pulizia una tantum (20/10/2026, richiesta di Pietro): le lezioni fatte per prova prima della
   // prima lezione vera si cancellano dallo storico del browser, una sola volta, e solo prima delle 12.
   try {
