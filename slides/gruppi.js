@@ -273,6 +273,8 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   <div class="p16g-riga">
     <button type="button" id="p16g-salvanomi">Salva classe</button>
     <button type="button" id="p16g-esporta">Scarica copia (classe e storico)</button>
+    <button type="button" id="p16g-togli-oggi">Togli dallo storico i gruppi di oggi</button>
+    <button type="button" id="p16g-azzera">Azzera tutto lo storico</button>
     <label><button type="button" id="p16g-importa-btn">Carica copia o file di una lezione</button><input type="file" id="p16g-importa" accept=".json,application/json" hidden></label>
   </div>
   <p class="nota">La copia contiene i nomi: tienila sul PC o su una chiavetta, mai in una repo o online.</p>
@@ -297,6 +299,21 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       const sel = pann.querySelector("#p16g-rit"); if (!sel.value) return;
       aggiungi(+sel.value);
     };
+    // azzeramenti: si chiede una conferma con un secondo clic (niente finestre del browser)
+    const conSecondoClic = (id, testo, fai) => {
+      const b = pann.querySelector(id); let armato = false;
+      b.onclick = () => { if (!armato) { armato = true; b.textContent = "Clicca di nuovo per confermare"; setTimeout(() => { armato = false; b.textContent = testo; }, 4000); return; } fai(); };
+    };
+    conSecondoClic("#p16g-togli-oggi", "Togli dallo storico i gruppi di oggi", () => {
+      storico.lezioni = storico.lezioni.filter(l => l.data !== oggiData()); scrivi(K.storico, storico);
+      try { localStorage.removeItem(K.oggi); localStorage.removeItem(K.riep); } catch (e) {}
+      proposta = null; disegna(); msg("Gruppi di oggi tolti dallo storico.");
+    });
+    conSecondoClic("#p16g-azzera", "Azzera tutto lo storico", () => {
+      storico = { lezioni: [] }; scrivi(K.storico, storico);
+      try { localStorage.removeItem(K.oggi); localStorage.removeItem(K.riep); } catch (e) {}
+      proposta = null; disegna(); msg("Storico azzerato in questo browser.");
+    });
     pann.querySelector("#p16g-salvanomi").onclick = () => {
       const righe = pann.querySelector("#p16g-nomi").value.split("\n").map(s => s.trim());
       let iscr = Math.max(1, Math.min(30, +pann.querySelector("#p16g-iscr").value || 30));
@@ -346,7 +363,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     storico.lezioni.push({ data, gruppi: proposta.map(g => ({ id: g.id, membri: g.membri.map(m => ({ num: m.num, ruolo: m.ruolo })) })) });
     storico.lezioni.sort((a, b) => a.data < b.data ? -1 : 1);
     scrivi(K.storico, storico);
-    scrivi(K.oggi, { data, gruppi: proposta.map(g => ({ id: g.id, n: g.membri.length, membri: g.membri.map(m => ({ nome: nome(m.num), ruolo: RUOLI[m.ruolo] })) })) });
+    scrivi(K.oggi, { data, gruppi: proposta.map(g => ({ id: g.id, n: g.membri.length, membri: g.membri.map(m => ({ num: m.num, nome: nome(m.num), ruolo: RUOLI[m.ruolo] })) })) });   // num: le slide rileggono il nome aggiornato
     scrivi(K.riep, {
       data, presenti: presenti().length, escono_prima: uscite().length,
       gruppi: proposta.map(g => ({ id: g.id, n: g.membri.length, ruoli: g.membri.map(m => m.ruolo) })),
@@ -370,5 +387,5 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     }
   });
 
-  window.Gruppi = { apri, chiudi, dimensioni, descrivi, colori: COLORI, nomiRuoli: RUOLI, _forma: forma, _statistiche: statistiche };
+  window.Gruppi = { apri, chiudi, nome: num => nome(num), dimensioni, descrivi, colori: COLORI, nomiRuoli: RUOLI, _forma: forma, _statistiche: statistiche };
 })();

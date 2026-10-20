@@ -40,7 +40,8 @@
     const veri = !!(oggi && oggi.gruppi && oggi.gruppi.length);
     const presenti = veri ? oggi.gruppi.map(x => ({ g: G.find(c => c.id === x.id), n: x.n }))
       : (window.Gruppi ? Gruppi.colori : G).slice(0, 8).map((g, k) => ({ g, n: k < 6 ? 4 : 3 }));
-    const membri = (veri && oggi.gruppi[0].membri) ? oggi.gruppi.map(x => ({ g: G.find(c => c.id === x.id), m: x.membri }))
+    const nomeVero = m => (m.num && window.Gruppi && Gruppi.nome) ? Gruppi.nome(m.num) : m.nome;   // nomi aggiornati dalla classe
+    const membri = (veri && oggi.gruppi[0].membri) ? oggi.gruppi.map(x => ({ g: G.find(c => c.id === x.id), m: x.membri.map(m => Object.assign({}, m, { nome: nomeVero(m) })) }))
       : presenti.map((p, k) => ({ g: p.g, m: Array.from({ length: p.n }, (_, j) => ({ nome: "Studente " + (k * 4 + j + 1), ruolo: (p.n === 3 ? RUOLI3 : RUOLI4)[j] })) }));
 
     // slide 0: appello e gruppi
