@@ -3,8 +3,11 @@
  * Si usa sul PC d'aula PRIMA di collegare il proiettore: tasto G nelle slide.
  * 1. Appello: un pulsante per ogni numero (o nome). Un clic: assente. Due clic: esce prima.
  *    Tre clic: di nuovo presente.
- * 2. "Forma i gruppi": massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3;
- *    18: 3x4 + 2x3; 19: 4x4 + 1x3; 20: 5x4). Fino a 30 persone, al massimo 9 gruppi.
+ * 2. "Forma i gruppi". Due misure, si sceglie nel pannello (D-93):
+ *    - da 3 (predefinita): massimo numero di gruppi da 3, il resto da 4 (21: 7x3; 22: 6x3 + 1x4;
+ *      23: 5x3 + 2x4). Si formano con chi c'è; i ritardatari entrano nei gruppi da 3, che diventano da 4.
+ *    - da 4: massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3; 20: 5x4).
+ *    Fino a 30 persone, al massimo 9 gruppi.
  * 3. Ruoli sempre coperti. Ognuno cambia ruolo rispetto alla volta prima e capita il meno
  *    possibile con le stesse persone. Chi esce prima non fa il custode (riordino finale)
  *    e, se si può, nemmeno il segretario o il facilitatore; mai due nello stesso gruppo.
@@ -24,7 +27,7 @@
  */
 (function () {
   "use strict";
-  const K = { classe: "p16-classe", storico: "p16-storico", oggi: "p16-gruppi-oggi", riep: "p16-gruppi-riepilogo", appello: "p16-appello" };
+  const K = { misura: "p16-gruppi-misura", classe: "p16-classe", storico: "p16-storico", oggi: "p16-gruppi-oggi", riep: "p16-gruppi-riepilogo", appello: "p16-appello" };
   const leggi = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v == null ? d : v; } catch (e) { return d; } };
   const scrivi = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
 
@@ -39,11 +42,14 @@
   const BASE = { F: ["F"], C: ["C"], V: ["V"], S: ["S"], FC: ["F", "C"], V2: ["V"] };
 
   // ------------------------------------------------------------ dimensioni dei gruppi
-  function dimensioni(n) {
+  const misura = () => leggi(K.misura, 3) === 4 ? 4 : 3;
+  function dimensioni(n, m) {
+    m = m || misura();
     if (n <= 0) return [];
     if (n < 6) return [n];                         // 1-5 presenti: un solo gruppo
-    const tre = (4 - (n % 4)) % 4;                 // quanti gruppi da 3 servono
-    const quattro = (n - 3 * tre) / 4;
+    let tre, quattro;
+    if (m === 3) { quattro = n % 3 === 0 ? 0 : n % 3 === 1 ? 1 : 2; tre = (n - 4 * quattro) / 3; }   // massimo dei gruppi da 3
+    else { tre = (4 - (n % 4)) % 4; quattro = (n - 3 * tre) / 4; }                                  // massimo dei gruppi da 4
     return Array(quattro).fill(4).concat(Array(tre).fill(3));
   }
   function ruoliPer(d) {
@@ -274,6 +280,7 @@
       const et = s === "assente" ? "assente" : s === "esce" ? "esce prima" : "presente";
       return `<button type="button" data-n="${n}" class="${s}" aria-label="${nome(n)}: ${et}"><b>${classe.nomi && classe.nomi[n] ? n + ". " + nome(n) : nome(n)}</b><small>${et}</small></button>`;
     }).join("")}</div>
+<div class="p16g-riga"><label>Misura dei gruppi <select id="p16g-misura"><option value="3"${misura() === 3 ? " selected" : ""}>da 3 (i ritardatari li portano a 4)</option><option value="4"${misura() === 4 ? " selected" : ""}>da 4 (il resto da 3)</option></select></label></div>
 <div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span></div>
 <div class="p16g-riga">
   <button class="prim" type="button" id="p16g-forma">${proposta ? "Rifai i gruppi" : "Forma i gruppi"}</button>
@@ -301,6 +308,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   <p class="nota">La copia contiene i nomi: tienila sul PC o su una chiavetta, mai in una repo o online.</p>
 </details>`;
     pann.querySelector("#p16g-chiudi").onclick = chiudi;
+    pann.querySelector("#p16g-misura").onchange = e => { scrivi(K.misura, +e.target.value); proposta = null; disegna(); };
     pann.querySelector("#p16g-appello").onclick = e => {
       const b = e.target.closest("button[data-n]"); if (!b) return;
       const n = +b.dataset.n, s = appello.stato[n];

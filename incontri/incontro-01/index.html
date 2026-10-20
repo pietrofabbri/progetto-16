@@ -1993,8 +1993,11 @@ window.P16_PALETTE = {
  * Si usa sul PC d'aula PRIMA di collegare il proiettore: tasto G nelle slide.
  * 1. Appello: un pulsante per ogni numero (o nome). Un clic: assente. Due clic: esce prima.
  *    Tre clic: di nuovo presente.
- * 2. "Forma i gruppi": massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3;
- *    18: 3x4 + 2x3; 19: 4x4 + 1x3; 20: 5x4). Fino a 30 persone, al massimo 9 gruppi.
+ * 2. "Forma i gruppi". Due misure, si sceglie nel pannello (D-93):
+ *    - da 3 (predefinita): massimo numero di gruppi da 3, il resto da 4 (21: 7x3; 22: 6x3 + 1x4;
+ *      23: 5x3 + 2x4). Si formano con chi c'è; i ritardatari entrano nei gruppi da 3, che diventano da 4.
+ *    - da 4: massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3; 20: 5x4).
+ *    Fino a 30 persone, al massimo 9 gruppi.
  * 3. Ruoli sempre coperti. Ognuno cambia ruolo rispetto alla volta prima e capita il meno
  *    possibile con le stesse persone. Chi esce prima non fa il custode (riordino finale)
  *    e, se si può, nemmeno il segretario o il facilitatore; mai due nello stesso gruppo.
@@ -2014,7 +2017,7 @@ window.P16_PALETTE = {
  */
 (function () {
   "use strict";
-  const K = { classe: "p16-classe", storico: "p16-storico", oggi: "p16-gruppi-oggi", riep: "p16-gruppi-riepilogo", appello: "p16-appello" };
+  const K = { misura: "p16-gruppi-misura", classe: "p16-classe", storico: "p16-storico", oggi: "p16-gruppi-oggi", riep: "p16-gruppi-riepilogo", appello: "p16-appello" };
   const leggi = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v == null ? d : v; } catch (e) { return d; } };
   const scrivi = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } };
 
@@ -2029,11 +2032,14 @@ window.P16_PALETTE = {
   const BASE = { F: ["F"], C: ["C"], V: ["V"], S: ["S"], FC: ["F", "C"], V2: ["V"] };
 
   // ------------------------------------------------------------ dimensioni dei gruppi
-  function dimensioni(n) {
+  const misura = () => leggi(K.misura, 3) === 4 ? 4 : 3;
+  function dimensioni(n, m) {
+    m = m || misura();
     if (n <= 0) return [];
     if (n < 6) return [n];                         // 1-5 presenti: un solo gruppo
-    const tre = (4 - (n % 4)) % 4;                 // quanti gruppi da 3 servono
-    const quattro = (n - 3 * tre) / 4;
+    let tre, quattro;
+    if (m === 3) { quattro = n % 3 === 0 ? 0 : n % 3 === 1 ? 1 : 2; tre = (n - 4 * quattro) / 3; }   // massimo dei gruppi da 3
+    else { tre = (4 - (n % 4)) % 4; quattro = (n - 3 * tre) / 4; }                                  // massimo dei gruppi da 4
     return Array(quattro).fill(4).concat(Array(tre).fill(3));
   }
   function ruoliPer(d) {
@@ -2264,6 +2270,7 @@ window.P16_PALETTE = {
       const et = s === "assente" ? "assente" : s === "esce" ? "esce prima" : "presente";
       return `<button type="button" data-n="${n}" class="${s}" aria-label="${nome(n)}: ${et}"><b>${classe.nomi && classe.nomi[n] ? n + ". " + nome(n) : nome(n)}</b><small>${et}</small></button>`;
     }).join("")}</div>
+<div class="p16g-riga"><label>Misura dei gruppi <select id="p16g-misura"><option value="3"${misura() === 3 ? " selected" : ""}>da 3 (i ritardatari li portano a 4)</option><option value="4"${misura() === 4 ? " selected" : ""}>da 4 (il resto da 3)</option></select></label></div>
 <div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span></div>
 <div class="p16g-riga">
   <button class="prim" type="button" id="p16g-forma">${proposta ? "Rifai i gruppi" : "Forma i gruppi"}</button>
@@ -2291,6 +2298,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   <p class="nota">La copia contiene i nomi: tienila sul PC o su una chiavetta, mai in una repo o online.</p>
 </details>`;
     pann.querySelector("#p16g-chiudi").onclick = chiudi;
+    pann.querySelector("#p16g-misura").onchange = e => { scrivi(K.misura, +e.target.value); proposta = null; disegna(); };
     pann.querySelector("#p16g-appello").onclick = e => {
       const b = e.target.closest("button[data-n]"); if (!b) return;
       const n = +b.dataset.n, s = appello.stato[n];
@@ -2805,11 +2813,17 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
 
   // ---------- pianta dell'aula: posizione fissa di ogni isola (colonna, riga). Da adattare all'aula vera.
   // Aula vera (19/10, D-91): rettangolo con il lato lungo orizzontale, 4 isole davanti e 3 dietro (al massimo 7 gruppi).
-  const PIANTA = window.P16_PIANTA || { colonne: 4, righe: 2, pos: { rosso: [0, 0], arancio: [1, 0], verde: [2, 0], petrolio: [3, 0], azzurro: [0.5, 1], blu: [1.5, 1], viola: [2.5, 1], rosa: [3.5, 1], giallo: [-0.5, 1] } };
+  // Pianta (D-91, D-93): 4 isole davanti (le prime 4 nell'ordine dei colori), le altre dietro, centrate.
+  // Con 8-9 gruppi la fila dietro ha 4-5 isole e la pianta si allarga a 4-5 colonne.
+  const piantaPer = ids => { const dav = ids.slice(0, 4), die = ids.slice(4), col = Math.max(4, die.length), pos = {};
+    dav.forEach((id, i) => pos[id] = [(col - dav.length) / 2 + i, 0]); die.forEach((id, j) => pos[id] = [(col - die.length) / 2 + j, 1]);
+    return { colonne: col, righe: 2, pos }; };
+  let PIANTA = window.P16_PIANTA;
   const SIGLA_RUOLO = n => /^Facilitatore e/.test(n) ? "F" : /^Facilitatore/.test(n) ? "F" : /^Custode/.test(n) ? "C" : /erificatore/.test(n) ? "V" : "S";
   const ICONE_RUOLO = {F: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 5 L15 12 L12 19 L9 12 Z" fill="currentColor"/>', C: '<path d="M6 3 H18 M6 21 H18 M7 3 C7 9 17 9 17 12 C17 15 7 15 7 21 M17 3 C17 9 7 9 7 12 C7 15 17 15 17 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>', V: '<circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M14.5 14.5 L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>', S: '<path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z M14 6 L18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>'};
   {
     const pianta = document.getElementById("pianta");
+    PIANTA = PIANTA || piantaPer(membri.map(x => x.g.id));
     membri.forEach(x => {
       const el = document.createElement("div"); el.className = "isola-p"; el.dataset.g = x.g.id;
       el.style.setProperty("--g", x.g.hex);

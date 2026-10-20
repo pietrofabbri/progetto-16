@@ -29,7 +29,11 @@
     S: '<path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z M14 6 L18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
   };
   // Aula vera (D-91): 4 isole davanti (vicino alla lavagna) e 3 dietro, centrate. Rosa e giallo servirebbero solo oltre 28 presenti.
-  const PIANTA_PRED = { colonne: 4, righe: 2, pos: { rosso: [0, 0], arancio: [1, 0], verde: [2, 0], petrolio: [3, 0], azzurro: [0.5, 1], blu: [1.5, 1], viola: [2.5, 1], rosa: [3.5, 1], giallo: [-0.5, 1] } };
+  // Pianta (D-91, D-93): 4 isole davanti (le prime 4 nell'ordine dei colori), le altre dietro, centrate.
+  // Con 8-9 gruppi la fila dietro ha 4-5 isole e la pianta si allarga a 4-5 colonne.
+  const piantaPer = ids => { const dav = ids.slice(0, 4), die = ids.slice(4), col = Math.max(4, die.length), pos = {};
+    dav.forEach((id, i) => pos[id] = [(col - dav.length) / 2 + i, 0]); die.forEach((id, j) => pos[id] = [(col - die.length) / 2 + j, 1]);
+    return { colonne: col, righe: 2, pos }; };
 
   function avvia(opz) {
     opz = opz || {};
@@ -53,7 +57,7 @@
     // pianta dell'aula
     const pianta = document.getElementById("pianta");
     if (pianta) {
-      const PI = window.P16_PIANTA || PIANTA_PRED;
+      const PI = window.P16_PIANTA || piantaPer(membri.map(x => x.g.id));
       membri.forEach(x => {
         const el = document.createElement("div"); el.className = "isola-p"; el.dataset.g = x.g.id;
         el.style.setProperty("--g", x.g.hex);
