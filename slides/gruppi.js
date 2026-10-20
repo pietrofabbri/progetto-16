@@ -3,11 +3,15 @@
  * Si usa sul PC d'aula PRIMA di collegare il proiettore: tasto G nelle slide.
  * 1. Appello: un pulsante per ogni numero (o nome). Un clic: assente. Due clic: esce prima.
  *    Tre clic: di nuovo presente.
- * 2. "Forma i gruppi". Due misure, si sceglie nel pannello (D-93):
- *    - da 3 (predefinita): massimo numero di gruppi da 3, il resto da 4 (21: 7x3; 22: 6x3 + 1x4;
- *      23: 5x3 + 2x4). Si formano con chi c'è; i ritardatari entrano nei gruppi da 3, che diventano da 4.
- *    - da 4: massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3; 20: 5x4).
+ * 2. "Forma i gruppi". Due misure, si sceglie nel pannello (D-93, D-95):
+ *    - da 4 (predefinita): massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3;
+ *      20: 5x4; 21: 3x4 + 3x3; 25: 4x4 + 3x3).
+ *    - da 3: massimo numero di gruppi da 3, il resto da 4 (21: 7x3; 22: 6x3 + 1x4).
  *    Fino a 30 persone, al massimo 9 gruppi.
+ *    Ritardatari (D-95): "Aggiungi a un gruppo" li mette in più, SENZA RUOLO, nel gruppo più piccolo;
+ *    i ruoli del gruppo non cambiano.
+ *    Chi esce sempre prima (D-95): "Ricorda chi esce prima" salva nel browser i numeri segnati
+ *    "esce prima"; dalla lezione dopo l'appello parte già con loro segnati così.
  * 3. Ruoli sempre coperti. Ognuno cambia ruolo rispetto alla volta prima e capita il meno
  *    possibile con le stesse persone. Chi esce prima non fa il custode (riordino finale)
  *    e, se si può, nemmeno il segretario o il facilitatore; mai due nello stesso gruppo.
@@ -37,12 +41,12 @@
   const COLORI = P ? ORDINE.map(id => P.gruppi.find(g => g.id === id)).filter(Boolean) : [];
   const RUOLI = {
     F: "Facilitatore", C: "Custode", V: "Verificatore", S: "Segretario",
-    FC: "Facilitatore e custode", V2: "Secondo verificatore",
+    FC: "Facilitatore e custode", V2: "Secondo verificatore", X: "Senza ruolo",
   };
-  const BASE = { F: ["F"], C: ["C"], V: ["V"], S: ["S"], FC: ["F", "C"], V2: ["V"] };
+  const BASE = { F: ["F"], C: ["C"], V: ["V"], S: ["S"], FC: ["F", "C"], V2: ["V"], X: [] };
 
   // ------------------------------------------------------------ dimensioni dei gruppi
-  const misura = () => leggi(K.misura, 3) === 4 ? 4 : 3;
+  const misura = () => leggi(K.misura, 4) === 3 ? 3 : 4;   // D-95: da 4 se possibile, poi da 3
   function dimensioni(n, m) {
     m = m || misura();
     if (n <= 0) return [];
@@ -160,7 +164,7 @@
       const tot = costi.reduce((s, c) => s + c.costo, 0);
       if (!migliore || tot < migliore.tot) migliore = { tot, gruppi, costi };
     }
-    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4 };
+    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4, X: 5 };
     return migliore.gruppi.map((m, i) => ({
       id: COLORI[i] ? COLORI[i].id : "g" + (i + 1),
       membri: m.map((num, j) => ({ num, ruolo: migliore.costi[i].ruoli[j], esce: esceSet.has(num) || undefined }))
@@ -173,7 +177,10 @@
   let classe = leggi(K.classe, { iscritti: 25, nomi: {} });   // iscritti del corso 2026/27 (D-91); i nomi si incollano nel pannello, mai in una repo
   let storico = leggi(K.storico, { lezioni: [] });
   let appello = leggi(K.appello, null);
-  if (!appello || appello.data !== oggiData()) appello = { data: oggiData(), stato: {} };   // stato[num] = "assente" | "esce"
+  if (!appello || appello.data !== oggiData()) {   // stato[num] = "assente" | "esce"; chi esce sempre prima parte già segnato (D-95)
+    appello = { data: oggiData(), stato: {} };
+    (classe.escono || []).forEach(n => { appello.stato[n] = "esce"; });
+  }
   let proposta = null;
   let daFile = 0;
 
@@ -280,8 +287,8 @@
       const et = s === "assente" ? "assente" : s === "esce" ? "esce prima" : "presente";
       return `<button type="button" data-n="${n}" class="${s}" aria-label="${nome(n)}: ${et}"><b>${classe.nomi && classe.nomi[n] ? n + ". " + nome(n) : nome(n)}</b><small>${et}</small></button>`;
     }).join("")}</div>
-<div class="p16g-riga"><label>Misura dei gruppi <select id="p16g-misura"><option value="3"${misura() === 3 ? " selected" : ""}>da 3 (i ritardatari li portano a 4)</option><option value="4"${misura() === 4 ? " selected" : ""}>da 4 (il resto da 3)</option></select></label></div>
-<div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span></div>
+<div class="p16g-riga"><label>Misura dei gruppi <select id="p16g-misura"><option value="4"${misura() === 4 ? " selected" : ""}>da 4 (il resto da 3)</option><option value="3"${misura() === 3 ? " selected" : ""}>da 3 (il resto da 4)</option></select></label></div>
+<div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span><button type="button" id="p16g-escono">Ricorda chi esce prima</button><span class="nota" style="margin:0">${(classe.escono || []).length ? "Escono sempre prima: " + classe.escono.map(n => nome(n)).join(", ") : ""}</span></div>
 <div class="p16g-riga">
   <button class="prim" type="button" id="p16g-forma">${proposta ? "Rifai i gruppi" : "Forma i gruppi"}</button>
   ${proposta ? '<button class="prim" type="button" id="p16g-conferma">Conferma e mostra</button>' : ""}
@@ -308,6 +315,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   <p class="nota">La copia contiene i nomi: tienila sul PC o su una chiavetta, mai in una repo o online.</p>
 </details>`;
     pann.querySelector("#p16g-chiudi").onclick = chiudi;
+    pann.querySelector("#p16g-escono").onclick = () => { classe.escono = uscite(); scrivi(K.classe, classe); disegna(); msg(classe.escono.length ? "Dalla prossima lezione partono già segnati come \"esce prima\"." : "Nessuno segnato come \"esce prima\"."); };
     pann.querySelector("#p16g-misura").onchange = e => { scrivi(K.misura, +e.target.value); proposta = null; disegna(); };
     pann.querySelector("#p16g-appello").onclick = e => {
       const b = e.target.closest("button[data-n]"); if (!b) return;
@@ -371,16 +379,12 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   function msg(t) { const m = pann && pann.querySelector("#p16g-msg"); if (m) m.textContent = t; }
 
   function aggiungi(num) {
-    // Il ritardatario entra nel gruppo più piccolo (D-79). In un gruppo da 3 i ruoli tornano quattro:
-    // chi era facilitatore e custode resta facilitatore, il ritardatario fa il custode.
-    // In un gruppo da 4 fa il secondo verificatore; in un gruppo da 2 il verificatore.
+    // Il ritardatario entra in più, senza ruolo, nel gruppo più piccolo (D-95, supera D-79):
+    // i ruoli del gruppo restano quelli dati all'inizio. Solo in un gruppo da 2 fa il verificatore.
     delete appello.stato[num]; scrivi(K.appello, appello);
-    let g = proposta.slice().sort((a, b) => a.membri.length - b.membri.length)[0];
-    if (g.membri.length === 3) {
-      const fc = g.membri.find(m => m.ruolo === "FC"); if (fc) fc.ruolo = "F";
-      g.membri.push({ num, ruolo: "C" });
-    } else g.membri.push({ num, ruolo: g.membri.length >= 4 ? "V2" : "V" });
-    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4 };
+    const g = proposta.slice().sort((a, b) => a.membri.length - b.membri.length)[0];
+    g.membri.push({ num, ruolo: g.membri.length <= 2 ? "V" : "X" });
+    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4, X: 5 };
     g.membri.sort((a, b) => ORD[a.ruolo] - ORD[b.ruolo]);
     if (salvatoOggi()) conferma(); else disegna();
   }

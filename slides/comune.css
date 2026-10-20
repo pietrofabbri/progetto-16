@@ -61,3 +61,18 @@
 .dati th{font-size:.8em;color:var(--p16-grigio);font-weight:700}
 .dati input{font:inherit;width:4.2em;text-align:center;border:2px solid var(--p16-linea);border-radius:8px;padding:.15em}
 .dati .chip{font-size:.9em}
+
+/* promemoria dei ruoli (D-96): banda in basso nelle slide di gruppo, icona del ruolo che guida */
+.slide.con-ruoli{padding-bottom:16vh}
+.ruoli-banda{position:absolute;left:6vw;right:130px;bottom:2.2vh;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1vw}
+.ruoli-banda>div{display:flex;align-items:center;gap:.7vw;background:var(--p16-bianco);border:3px solid var(--p16-inchiostro);border-radius:12px;padding:.9vh .8vw;min-height:9vh;box-sizing:border-box}
+.ruoli-banda svg{flex:none;width:clamp(26px,2.4vw,46px);height:auto;color:var(--p16-inchiostro)}
+.ruoli-banda span{font-size:clamp(14px,1.15vw,22px);line-height:1.2;color:var(--p16-inchiostro)}
+.ruoli-banda b{display:block;font-size:clamp(15px,1.25vw,24px);text-transform:uppercase;letter-spacing:.04em}
+.scena .ruoli-banda>div{background:#1B2130;border-color:var(--p16-carta)}
+.scena .ruoli-banda span,.scena .ruoli-banda svg{color:var(--p16-carta)}
+.guida{display:inline-flex;align-items:center;gap:.3em;margin-right:.6em;padding:.1em .5em;border-radius:999px;background:var(--p16-inchiostro);color:var(--p16-carta);font-size:.62em;vertical-align:.12em;text-transform:uppercase;letter-spacing:.04em}
+.guida svg{width:1.2em;height:1.2em}
+.legenda-ruoli{display:flex;flex-wrap:wrap;justify-content:center;gap:.6vh 2.4vw;font-size:clamp(16px,1.4vw,28px);font-weight:700;color:var(--p16-inchiostro)}
+.legenda-ruoli span{display:inline-flex;align-items:center;gap:.35em}
+.legenda-ruoli svg{width:1.3em;height:1.3em}

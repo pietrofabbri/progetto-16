@@ -173,13 +173,28 @@ h2{font-size:clamp(28px,3.4vw,60px);line-height:1.08;margin:0;max-width:18em;tex
 .dati input{font:inherit;width:4.2em;text-align:center;border:2px solid var(--p16-linea);border-radius:8px;padding:.15em}
 .dati .chip{font-size:.9em}
 
+/* promemoria dei ruoli (D-96): banda in basso nelle slide di gruppo, icona del ruolo che guida */
+.slide.con-ruoli{padding-bottom:16vh}
+.ruoli-banda{position:absolute;left:6vw;right:130px;bottom:2.2vh;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1vw}
+.ruoli-banda>div{display:flex;align-items:center;gap:.7vw;background:var(--p16-bianco);border:3px solid var(--p16-inchiostro);border-radius:12px;padding:.9vh .8vw;min-height:9vh;box-sizing:border-box}
+.ruoli-banda svg{flex:none;width:clamp(26px,2.4vw,46px);height:auto;color:var(--p16-inchiostro)}
+.ruoli-banda span{font-size:clamp(14px,1.15vw,22px);line-height:1.2;color:var(--p16-inchiostro)}
+.ruoli-banda b{display:block;font-size:clamp(15px,1.25vw,24px);text-transform:uppercase;letter-spacing:.04em}
+.scena .ruoli-banda>div{background:#1B2130;border-color:var(--p16-carta)}
+.scena .ruoli-banda span,.scena .ruoli-banda svg{color:var(--p16-carta)}
+.guida{display:inline-flex;align-items:center;gap:.3em;margin-right:.6em;padding:.1em .5em;border-radius:999px;background:var(--p16-inchiostro);color:var(--p16-carta);font-size:.62em;vertical-align:.12em;text-transform:uppercase;letter-spacing:.04em}
+.guida svg{width:1.2em;height:1.2em}
+.legenda-ruoli{display:flex;flex-wrap:wrap;justify-content:center;gap:.6vh 2.4vw;font-size:clamp(16px,1.4vw,28px);font-weight:700;color:var(--p16-inchiostro)}
+.legenda-ruoli span{display:inline-flex;align-items:center;gap:.35em}
+.legenda-ruoli svg{width:1.3em;height:1.3em}
+
 html,body{height:100%;background:var(--p16-carta)}
 </style>
 <style>
 /* titoli pirotecnici */
 .titolone{font-size:clamp(48px,7vw,140px);line-height:1;font-weight:700;margin:0;text-wrap:balance}
 .titolone span{display:inline-block;opacity:0;transform:translateY(40px) scale(.6);animation:p16-pop .6s cubic-bezier(.2,1.6,.4,1) forwards}
-.buste4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2vw;width:min(100%,780px)}
+.buste4{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:2vw;width:min(100%,calc(var(--n,4) * 195px))}
 .buste4 div{position:relative;aspect-ratio:4/3;border-radius:14px;background:var(--p16-inchiostro);border:3px solid var(--p16-carta);display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.3) rotate(-12deg);animation:p16-pop .7s cubic-bezier(.2,1.6,.4,1) forwards;overflow:hidden}
 .buste4 div svg{position:absolute;inset:0;width:100%;height:100%}
 .buste4 b{position:relative;font-size:clamp(36px,4.4vw,84px);color:var(--p16-g-giallo);background:var(--p16-inchiostro);border-radius:50%;width:1.4em;height:1.4em;display:flex;align-items:center;justify-content:center;border:3px solid var(--p16-g-giallo)}
@@ -418,8 +433,8 @@ html,body{height:100%;background:var(--p16-carta)}
 <section class="slide centro scena" data-id="oggi" data-rumore="spento">
   <div class="occhiello">Incontro 2</div>
   <h1 class="titolone"><span style="animation-delay:.05s">Quattro persone,</span> <span style="animation-delay:.45s">quattro versioni della realtà.</span></h1>
-  <div class="buste4" id="buste4"><div><b>1</b></div><div><b>2</b></div><div><b>3</b></div><div><b>4</b></div></div>
-  <p class="consegna">Oggi, quattro esperimenti. Che cosa sono, lo scoprite facendoli.</p>
+  <div class="buste4" id="buste4" style="--n:3"><div><b>1</b></div><div><b>2</b></div><div><b>3</b></div></div>
+  <p class="consegna">Oggi, tre esperimenti. Che cosa sono, lo scoprite facendoli.</p>
 </section>
 
 <!-- ================= 1. B O 13 ================= -->
@@ -535,7 +550,7 @@ html,body{height:100%;background:var(--p16-carta)}
     <div class="passo"><i>2</i><b>Una carta a testa</b><span id="carte-ruoli"></span></div>
     <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.4-9.3-9A5.2 5.2 0 0 1 12 6a5.2 5.2 0 0 1 9.3 6C19 16.6 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Con cura</b>Le carte non si piegano e non si scrivono. Alla fine tornano alla cattedra, in ordine.</div>
   </div>
-  <p class="consegna passo centrato">C'è anche una <b>carta 5</b>: la tiene il segretario, <b>coperta</b>, fino a quando lo dico. Gruppi da 3: carte 1, 2, 3 e 5; la carta 4 resta sulla cattedra.</p>
+  <p class="consegna passo centrato">C'è anche una <b>carta 5</b>: la tiene il segretario, <b>coperta</b>, fino a quando lo dico. Gruppi da 3: carte 1, 2, 3 e 5; la carta 4 resta sulla cattedra. Chi è arrivato dopo ascolta e chiede: «Come lo sai?»</p>
 </section>
 
 <section class="slide centro" data-id="bici-leggi" data-rumore="silenzio" data-fase="solo" data-timer="90">
@@ -571,19 +586,21 @@ html,body{height:100%;background:var(--p16-carta)}
   </div>
 </section>
 
-<section class="slide" data-id="bici-gruppo" data-rumore="discussione" data-fase="gruppo" data-timer="600">
-  <div class="occhiello">Nel gruppo · 10 minuti · con il maccherone</div>
+<section class="slide" data-id="bici-gruppo" data-rumore="discussione" data-fase="gruppo" data-timer="600"
+  data-ruoli="F:Dà la parola a turno, con il maccherone. Se c'è silenzio: «Che cosa non ti torna?»|C:Guarda il tempo. A ogni nuova domanda: «Passiamo avanti».|V:A ogni accusa chiede: «Come lo sai? È scritto su una carta?»|S:Scrive orari e nomi, in colonna, sul foglio del gruppo.">
+  <div class="occhiello">Nel gruppo · 10 minuti · cinque domande, una alla volta</div>
   <h2>Chi ha preso la bici? Mettete insieme quello che sapete.</h2>
   <ul class="rilanci">
-    <li class="passo">Ognuno ha letto ad alta voce <b>tutta</b> la sua carta, anche "Solo tu sai"? Il verificatore controlla <b>ascoltando</b>: non legge le carte degli altri.</li>
-    <li class="passo">Fate la linea del tempo: dalle 8.45 alle 9.40, <b>che cosa succede, minuto per minuto?</b></li>
-    <li class="passo">Il lucchetto non è rotto. <b>Chi poteva avere una chiave?</b></li>
-    <li class="passo">Per ogni nome: lo accusa <b>un fatto</b> o <b>un racconto</b>? E chi è scagionato?</li>
-    <li class="passo">Siete sicuri che sia stata <b>una persona sola</b>?</li>
+    <li class="passo" data-dopo="0" data-guida="F">Giro delle carte: ognuno legge <b>tutta</b> la sua carta, anche "Solo tu sai". Gli altri ascoltano.</li>
+    <li class="passo" data-dopo="120" data-guida="S">La linea del tempo: dalle 8.45 alle 9.40, <b>che cosa succede, minuto per minuto?</b></li>
+    <li class="passo" data-dopo="270" data-guida="V">Il lucchetto non è rotto. <b>Chi poteva avere una chiave?</b> Come lo sappiamo?</li>
+    <li class="passo" data-dopo="390" data-guida="V">Per ogni nome: lo accusa <b>un fatto</b> o <b>un racconto</b>? Chi è scagionato, e da che cosa?</li>
+    <li class="passo" data-dopo="510" data-guida="F">Siete sicuri che sia stata <b>una persona sola</b>? A turno, ognuno dice i suoi nomi.</li>
   </ul>
 </section>
 
-<section class="slide" data-id="bici-verdetto" data-rumore="discussione" data-fase="gruppo" data-timer="180" data-timer-auto>
+<section class="slide" data-id="bici-verdetto" data-rumore="discussione" data-fase="gruppo" data-timer="180" data-timer-auto
+  data-ruoli="F:Fa decidere il gruppo: chi e come.|C:Avvisa quando manca 1 minuto.|V:Controlla: ogni riga ha un indizio?|S:Scrive il verdetto, al massimo 5 righe.">
   <div class="occhiello">Nel gruppo · 3 minuti · scrive il segretario</div>
   <h2>Il verdetto del gruppo: al massimo 5 righe</h2>
   <div class="foglio-oggi">
@@ -609,13 +626,13 @@ html,body{height:100%;background:var(--p16-carta)}
 </section>
 
 <section class="slide" data-id="bici-voti" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Tutti insieme · un gruppo alla volta · 45 secondi per leggere il verdetto</div>
+  <div class="occhiello">Tutti insieme · un gruppo alla volta · 30 secondi per leggere il verdetto</div>
   <div class="turno-gruppo" id="voti-turno"></div>
   <div class="voti" id="voti"></div>
 </section>
 
-<section class="slide" data-id="bici-plenaria" data-rumore="spento" data-fase="tutti" data-timer="120">
-  <div class="occhiello">Tutti insieme · 2 minuti per domanda · per parlare, mano alzata</div>
+<section class="slide" data-id="bici-plenaria" data-rumore="spento" data-fase="tutti" data-timer="90">
+  <div class="occhiello">Tutti insieme · un minuto e mezzo per domanda · per parlare, mano alzata</div>
   <h2>Prima della soluzione, parliamone</h2>
   <ul class="rilanci">
     <li class="passo">I gruppi hanno dato risposte diverse. <b>Quale indizio vi ha convinto?</b></li>
@@ -633,35 +650,6 @@ html,body{height:100%;background:var(--p16-carta)}
     <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2a2 2 0 1 0 4 0V4h6v6h-2a2 2 0 1 0 0 4h2v6h-6v-2a2 2 0 1 0-4 0v2H4v-6h2a2 2 0 1 0 0-4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Insieme</b>Un dettaglio solo non basta. Tre gruppi qualsiasi, sì.</div>
   </div>
   <p class="consegna passo centrato">Allora: <b>perché</b> hanno preso la bici? Poi anche la carta 5 torna alla cattedra.</p>
-</section>
-
-<!-- ================= 4. IL DISEGNO CHE PASSA DI MANO ================= -->
-<section class="slide" data-id="disegno-prep" data-rumore="spento" data-fase="gruppo">
-  <div class="occhiello">Esperimento 4 · il disegno che passa di mano · si prepara</div>
-  <h2>Prima prepariamo il tavolo</h2>
-  <div class="passi-icone" style="--n:3">
-    <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4v16M3 12h18M7.5 4v16M16.5 4v16" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/></svg><b>Un foglio a testa</b>Piegalo a metà tre volte, poi strappalo lungo le pieghe: 8 foglietti.</div>
-    <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="12" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="3" width="12" height="15" rx="2" fill="var(--p16-bianco)" stroke="currentColor" stroke-width="2"/></svg><b>Le carte-disegno</b>Il custode le prende alla cattedra: una a testa, <b>coperta</b>. Non giratela ancora.</div>
-    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Penna pronta</b>Gruppi da 3: la carta 4 resta sulla cattedra.</div>
-  </div>
-</section>
-
-<section class="slide" data-id="disegno-giro" data-rumore="spento" data-fase="gruppo">
-  <div class="occhiello">Esperimento 4 · com'è fatto un giro</div>
-  <h2>8 giri. Tutti disegnano, sempre.</h2>
-  <div class="spiega">
-    <div style="display:flex;flex-direction:column;align-items:center;gap:2vh"><div class="tavolo-giro" id="tavolo-giro"></div>
-      <div class="esempio-f passo"><span>un pesce · giro 3</span><svg viewBox="0 0 120 70" aria-hidden="true"><path d="M15 35 C35 10 75 10 92 35 C75 60 35 60 15 35 Z M92 35 L112 18 L112 52 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><circle cx="35" cy="31" r="3" fill="currentColor"/></svg><small>Esempio. Nelle vostre carte non c'è.</small></div></div>
-    <ol class="elenco">
-      <li class="passo"><b>Guarda</b>, 5 secondi: al primo giro la tua carta, poi il foglietto che ti arriva. Poi lo giri.</li>
-      <li class="passo"><b>Disegna</b> a memoria su un foglietto nuovo. In alto: il nome dell'oggetto e il numero del giro.</li>
-      <li class="passo"><b>Passa</b> il tuo disegno, coperto, a chi sta alla tua destra. Quello che hai guardato va al centro, coperto.</li>
-    </ol>
-  </div>
-</section>
-
-<section class="slide" data-id="disegno-via" data-rumore="silenzio" data-fase="gruppo">
-  <div class="orologio" id="orologio"></div>
 </section>
 
 <!-- ================= 2. L'INCIDENTE (seconda parte) ================= -->
@@ -682,7 +670,8 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="cura passo" style="background:var(--p16-bianco);color:var(--p16-inchiostro);box-shadow:0 4px 18px rgba(13,19,34,.12)"><span><b>Esempio</b> di un gruppo da 4: velocità 40, 55, 30, 60. Somma: <b>185</b>. Due sì e due no: <b>2</b>. Il segretario dirà: "185 e 2".</span></div>
 </section>
 
-<section class="slide" data-id="auto-segretario" data-rumore="discussione" data-fase="gruppo" data-timer="120" data-timer-auto>
+<section class="slide" data-id="auto-segretario" data-rumore="discussione" data-fase="gruppo" data-timer="120" data-timer-auto
+  data-ruoli="F:Fa parlare uno alla volta.|C:Controlla che i fogli restino sul tavolo.|V:Rifà la somma, per controllo.|S:Somma le velocità e conta i sì.">
   <div class="occhiello">Nel gruppo · 2 minuti · guida il segretario</div>
   <h2>Il segretario raccoglie due numeri</h2>
   <div class="passi-icone" style="--n:3">
@@ -695,11 +684,10 @@ html,body{height:100%;background:var(--p16-carta)}
 <!-- ================= CHIUSURA ================= -->
 <section class="slide" data-id="tesi" data-rumore="spento" data-fase="tutti">
   <div class="occhiello">Che cosa abbiamo visto oggi</div>
-  <div class="riquadri tesi2" style="--col:2">
+  <div class="riquadri tesi2" style="--col:3">
     <div class="passo" style="--c:var(--p16-g-azzurro)"><b>Il segno</b>Il contesto decide che cosa vediamo.</div>
     <div class="passo" style="--c:var(--p16-g-rosso)"><b>L'incidente</b>Una parola può cambiare un ricordo.</div>
     <div class="passo" style="--c:var(--p16-g-giallo)"><b>La bici</b>Quattro versioni, tutte vere: nessuna completa.</div>
-    <div class="passo" style="--c:var(--p16-g-viola)"><b>Il disegno</b>La memoria ricostruisce, e le parole la guidano.</div>
   </div>
   <p class="consegna passo centrato">Per vedere la storia intera servono <b>gli altri</b>: soprattutto quelli che hanno visto un'altra parte.</p>
 </section>
@@ -713,7 +701,8 @@ html,body{height:100%;background:var(--p16-carta)}
   </ol>
 </section>
 
-<section class="slide" data-id="riordino" data-rumore="discussione" data-fase="gruppo" data-timer="60" data-timer-auto>
+<section class="slide" data-id="riordino" data-rumore="discussione" data-fase="gruppo" data-timer="60" data-timer-auto
+  data-ruoli="F:Controlla che tutti abbiano finito.|C:Riporta tutto alla cattedra.|V:Guarda il tavolo: nessuna carta?|S:Mette tessere e schede nella busta.">
   <div class="occhiello">1 minuto · guida il custode</div>
   <h2>Fine: tutto pronto per la prossima volta</h2>
   <ul class="elenco">
@@ -767,6 +756,36 @@ html,body{height:100%;background:var(--p16-carta)}
     <div class="passo" style="--c:var(--p16-g-verde)"><b>Poi si stanca</b>I neuroni che sostengono una versione si affaticano, e dopo qualche secondo vince l'altra. Si chiama percezione bistabile.</div>
   </div>
   <p class="fonte">Per chi vuole approfondire: L. A. Necker (1832); D. A. Leopold e N. K. Logothetis (1999), sulla percezione bistabile.</p>
+</section>
+
+<!-- RISERVA (D-94): il disegno resta fuori dai 75 minuti; candidato per un altro incontro. -->
+<!-- ================= 4. IL DISEGNO CHE PASSA DI MANO ================= -->
+<section class="slide" data-id="disegno-prep" data-rumore="spento" data-fase="gruppo">
+  <div class="occhiello">Esperimento in più · il disegno che passa di mano · si prepara</div>
+  <h2>Prima prepariamo il tavolo</h2>
+  <div class="passi-icone" style="--n:3">
+    <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4v16M3 12h18M7.5 4v16M16.5 4v16" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2 2"/></svg><b>Un foglio a testa</b>Piegalo a metà tre volte, poi strappalo lungo le pieghe: 8 foglietti.</div>
+    <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="12" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="3" width="12" height="15" rx="2" fill="var(--p16-bianco)" stroke="currentColor" stroke-width="2"/></svg><b>Le carte-disegno</b>Il custode le prende alla cattedra: una a testa, <b>coperta</b>. Non giratela ancora.</div>
+    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Penna pronta</b>Gruppi da 3: la carta 4 resta sulla cattedra.</div>
+  </div>
+</section>
+
+<section class="slide" data-id="disegno-giro" data-rumore="spento" data-fase="gruppo">
+  <div class="occhiello">Esperimento in più · com'è fatto un giro</div>
+  <h2>8 giri. Tutti disegnano, sempre.</h2>
+  <div class="spiega">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2vh"><div class="tavolo-giro" id="tavolo-giro"></div>
+      <div class="esempio-f passo"><span>un pesce · giro 3</span><svg viewBox="0 0 120 70" aria-hidden="true"><path d="M15 35 C35 10 75 10 92 35 C75 60 35 60 15 35 Z M92 35 L112 18 L112 52 Z" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><circle cx="35" cy="31" r="3" fill="currentColor"/></svg><small>Esempio. Nelle vostre carte non c'è.</small></div></div>
+    <ol class="elenco">
+      <li class="passo"><b>Guarda</b>, 5 secondi: al primo giro la tua carta, poi il foglietto che ti arriva. Poi lo giri.</li>
+      <li class="passo"><b>Disegna</b> a memoria su un foglietto nuovo. In alto: il nome dell'oggetto e il numero del giro.</li>
+      <li class="passo"><b>Passa</b> il tuo disegno, coperto, a chi sta alla tua destra. Quello che hai guardato va al centro, coperto.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="slide" data-id="disegno-via" data-rumore="silenzio" data-fase="gruppo">
+  <div class="orologio" id="orologio"></div>
 </section>
 
 <script>
@@ -1791,11 +1810,15 @@ window.P16_PALETTE = {
  * Si usa sul PC d'aula PRIMA di collegare il proiettore: tasto G nelle slide.
  * 1. Appello: un pulsante per ogni numero (o nome). Un clic: assente. Due clic: esce prima.
  *    Tre clic: di nuovo presente.
- * 2. "Forma i gruppi". Due misure, si sceglie nel pannello (D-93):
- *    - da 3 (predefinita): massimo numero di gruppi da 3, il resto da 4 (21: 7x3; 22: 6x3 + 1x4;
- *      23: 5x3 + 2x4). Si formano con chi c'è; i ritardatari entrano nei gruppi da 3, che diventano da 4.
- *    - da 4: massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3; 20: 5x4).
+ * 2. "Forma i gruppi". Due misure, si sceglie nel pannello (D-93, D-95):
+ *    - da 4 (predefinita): massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3;
+ *      20: 5x4; 21: 3x4 + 3x3; 25: 4x4 + 3x3).
+ *    - da 3: massimo numero di gruppi da 3, il resto da 4 (21: 7x3; 22: 6x3 + 1x4).
  *    Fino a 30 persone, al massimo 9 gruppi.
+ *    Ritardatari (D-95): "Aggiungi a un gruppo" li mette in più, SENZA RUOLO, nel gruppo più piccolo;
+ *    i ruoli del gruppo non cambiano.
+ *    Chi esce sempre prima (D-95): "Ricorda chi esce prima" salva nel browser i numeri segnati
+ *    "esce prima"; dalla lezione dopo l'appello parte già con loro segnati così.
  * 3. Ruoli sempre coperti. Ognuno cambia ruolo rispetto alla volta prima e capita il meno
  *    possibile con le stesse persone. Chi esce prima non fa il custode (riordino finale)
  *    e, se si può, nemmeno il segretario o il facilitatore; mai due nello stesso gruppo.
@@ -1825,12 +1848,12 @@ window.P16_PALETTE = {
   const COLORI = P ? ORDINE.map(id => P.gruppi.find(g => g.id === id)).filter(Boolean) : [];
   const RUOLI = {
     F: "Facilitatore", C: "Custode", V: "Verificatore", S: "Segretario",
-    FC: "Facilitatore e custode", V2: "Secondo verificatore",
+    FC: "Facilitatore e custode", V2: "Secondo verificatore", X: "Senza ruolo",
   };
-  const BASE = { F: ["F"], C: ["C"], V: ["V"], S: ["S"], FC: ["F", "C"], V2: ["V"] };
+  const BASE = { F: ["F"], C: ["C"], V: ["V"], S: ["S"], FC: ["F", "C"], V2: ["V"], X: [] };
 
   // ------------------------------------------------------------ dimensioni dei gruppi
-  const misura = () => leggi(K.misura, 3) === 4 ? 4 : 3;
+  const misura = () => leggi(K.misura, 4) === 3 ? 3 : 4;   // D-95: da 4 se possibile, poi da 3
   function dimensioni(n, m) {
     m = m || misura();
     if (n <= 0) return [];
@@ -1948,7 +1971,7 @@ window.P16_PALETTE = {
       const tot = costi.reduce((s, c) => s + c.costo, 0);
       if (!migliore || tot < migliore.tot) migliore = { tot, gruppi, costi };
     }
-    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4 };
+    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4, X: 5 };
     return migliore.gruppi.map((m, i) => ({
       id: COLORI[i] ? COLORI[i].id : "g" + (i + 1),
       membri: m.map((num, j) => ({ num, ruolo: migliore.costi[i].ruoli[j], esce: esceSet.has(num) || undefined }))
@@ -1961,7 +1984,10 @@ window.P16_PALETTE = {
   let classe = leggi(K.classe, { iscritti: 25, nomi: {} });   // iscritti del corso 2026/27 (D-91); i nomi si incollano nel pannello, mai in una repo
   let storico = leggi(K.storico, { lezioni: [] });
   let appello = leggi(K.appello, null);
-  if (!appello || appello.data !== oggiData()) appello = { data: oggiData(), stato: {} };   // stato[num] = "assente" | "esce"
+  if (!appello || appello.data !== oggiData()) {   // stato[num] = "assente" | "esce"; chi esce sempre prima parte già segnato (D-95)
+    appello = { data: oggiData(), stato: {} };
+    (classe.escono || []).forEach(n => { appello.stato[n] = "esce"; });
+  }
   let proposta = null;
   let daFile = 0;
 
@@ -2068,8 +2094,8 @@ window.P16_PALETTE = {
       const et = s === "assente" ? "assente" : s === "esce" ? "esce prima" : "presente";
       return `<button type="button" data-n="${n}" class="${s}" aria-label="${nome(n)}: ${et}"><b>${classe.nomi && classe.nomi[n] ? n + ". " + nome(n) : nome(n)}</b><small>${et}</small></button>`;
     }).join("")}</div>
-<div class="p16g-riga"><label>Misura dei gruppi <select id="p16g-misura"><option value="3"${misura() === 3 ? " selected" : ""}>da 3 (i ritardatari li portano a 4)</option><option value="4"${misura() === 4 ? " selected" : ""}>da 4 (il resto da 3)</option></select></label></div>
-<div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span></div>
+<div class="p16g-riga"><label>Misura dei gruppi <select id="p16g-misura"><option value="4"${misura() === 4 ? " selected" : ""}>da 4 (il resto da 3)</option><option value="3"${misura() === 3 ? " selected" : ""}>da 3 (il resto da 4)</option></select></label></div>
+<div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span><button type="button" id="p16g-escono">Ricorda chi esce prima</button><span class="nota" style="margin:0">${(classe.escono || []).length ? "Escono sempre prima: " + classe.escono.map(n => nome(n)).join(", ") : ""}</span></div>
 <div class="p16g-riga">
   <button class="prim" type="button" id="p16g-forma">${proposta ? "Rifai i gruppi" : "Forma i gruppi"}</button>
   ${proposta ? '<button class="prim" type="button" id="p16g-conferma">Conferma e mostra</button>' : ""}
@@ -2096,6 +2122,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   <p class="nota">La copia contiene i nomi: tienila sul PC o su una chiavetta, mai in una repo o online.</p>
 </details>`;
     pann.querySelector("#p16g-chiudi").onclick = chiudi;
+    pann.querySelector("#p16g-escono").onclick = () => { classe.escono = uscite(); scrivi(K.classe, classe); disegna(); msg(classe.escono.length ? "Dalla prossima lezione partono già segnati come \"esce prima\"." : "Nessuno segnato come \"esce prima\"."); };
     pann.querySelector("#p16g-misura").onchange = e => { scrivi(K.misura, +e.target.value); proposta = null; disegna(); };
     pann.querySelector("#p16g-appello").onclick = e => {
       const b = e.target.closest("button[data-n]"); if (!b) return;
@@ -2159,16 +2186,12 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   function msg(t) { const m = pann && pann.querySelector("#p16g-msg"); if (m) m.textContent = t; }
 
   function aggiungi(num) {
-    // Il ritardatario entra nel gruppo più piccolo (D-79). In un gruppo da 3 i ruoli tornano quattro:
-    // chi era facilitatore e custode resta facilitatore, il ritardatario fa il custode.
-    // In un gruppo da 4 fa il secondo verificatore; in un gruppo da 2 il verificatore.
+    // Il ritardatario entra in più, senza ruolo, nel gruppo più piccolo (D-95, supera D-79):
+    // i ruoli del gruppo restano quelli dati all'inizio. Solo in un gruppo da 2 fa il verificatore.
     delete appello.stato[num]; scrivi(K.appello, appello);
-    let g = proposta.slice().sort((a, b) => a.membri.length - b.membri.length)[0];
-    if (g.membri.length === 3) {
-      const fc = g.membri.find(m => m.ruolo === "FC"); if (fc) fc.ruolo = "F";
-      g.membri.push({ num, ruolo: "C" });
-    } else g.membri.push({ num, ruolo: g.membri.length >= 4 ? "V2" : "V" });
-    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4 };
+    const g = proposta.slice().sort((a, b) => a.membri.length - b.membri.length)[0];
+    g.membri.push({ num, ruolo: g.membri.length <= 2 ? "V" : "X" });
+    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4, X: 5 };
     g.membri.sort((a, b) => ORD[a.ruolo] - ORD[b.ruolo]);
     if (salvatoOggi()) conferma(); else disegna();
   }
@@ -2232,12 +2255,13 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   const chip = g => `<span class="chip" data-g="${g.id}">${forma(g)}${g.nome}</span>`;
   const META_A = ["rosso", "verde", "azzurro", "viola", "giallo"];
   const RUOLI4 = ["Facilitatore", "Custode", "Verificatore", "Segretario"], RUOLI3 = ["Facilitatore e custode", "Verificatore", "Segretario"];
-  const SIGLA = n => /^Facilitatore/.test(n) ? "F" : /^Custode/.test(n) ? "C" : /erificatore/.test(n) ? "V" : "S";
+  const SIGLA = n => /^Facilitatore/.test(n) ? "F" : /^Custode/.test(n) ? "C" : /erificatore/.test(n) ? "V" : /^Senza/.test(n) ? "X" : "S";
   const ICONE_RUOLO = {
     F: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 5 L15 12 L12 19 L9 12 Z" fill="currentColor"/>',
     C: '<path d="M6 3 H18 M6 21 H18 M7 3 C7 9 17 9 17 12 C17 15 7 15 7 21 M17 3 C17 9 7 9 7 12 C7 15 17 15 17 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
     V: '<circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M14.5 14.5 L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
     S: '<path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z M14 6 L18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+    X: '<circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/>',
   };
   // Aula vera (D-91): 4 isole davanti (vicino alla lavagna) e 3 dietro, centrate. Rosa e giallo servirebbero solo oltre 28 presenti.
   // Pianta (D-91, D-93): 4 isole davanti (le prime 4 nell'ordine dei colori), le altre dietro, centrate.
@@ -2301,8 +2325,41 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
         },
       });
       window.addEventListener("resize", disponi);
+      // legenda dei ruoli sotto la pianta (D-96)
+      const NR = [["F", "Facilitatore"], ["C", "Custode"], ["V", "Verificatore"], ["S", "Segretario"]];
+      if (membri.some(x => x.m.some(m => SIGLA(m.ruolo || "") === "X"))) NR.push(["X", "Senza ruolo"]);
+      pianta.insertAdjacentHTML("afterend", `<div class="legenda-ruoli">${NR.map(([r, n]) => `<span><svg viewBox="0 0 24 24" aria-hidden="true">${ICONE_RUOLO[r]}</svg>${n}</span>`).join("")}</div>`);
       const demo = document.getElementById("gruppi-demo");
       if (demo) demo.textContent = veri && oggi.gruppi[0].membri ? "" : "Dati di prova.";
+    }
+    // ---------- promemoria dei ruoli (D-96)
+    // Ogni slide con data-ruoli="F:...|C:...|V:...|S:..." mostra in basso che cosa fa ogni ruolo adesso.
+    // Una sezione con data-guida="F" (o C, V, S) mostra l'icona del ruolo che guida quel momento.
+    const NOMI_RUOLO = { F: "Facilitatore", C: "Custode", V: "Verificatore", S: "Segretario" };
+    document.querySelectorAll("section.slide[data-ruoli]").forEach(sl => {
+      const voci = sl.dataset.ruoli.split("|").map(x => x.split(/:(.*)/s)).filter(x => NOMI_RUOLO[x[0].trim()]);
+      const b = document.createElement("div"); b.className = "ruoli-banda"; b.setAttribute("aria-label", "Chi fa che cosa");
+      b.innerHTML = voci.map(([r, t]) => `<div><svg viewBox="0 0 24 24" aria-hidden="true">${ICONE_RUOLO[r.trim()]}</svg><span><b>${NOMI_RUOLO[r.trim()]}</b>${t.trim()}</span></div>`).join("");
+      sl.classList.add("con-ruoli"); sl.appendChild(b);
+    });
+    document.querySelectorAll("[data-guida]").forEach(el => {
+      const r = el.dataset.guida; if (!NOMI_RUOLO[r]) return;
+      el.insertAdjacentHTML("afterbegin", `<span class="guida"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONE_RUOLO[r]}</svg>${NOMI_RUOLO[r]}</span>`);
+    });
+    // Tasto P: si torna alla pianta con i nomi e i ruoli; premuto di nuovo, si torna dov'eravamo (D-96).
+    {
+      let ritorno = null;
+      document.addEventListener("keydown", e => {
+        if (e.key !== "p" && e.key !== "P") return;
+        if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+        if (document.querySelector(".p16g-pann, .p16b-pann")) return;
+        const tutte = [...document.querySelectorAll("section.slide")];
+        const ora = tutte.findIndex(x => x.classList.contains("attiva")), dove = tutte.findIndex(x => x.dataset.id === "gruppi");
+        if (dove < 0) return;
+        e.preventDefault();
+        if (ora === dove && ritorno != null) { const r = ritorno; ritorno = null; Motore.vai(r); }
+        else if (ora !== dove) { ritorno = ora; Motore.vai(dove); }
+      });
     }
     return { P, G, forma, chip, oggi, presenti, membri, prova: !veri, meta: g => META_A.includes(g.id) ? "A" : "B", ICONE_RUOLO, SIGLA };
   }
@@ -2482,8 +2539,24 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     indietro() { $("mappa").classList.remove("sparita"); return false; },
   });
   const rilanci = s => setTimeout(() => { const v = [...s.querySelectorAll(".rilanci .visto")]; v.forEach((li, k) => li.classList.toggle("vecchio", k < v.length - 1)); s.querySelectorAll(".rilanci li:not(.visto)").forEach(li => li.classList.remove("vecchio")); }, 0);
-  Motore.registra("bici-gruppo", { avanti(s) { rilanci(s); Motore.evento("rilancio"); return false; }, indietro(s) { rilanci(s); return false; } });
-  Motore.registra("bici-plenaria", { avanti(s) { const nuovo = s.querySelectorAll(".rilanci li:not(.visto)").length > 0; rilanci(s); if (nuovo) Motore.timer.imposta(120, true); return false; }, indietro(s) { rilanci(s); return false; } });
+  // Discussione a fasi (D-96): ogni domanda compare da sola quando il timer arriva al suo minuto (data-dopo, in secondi
+  // dall'avvio), con la campanella; → la fa comparire prima. Il ruolo che guida è nell'etichetta (data-guida).
+  {
+    let giro = null;
+    const aggiorna = s => {
+      const durata = +s.dataset.timer, resto = Motore.timer.resto();
+      if (resto >= durata) return;                                // timer non ancora avviato
+      const prossima = s.querySelector(".rilanci li.passo:not(.visto)");
+      if (prossima && durata - resto >= +prossima.dataset.dopo) { Motore.avanti(); if (+prossima.dataset.dopo > 0) Motore.campanella(); }
+    };
+    Motore.registra("bici-gruppo", {
+      entra(s) { clearInterval(giro); giro = setInterval(() => aggiorna(s), 500); },
+      esci() { clearInterval(giro); giro = null; },
+      avanti(s) { rilanci(s); Motore.evento("rilancio"); return false; },
+      indietro(s) { rilanci(s); return false; },
+    });
+  }
+  Motore.registra("bici-plenaria", { avanti(s) { const nuovo = s.querySelectorAll(".rilanci li:not(.visto)").length > 0; rilanci(s); if (nuovo) Motore.timer.imposta(90, true); return false; }, indietro(s) { rilanci(s); return false; } });
 
   // ---------- la risposta di ogni gruppo: tasti 1-6 accendono o spengono un nome; → gruppo dopo
   {
@@ -2494,7 +2567,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       box.innerHTML = ORDINE_SOSP.map((s, n) => `<div class="${(risposte[k] || []).includes(s) ? "scelto" : ""}" style="--c:${AVATAR[s].c}">${avatar(s)}<b>${n + 1}. ${AVATAR[s].nome}</b><div class="pila">${C.presenti.map((p, j) => (j <= k && risposte[j].includes(s)) ? C.chip(p.g) : "").join("")}</div></div>`).join("");
       const g = C.presenti[k];
       turno.innerHTML = g ? `Gruppo ${C.chip(g.g)}: il segretario legge il verdetto.` : "Tutti i gruppi hanno letto il verdetto.";
-      Motore.timer.imposta(g ? 45 : 0, false);
+      Motore.timer.imposta(g ? 30 : 0, false);
     }
     Motore.registra("bici-voti", {
       entra() { disegna(); },

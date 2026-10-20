@@ -21,12 +21,13 @@
   const chip = g => `<span class="chip" data-g="${g.id}">${forma(g)}${g.nome}</span>`;
   const META_A = ["rosso", "verde", "azzurro", "viola", "giallo"];
   const RUOLI4 = ["Facilitatore", "Custode", "Verificatore", "Segretario"], RUOLI3 = ["Facilitatore e custode", "Verificatore", "Segretario"];
-  const SIGLA = n => /^Facilitatore/.test(n) ? "F" : /^Custode/.test(n) ? "C" : /erificatore/.test(n) ? "V" : "S";
+  const SIGLA = n => /^Facilitatore/.test(n) ? "F" : /^Custode/.test(n) ? "C" : /erificatore/.test(n) ? "V" : /^Senza/.test(n) ? "X" : "S";
   const ICONE_RUOLO = {
     F: '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 5 L15 12 L12 19 L9 12 Z" fill="currentColor"/>',
     C: '<path d="M6 3 H18 M6 21 H18 M7 3 C7 9 17 9 17 12 C17 15 7 15 7 21 M17 3 C17 9 7 9 7 12 C7 15 17 15 17 21" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
     V: '<circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M14.5 14.5 L20 20" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>',
     S: '<path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z M14 6 L18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>',
+    X: '<circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/>',
   };
   // Aula vera (D-91): 4 isole davanti (vicino alla lavagna) e 3 dietro, centrate. Rosa e giallo servirebbero solo oltre 28 presenti.
   // Pianta (D-91, D-93): 4 isole davanti (le prime 4 nell'ordine dei colori), le altre dietro, centrate.
@@ -90,8 +91,41 @@
         },
       });
       window.addEventListener("resize", disponi);
+      // legenda dei ruoli sotto la pianta (D-96)
+      const NR = [["F", "Facilitatore"], ["C", "Custode"], ["V", "Verificatore"], ["S", "Segretario"]];
+      if (membri.some(x => x.m.some(m => SIGLA(m.ruolo || "") === "X"))) NR.push(["X", "Senza ruolo"]);
+      pianta.insertAdjacentHTML("afterend", `<div class="legenda-ruoli">${NR.map(([r, n]) => `<span><svg viewBox="0 0 24 24" aria-hidden="true">${ICONE_RUOLO[r]}</svg>${n}</span>`).join("")}</div>`);
       const demo = document.getElementById("gruppi-demo");
       if (demo) demo.textContent = veri && oggi.gruppi[0].membri ? "" : "Dati di prova.";
+    }
+    // ---------- promemoria dei ruoli (D-96)
+    // Ogni slide con data-ruoli="F:...|C:...|V:...|S:..." mostra in basso che cosa fa ogni ruolo adesso.
+    // Una sezione con data-guida="F" (o C, V, S) mostra l'icona del ruolo che guida quel momento.
+    const NOMI_RUOLO = { F: "Facilitatore", C: "Custode", V: "Verificatore", S: "Segretario" };
+    document.querySelectorAll("section.slide[data-ruoli]").forEach(sl => {
+      const voci = sl.dataset.ruoli.split("|").map(x => x.split(/:(.*)/s)).filter(x => NOMI_RUOLO[x[0].trim()]);
+      const b = document.createElement("div"); b.className = "ruoli-banda"; b.setAttribute("aria-label", "Chi fa che cosa");
+      b.innerHTML = voci.map(([r, t]) => `<div><svg viewBox="0 0 24 24" aria-hidden="true">${ICONE_RUOLO[r.trim()]}</svg><span><b>${NOMI_RUOLO[r.trim()]}</b>${t.trim()}</span></div>`).join("");
+      sl.classList.add("con-ruoli"); sl.appendChild(b);
+    });
+    document.querySelectorAll("[data-guida]").forEach(el => {
+      const r = el.dataset.guida; if (!NOMI_RUOLO[r]) return;
+      el.insertAdjacentHTML("afterbegin", `<span class="guida"><svg viewBox="0 0 24 24" aria-hidden="true">${ICONE_RUOLO[r]}</svg>${NOMI_RUOLO[r]}</span>`);
+    });
+    // Tasto P: si torna alla pianta con i nomi e i ruoli; premuto di nuovo, si torna dov'eravamo (D-96).
+    {
+      let ritorno = null;
+      document.addEventListener("keydown", e => {
+        if (e.key !== "p" && e.key !== "P") return;
+        if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+        if (document.querySelector(".p16g-pann, .p16b-pann")) return;
+        const tutte = [...document.querySelectorAll("section.slide")];
+        const ora = tutte.findIndex(x => x.classList.contains("attiva")), dove = tutte.findIndex(x => x.dataset.id === "gruppi");
+        if (dove < 0) return;
+        e.preventDefault();
+        if (ora === dove && ritorno != null) { const r = ritorno; ritorno = null; Motore.vai(r); }
+        else if (ora !== dove) { ritorno = ora; Motore.vai(dove); }
+      });
     }
     return { P, G, forma, chip, oggi, presenti, membri, prova: !veri, meta: g => META_A.includes(g.id) ? "A" : "B", ICONE_RUOLO, SIGLA };
   }
