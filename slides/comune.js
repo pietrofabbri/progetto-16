@@ -63,12 +63,14 @@
       });
       const disponi = () => {
         const W = pianta.clientWidth, H = pianta.clientHeight;
+        let k = 1;   // un solo fattore per tutte le isole: si rimpiccioliscono insieme quanto basta per stare nella pianta
         pianta.querySelectorAll(".isola-p").forEach(el => {
           const [c, r] = PI.pos[el.dataset.g] || [0, 0];
           el.style.left = (W * (c + 0.5) / PI.colonne) + "px";
           el.style.top = (18 + (H - 18) * (r + 0.5) / PI.righe) + "px";
-          el.style.setProperty("--w", (W / PI.colonne - 16) + "px");
+          k = Math.min(k, Math.min(1, (W / PI.colonne - 10) / el.offsetWidth, ((H - 22) / PI.righe - 12) / el.offsetHeight));
         });
+        pianta.style.setProperty("--k", k.toFixed(3));
       };
       let tt = [];
       Motore.registra("gruppi", {

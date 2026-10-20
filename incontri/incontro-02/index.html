@@ -131,16 +131,16 @@ h2{font-size:clamp(28px,3.4vw,60px);line-height:1.08;margin:0;max-width:18em;tex
 /* pianta dell'aula */
 .pianta{position:relative;flex:1;min-height:0;border:4px solid var(--p16-inchiostro);border-radius:10px;background:var(--p16-bianco);margin-top:.5vh}
 .lavagna{position:absolute;left:30%;right:30%;top:-4px;height:18px;background:var(--p16-inchiostro);color:var(--p16-bianco);font-size:16px;text-align:center;line-height:18px;border-radius:0 0 6px 6px;letter-spacing:.1em;text-transform:uppercase}
-.isola-p{position:absolute;transform:translate(-50%,-50%) scale(.6);opacity:0;transition:opacity .5s,transform .6s cubic-bezier(.2,1.6,.4,1);display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:5px;width:var(--w)}
+.isola-p{position:absolute;transform:translate(-50%,-50%) scale(calc(var(--k,1)*.6));opacity:0;transition:opacity .5s,transform .6s cubic-bezier(.2,1.6,.4,1);display:grid;grid-template-columns:max-content auto max-content;align-items:center;gap:6px;width:max-content}
 .isola-p .lato{display:flex;flex-direction:column;gap:clamp(14px,3vh,34px)}
 .isola-p .lato.sx .nome{justify-content:flex-end}
-.isola-p.on{opacity:1;transform:translate(-50%,-50%)}
-.isola-p .nome{display:flex;align-items:center;gap:4px;font-size:clamp(13px,1.02vw,22px);letter-spacing:-.01em;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .4s}
+.isola-p.on{opacity:1;transform:translate(-50%,-50%) scale(var(--k,1))}
+.isola-p .nome{display:flex;align-items:center;gap:4px;font-size:clamp(15px,1.2vw,26px);font-weight:700;white-space:nowrap;opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .4s}
 .isola-p .nome.on{opacity:1;transform:none}
 .isola-p .nome svg{width:.95em;height:.95em;flex:none;color:var(--p16-inchiostro)}
-.banchi{position:relative;display:grid;grid-template-rows:1fr 1fr;gap:3px;width:clamp(46px,3.9vw,84px);height:clamp(90px,15vh,170px);border-radius:6px;padding:3px;background:var(--g)}
+.banchi{position:relative;display:grid;grid-template-rows:1fr 1fr;gap:3px;width:clamp(56px,4.4vw,96px);height:clamp(90px,15vh,170px);border-radius:6px;padding:3px;background:var(--g)}
 .banchi i{border:2px solid rgba(255,255,255,.55);border-radius:4px}
-.banchi .etg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--p16-bianco);font-weight:700;font-size:clamp(11px,.95vw,20px);z-index:1;text-align:center}
+.banchi .etg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--p16-bianco);font-weight:700;font-size:clamp(13px,1.05vw,22px);z-index:1;text-align:center}
 .banchi .etg svg{width:1.2em;height:1.2em;fill:var(--p16-bianco)}
 
 /* riquadri che compaiono con un salto */
@@ -1803,8 +1803,11 @@ window.P16_PALETTE = {
  * incontri/gruppi/storico.json, che le slide rileggono all'avvio (window.P16_STORICO_URL) e
  * uniscono a quello del browser. Così lo storico sopravvive anche se il browser viene ripulito.
  *
- * Dati: SOLO nel browser del PC d'aula (localStorage) e nelle copie esportate a mano.
- * Nessun nome entra mai in una repo. I nomi sono facoltativi: senza nomi si usano i numeri
+ * Dati: nel browser del PC d'aula (localStorage) e nelle copie esportate a mano. Nella repo
+ * PRIVATA, con l'autorizzazione di Pietro (D-92), i nomi stanno in incontri/gruppi/classe.js
+ * (window.P16_CLASSE), da cancellare a fine progetto. Mai nomi nella repo pubblica. Lo storico
+ * si legge anche da incontri/gruppi/storico.js (window.P16_STORICO): i file .js funzionano
+ * anche aprendo le slide da file://, dove fetch non funziona. Senza nomi si usano i numeri
  * del registro. Il riepilogo per "Fine lezione" (p16-gruppi-riepilogo) non contiene nomi.
  */
 (function () {
@@ -1966,6 +1969,11 @@ window.P16_PALETTE = {
     if (nuove) scrivi(K.storico, storico);
     return nuove;
   }
+  if (window.P16_STORICO) { daFile = (window.P16_STORICO.lezioni || []).length; unisci(window.P16_STORICO); }
+  // nomi della classe dal file della repo privata (D-92): valgono se nel browser non ci sono nomi
+  if (window.P16_CLASSE && window.P16_CLASSE.nomi && !Object.keys(classe.nomi || {}).length) {
+    classe = { iscritti: window.P16_CLASSE.iscritti || classe.iscritti, nomi: window.P16_CLASSE.nomi }; scrivi(K.classe, classe);
+  }
   if (window.P16_STORICO_URL) {
     fetch(window.P16_STORICO_URL, { cache: "no-store" }).then(r => r.ok ? r.json() : null)
       .then(j => { daFile = j && j.lezioni ? j.lezioni.length : 0; unisci(j); if (pann) disegna(); })
@@ -2031,7 +2039,7 @@ window.P16_PALETTE = {
 <div class="p16g-appello" id="p16g-appello">${numeri().map(n => {
       const s = appello.stato[n] || "";
       const et = s === "assente" ? "assente" : s === "esce" ? "esce prima" : "presente";
-      return `<button type="button" data-n="${n}" class="${s}" aria-label="${nome(n)}: ${et}"><b>${nome(n)}</b><small>${et}</small></button>`;
+      return `<button type="button" data-n="${n}" class="${s}" aria-label="${nome(n)}: ${et}"><b>${classe.nomi && classe.nomi[n] ? n + ". " + nome(n) : nome(n)}</b><small>${et}</small></button>`;
     }).join("")}</div>
 <div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span></div>
 <div class="p16g-riga">
@@ -2044,7 +2052,7 @@ ${proposta ? `<div class="p16g-gruppi">${proposta.map(g => {
       const c = COLORI.find(x => x.id === g.id) || { nome: g.id, hex: "#5B6475" };
       return `<div class="p16g-gr"><div class="t" style="background:${c.hex}">${c.nome}</div><ul>${g.membri.map(m => `<li>${nome(m.num)}${m.esce ? " <em>esce prima</em>" : ""}<span>${RUOLI[m.ruolo]}</span></li>`).join("")}</ul></div>`;
     }).join("")}</div>` : ""}
-${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritardatario: </span><select id="p16g-rit" aria-label="Ritardatario">${numeri().filter(n => appello.stato[n] === "assente").map(n => `<option value="${n}">${nome(n)}</option>`).join("")}</select><button type="button" id="p16g-agg">Aggiungi a un gruppo</button></div>` : ""}
+${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritardatario: </span><select id="p16g-rit" aria-label="Ritardatario">${numeri().filter(n => appello.stato[n] === "assente").map(n => `<option value="${n}">${n}. ${nome(n)}</option>`).join("")}</select><button type="button" id="p16g-agg">Aggiungi a un gruppo</button></div>` : ""}
 <details>
   <summary>Classe, nomi e copia di sicurezza</summary>
   <p class="nota">I nomi restano solo in questo browser. Uno per riga, nell'ordine del registro: la riga 1 è il numero 1. Senza nomi si usano i numeri.</p>
@@ -2220,12 +2228,14 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       });
       const disponi = () => {
         const W = pianta.clientWidth, H = pianta.clientHeight;
+        let k = 1;   // un solo fattore per tutte le isole: si rimpiccioliscono insieme quanto basta per stare nella pianta
         pianta.querySelectorAll(".isola-p").forEach(el => {
           const [c, r] = PI.pos[el.dataset.g] || [0, 0];
           el.style.left = (W * (c + 0.5) / PI.colonne) + "px";
           el.style.top = (18 + (H - 18) * (r + 0.5) / PI.righe) + "px";
-          el.style.setProperty("--w", (W / PI.colonne - 16) + "px");
+          k = Math.min(k, Math.min(1, (W / PI.colonne - 10) / el.offsetWidth, ((H - 22) / PI.righe - 12) / el.offsetHeight));
         });
+        pianta.style.setProperty("--k", k.toFixed(3));
       };
       let tt = [];
       Motore.registra("gruppi", {

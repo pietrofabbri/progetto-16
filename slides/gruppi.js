@@ -15,8 +15,11 @@
  * incontri/gruppi/storico.json, che le slide rileggono all'avvio (window.P16_STORICO_URL) e
  * uniscono a quello del browser. Così lo storico sopravvive anche se il browser viene ripulito.
  *
- * Dati: SOLO nel browser del PC d'aula (localStorage) e nelle copie esportate a mano.
- * Nessun nome entra mai in una repo. I nomi sono facoltativi: senza nomi si usano i numeri
+ * Dati: nel browser del PC d'aula (localStorage) e nelle copie esportate a mano. Nella repo
+ * PRIVATA, con l'autorizzazione di Pietro (D-92), i nomi stanno in incontri/gruppi/classe.js
+ * (window.P16_CLASSE), da cancellare a fine progetto. Mai nomi nella repo pubblica. Lo storico
+ * si legge anche da incontri/gruppi/storico.js (window.P16_STORICO): i file .js funzionano
+ * anche aprendo le slide da file://, dove fetch non funziona. Senza nomi si usano i numeri
  * del registro. Il riepilogo per "Fine lezione" (p16-gruppi-riepilogo) non contiene nomi.
  */
 (function () {
@@ -178,6 +181,11 @@
     if (nuove) scrivi(K.storico, storico);
     return nuove;
   }
+  if (window.P16_STORICO) { daFile = (window.P16_STORICO.lezioni || []).length; unisci(window.P16_STORICO); }
+  // nomi della classe dal file della repo privata (D-92): valgono se nel browser non ci sono nomi
+  if (window.P16_CLASSE && window.P16_CLASSE.nomi && !Object.keys(classe.nomi || {}).length) {
+    classe = { iscritti: window.P16_CLASSE.iscritti || classe.iscritti, nomi: window.P16_CLASSE.nomi }; scrivi(K.classe, classe);
+  }
   if (window.P16_STORICO_URL) {
     fetch(window.P16_STORICO_URL, { cache: "no-store" }).then(r => r.ok ? r.json() : null)
       .then(j => { daFile = j && j.lezioni ? j.lezioni.length : 0; unisci(j); if (pann) disegna(); })
@@ -243,7 +251,7 @@
 <div class="p16g-appello" id="p16g-appello">${numeri().map(n => {
       const s = appello.stato[n] || "";
       const et = s === "assente" ? "assente" : s === "esce" ? "esce prima" : "presente";
-      return `<button type="button" data-n="${n}" class="${s}" aria-label="${nome(n)}: ${et}"><b>${nome(n)}</b><small>${et}</small></button>`;
+      return `<button type="button" data-n="${n}" class="${s}" aria-label="${nome(n)}: ${et}"><b>${classe.nomi && classe.nomi[n] ? n + ". " + nome(n) : nome(n)}</b><small>${et}</small></button>`;
     }).join("")}</div>
 <div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span></div>
 <div class="p16g-riga">
@@ -256,7 +264,7 @@ ${proposta ? `<div class="p16g-gruppi">${proposta.map(g => {
       const c = COLORI.find(x => x.id === g.id) || { nome: g.id, hex: "#5B6475" };
       return `<div class="p16g-gr"><div class="t" style="background:${c.hex}">${c.nome}</div><ul>${g.membri.map(m => `<li>${nome(m.num)}${m.esce ? " <em>esce prima</em>" : ""}<span>${RUOLI[m.ruolo]}</span></li>`).join("")}</ul></div>`;
     }).join("")}</div>` : ""}
-${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritardatario: </span><select id="p16g-rit" aria-label="Ritardatario">${numeri().filter(n => appello.stato[n] === "assente").map(n => `<option value="${n}">${nome(n)}</option>`).join("")}</select><button type="button" id="p16g-agg">Aggiungi a un gruppo</button></div>` : ""}
+${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritardatario: </span><select id="p16g-rit" aria-label="Ritardatario">${numeri().filter(n => appello.stato[n] === "assente").map(n => `<option value="${n}">${n}. ${nome(n)}</option>`).join("")}</select><button type="button" id="p16g-agg">Aggiungi a un gruppo</button></div>` : ""}
 <details>
   <summary>Classe, nomi e copia di sicurezza</summary>
   <p class="nota">I nomi restano solo in questo browser. Uno per riga, nell'ordine del registro: la riga 1 è il numero 1. Senza nomi si usano i numeri.</p>
