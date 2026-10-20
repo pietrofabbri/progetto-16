@@ -6,7 +6,7 @@
 </head>
 <body>
 <title>Slide incontro 2</title>
-<!-- Pubblicato dopo l'incontro. Generato da incontri/incontro-02/slide/index.html (Incontro 2. Quattro persone, quattro versioni della realtà) -->
+<!-- Pubblicato dopo l'incontro. Generato da incontri/incontro-02/slide/index.html (Incontro 2. Sabato mattina in piazza) -->
 <style>
 /* Progetto 16. Palette comune (traduzione di palette.json).
    Uso: <link rel="stylesheet" href="../design/palette.css">
@@ -428,11 +428,55 @@ html,body{height:100%;background:var(--p16-carta)}
 .anello .chip{position:absolute;transform:translate(-50%,-50%);font-size:clamp(18px,1.6vw,30px)}
 .anello .msg{position:absolute;transform:translate(-50%,-50%);width:clamp(28px,2.6vw,50px);height:auto;animation:messaggero 3s ease-in-out infinite}
 @keyframes messaggero{0%{offset-distance:0%}100%{offset-distance:100%}}
+/* ===== caso v4 (D-98) ===== */
+.fascicolo{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:.6vh;background:var(--p16-g-giallo);color:var(--p16-inchiostro);border-radius:6px 22px 6px 6px;padding:2.4vh 4vw;transform:rotate(-2deg);box-shadow:0 14px 40px rgba(0,0,0,.4);opacity:0;animation:p16-pop .6s .8s cubic-bezier(.2,1.6,.4,1) forwards}
+.fascicolo b{font-size:clamp(26px,2.8vw,54px)}
+.fascicolo span{font-size:clamp(15px,1.3vw,24px)}
+.fascicolo .timbro{right:-3vw;top:-3vh;font-size:clamp(18px,1.8vw,34px);background:var(--p16-bianco);opacity:0;animation:p16-timbro .45s 1.8s cubic-bezier(.2,1.4,.4,1) both}
+.sosp.due-righe{row-gap:1.6vh}
+.sosp.due-righe svg.av{width:clamp(54px,4.4vw,88px)}
+.sosp.due-righe span{font-size:clamp(14px,1.1vw,21px)}
+.sosp.stretta{gap:.6vw}
+.sosp.stretta svg.av{width:clamp(44px,4vw,80px)}
+.sosp.stretta b{font-size:clamp(16px,1.35vw,26px)}
+.sosp.stretta span:not(.timbro){display:none}
+.sosp.stretta .timbro{font-size:clamp(11px,.9vw,17px);margin-left:-3em}
+.voti svg.av{width:clamp(40px,3.6vw,80px)}
+.voti b{font-size:clamp(15px,1.3vw,28px)}
+.prospettive{height:28vh}
+.prospettive svg{width:100%;height:100%}
+.prospettive .raggio,.prospettive .dett,.prospettive .botto{opacity:0}
+.prospettive.on .botto{animation:p16-boom .6s .2s cubic-bezier(.2,1.6,.4,1) both}
+.prospettive.on .raggio.tutti{animation:p16-pop .5s .8s both}
+.prospettive.on .raggio.uno,.prospettive.on .dett{animation:p16-pop .5s both}
+.nuovo{box-shadow:0 0 0 5px var(--p16-g-rosso),0 8px 26px rgba(0,0,0,.35)}
+.svela-tit{font-size:clamp(34px,3.8vw,72px);line-height:1.12}
+.esp i{display:block;font-style:normal;font-weight:700;font-size:clamp(34px,3.4vw,64px);line-height:1;color:var(--c);margin-bottom:.6vh}
+.esp{font-size:clamp(20px,1.9vw,36px)}
+.riquadri>div.esp.passo{transform:rotateY(90deg)}
+.riquadri>div.esp.passo.visto{transform:none;transition:transform .7s cubic-bezier(.2,1.4,.4,1),opacity .3s}
+.conti{display:flex;flex-direction:column;gap:2.6vh;align-items:center;margin:auto 0}
+.riga-c{display:flex;align-items:center;gap:1.1vw;font-size:clamp(26px,2.8vw,56px);font-weight:700}
+.riga-c .et{min-width:4.6em;text-align:right;font-size:.62em;line-height:1.1}
+.riga-c .et small{display:block;font-weight:400;color:var(--p16-grigio);font-size:.8em}
+.gett{background:var(--p16-bianco);border:4px solid var(--p16-inchiostro);border-radius:14px;padding:.15em .5em;opacity:0;transform:translateY(-60px) rotate(-12deg)}
+.gett.si{border-color:var(--p16-calma)}
+.uguale{opacity:0}
+.tot{background:var(--p16-inchiostro);color:var(--p16-bianco);border-radius:14px;padding:.15em .6em;opacity:0}
+.fumetto{background:var(--p16-g-giallo);color:var(--p16-inchiostro);border-radius:22px;padding:1.2vh 2vw;font-size:clamp(24px,2.6vw,50px);opacity:0}
+.conti.on .gett{animation:p16-pop .5s cubic-bezier(.2,1.6,.4,1) both}
+.conti.on .riga-c:nth-child(1) .gett:nth-child(2){animation-delay:.2s}.conti.on .riga-c:nth-child(1) .gett:nth-child(3){animation-delay:.45s}.conti.on .riga-c:nth-child(1) .gett:nth-child(4){animation-delay:.7s}.conti.on .riga-c:nth-child(1) .gett:nth-child(5){animation-delay:.95s}
+.conti.on .riga-c:nth-child(2) .gett:nth-child(2){animation-delay:1.9s}.conti.on .riga-c:nth-child(2) .gett:nth-child(3){animation-delay:2.15s}.conti.on .riga-c:nth-child(2) .gett:nth-child(4){animation-delay:2.4s}.conti.on .riga-c:nth-child(2) .gett:nth-child(5){animation-delay:2.65s}
+.conti.on .riga-c:nth-child(1) .uguale,.conti.on .riga-c:nth-child(1) .tot{animation:p16-boom .6s 1.3s cubic-bezier(.2,1.6,.4,1) both}
+.conti.on .riga-c:nth-child(2) .uguale,.conti.on .riga-c:nth-child(2) .tot{animation:p16-boom .6s 3s cubic-bezier(.2,1.6,.4,1) both}
+.conti.on .fumetto{animation:p16-boom .7s 3.8s cubic-bezier(.2,1.6,.4,1) both}
+.variante[hidden]{display:none}
 </style>
 
 
 
 <!-- ================= APERTURA ================= -->
+
 <section class="slide" data-id="appello" data-rumore="spento">
   <div class="occhiello">Slide 0 · solo per il prof, proiettore scollegato</div>
   <h2>Appello e gruppi</h2>
@@ -468,80 +512,27 @@ html,body{height:100%;background:var(--p16-carta)}
 </section>
 
 <section class="slide" data-id="foglio" data-rumore="spento" data-fase="solo">
-  <div class="occhiello">Il foglio di oggi</div>
-  <h2>Un foglio, cinque punti</h2>
+  <div class="occhiello">Prima di cominciare · da soli</div>
+  <h2>Il tuo foglietto da testimone</h2>
   <div class="foglio-oggi">
     <div class="carta-a4 anima" id="foglio-demo"><i class="passo" id="data-oggi">la data</i><b class="passo">1.</b><b class="passo">2.</b><b class="passo">3.</b><b class="passo">4.</b><b class="passo">5.</b></div>
     <div class="passi-icone" style="--n:1;gap:2vh">
-      <div class="passo" style="flex-direction:row;text-align:left;gap:1.4vw"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Prendi <b>un foglio bianco</b>. In alto scrivi <b>la data</b>. Niente nome.</span></div>
+      <div class="passo" style="flex-direction:row;text-align:left;gap:1.4vw"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Prendi <b>un foglietto bianco</b>. In alto scrivi <b>la data</b>. Niente nome.</span></div>
       <div class="passo" style="flex-direction:row;text-align:left;gap:1.4vw"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6h2M5 11h2M5 16h2M10 6h9M10 11h9M10 16h9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span>Scrivi a sinistra i numeri <b>da 1 a 5</b>, uno sotto l'altro, con spazio in mezzo.</span></div>
-      <div class="passo" style="flex-direction:row;text-align:left;gap:1.4vw"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Quando dico <b>"punto 2"</b>, scrivi accanto al 2. Il foglio resta tuo fino alla fine.</span></div>
+      <div class="passo" style="flex-direction:row;text-align:left;gap:1.4vw"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Quando dico <b>"punto 2"</b>, scrivi accanto al 2. Il foglietto resta tuo fino alla fine.</span></div>
     </div>
   </div>
 </section>
 
 <section class="slide centro scena" data-id="oggi" data-rumore="spento">
-  <div class="occhiello">Incontro 2</div>
-  <h1 class="titolone"><span style="animation-delay:.05s">Quattro persone,</span> <span style="animation-delay:.45s">quattro versioni della realtà.</span></h1>
-  <div class="buste4" id="buste4" style="--n:3"><div><b>1</b></div><div><b>2</b></div><div><b>3</b></div></div>
-  <p class="consegna">Oggi, tre esperimenti. Che cosa sono, lo scoprite facendoli.</p>
+  <div class="occhiello">Incontro 2 · il caso della bici gialla</div>
+  <h1 class="titolone"><span style="animation-delay:.05s">Sabato mattina</span> <span style="animation-delay:.45s">in piazza.</span></h1>
+  <div class="fascicolo"><b>Fascicolo 16/2</b><span>Sparita una bici gialla · piazza Trento e Trieste · ore 9.12-9.25</span><em class="timbro">caso aperto</em></div>
+  <p class="consegna">Voi eravate lì. Oggi siete <b>testimoni</b>.</p>
 </section>
 
-<!-- ================= 1. B O 13 ================= -->
-<section class="slide" data-id="b13-regole" data-rumore="spento" data-fase="solo">
-  <div class="occhiello">Esperimento 1 · due turni</div>
-  <h2>Un secondo per guardare. Poi si scrive.</h2>
-  <div class="giratevi passo"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="14" r="9" fill="currentColor"/><path d="M14 60c0-16 8-28 18-28s18 12 18 28z" fill="currentColor"/><path d="M26 14h12" stroke="var(--p16-carta)" stroke-width="3" stroke-linecap="round"/></svg><span>Quando chiamo il vostro gruppo: <b>giratevi con tutto il corpo</b> verso il fondo dell'aula e <b>chiudete gli occhi</b>.</span></div>
-  <p class="consegna passo">Funziona solo se nessuno sbircia. Chi tiene gli occhi chiusi fa un regalo agli altri, e al turno dopo il regalo lo riceve.</p>
-  <p class="consegna passo">Chi guarda: <b>punto 1</b> del foglio, scrivi che cosa c'era <b>in mezzo</b>. Senza parlare.</p>
-</section>
-
-<section class="slide scena" data-id="b13-turno1" data-rumore="silenzio" data-fase="solo">
-  <div class="occhiello">Esperimento 1 · turno 1</div>
-  <div class="lampo" id="b13-1"></div>
-</section>
-
-<section class="slide scena" data-id="b13-turno2" data-rumore="silenzio" data-fase="solo">
-  <div class="occhiello">Esperimento 1 · turno 2</div>
-  <div class="lampo" id="b13-2"></div>
-</section>
-
-<!-- ================= 2. L'INCIDENTE (prima parte) ================= -->
-<section class="slide centro" data-id="auto-intro" data-rumore="spento" data-fase="solo">
-  <div class="occhiello">Esperimento 2</div>
-  <h1>Siete <span style="color:var(--p16-g-rosso)">testimoni</span> di un incidente.</h1>
-  <p class="consegna passo">Lo vedrete <b>una volta sola</b>: sono pochi secondi.</p>
-  <p class="consegna passo">Poi, come fa la polizia con i testimoni veri, vi farò <b>una domanda</b> su quello che avete visto.</p>
-</section>
-
-<section class="slide scena" data-id="auto-video" data-rumore="silenzio" data-fase="solo">
-  <div class="auto-wrap"><canvas id="auto-tela"></canvas><div class="auto-msg" id="auto-msg"></div></div>
-</section>
-
-<section class="slide" data-id="auto-domanda" data-rumore="silenzio" data-fase="solo" data-timer="90">
-  <div class="occhiello">Esperimento 2 · la domanda · da soli, in silenzio</div>
-  <h2>La domanda è scritta su una carta</h2>
-  <div class="passi-icone" style="--n:4">
-    <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="18" height="3" rx="1" fill="currentColor"/><path d="M5 13v7M19 13v7" stroke="currentColor" stroke-width="2"/><rect x="8" y="5" width="7" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>Il custode</b>viene alla cattedra e prende la carta del suo colore.</div>
-    <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="2"/></svg><b>Ognuno la legge</b>in silenzio, poi la passa al compagno.</div>
-    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Punto 2</b>del foglio: la tua risposta, un numero. Non dirlo a nessuno.</div>
-    <div class="passo"><i>4</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><b>La carta torna</b>alla cattedra: la riporta il custode.</div>
-  </div>
-</section>
-
-<section class="slide" data-id="auto-senso" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Che cosa abbiamo appena fatto?</div>
-  <h2>Abbiamo fatto i testimoni.</h2>
-  <div class="riquadri">
-    <div class="passo" style="--c:var(--p16-g-rosso)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg><b>Visto una volta</b>Come chi assiste a un incidente vero: all'improvviso, in pochi secondi.</div>
-    <div class="passo" style="--c:var(--p16-g-blu)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21h16M6 21V10M18 21V10M12 3 3 8h18z M10 21v-6h4v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Conta moltissimo</b>In un processo, la parola di un testimone può decidere tutto.</div>
-    <div class="passo" style="--c:var(--p16-g-giallo)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b>Ma quanto è preciso?</b>Lo scopriremo alla fine della lezione. Intanto il foglio tenetelo con voi.</div>
-  </div>
-</section>
-
-<!-- ================= 3. IL CASO DELLA BICI GIALLA ================= -->
 <section class="slide scena" data-id="bici-storia" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Esperimento 3 · il caso della bici gialla</div>
+  <div class="occhiello">Il caso della bici gialla · che cosa è successo</div>
   <div class="storia">
     <svg class="mappa" id="mappa" viewBox="0 0 1000 470" aria-label="Schema di piazza Trento e Trieste">
       <rect x="30" y="20" width="700" height="112" rx="6" fill="var(--p16-inchiostro)" stroke="var(--p16-grigio)" stroke-width="3"/>
@@ -549,70 +540,124 @@ html,body{height:100%;background:var(--p16-carta)}
       <rect x="30" y="132" width="700" height="44" fill="var(--p16-inchiostro)" stroke="var(--p16-grigio)" stroke-width="2"/>
       <g id="archi" fill="var(--p16-notte)"></g>
       <text x="380" y="161" font-size="21" text-anchor="middle">Loggia dei Merciai (negozi)</text>
-      <rect x="20" y="186" width="860" height="226" rx="4" fill="var(--p16-grigio)"/>
-      <rect x="110" y="270" width="720" height="58" rx="10" fill="var(--p16-linea)"/>
+      <rect x="20" y="186" width="960" height="226" rx="4" fill="var(--p16-grigio)"/>
+      <rect x="90" y="270" width="640" height="58" rx="10" fill="var(--p16-linea)"/>
       <g id="lanterne" fill="var(--p16-g-giallo)"></g>
-      <text x="470" y="312" font-size="30" font-weight="700" text-anchor="middle" style="fill:var(--p16-inchiostro)">Listone</text>
-      <rect x="890" y="160" width="100" height="270" rx="6" fill="var(--p16-inchiostro)" stroke="var(--p16-grigio)" stroke-width="3"/>
-      <text x="940" y="275" font-size="24" font-weight="700" text-anchor="middle">Libreria</text>
-      <text x="940" y="303" font-size="17" text-anchor="middle">(tutto il</text>
-      <text x="940" y="324" font-size="17" text-anchor="middle">palazzo)</text>
-      <path d="M838 252v94M848 252v94M858 252v94M868 252v94" stroke="var(--p16-carta)" stroke-width="4"/>
-      <circle class="bici-punto" cx="853" cy="299" r="14" fill="var(--p16-g-giallo)"/>
-      <text x="853" y="240" font-size="19" text-anchor="middle" style="fill:var(--p16-g-giallo)">rastrelliera</text>
-      <text x="940" y="458" font-size="20" text-anchor="middle">via Mazzini ↓</text>
+      <text x="410" y="312" font-size="30" font-weight="700" text-anchor="middle" style="fill:var(--p16-inchiostro)">Listone</text>
+      <rect x="760" y="196" width="130" height="190" rx="6" fill="var(--p16-inchiostro)" stroke="var(--p16-grigio)" stroke-width="3"/>
+      <text x="825" y="282" font-size="24" font-weight="700" text-anchor="middle">Libreria</text>
+      <text x="825" y="308" font-size="16" text-anchor="middle">(tutto il palazzo)</text>
+      <path d="M912 250v96M925 250v96M938 250v96M951 250v96" stroke="var(--p16-carta)" stroke-width="4"/>
+      <circle class="bici-punto" cx="931" cy="298" r="14" fill="var(--p16-g-giallo)"/>
+      <text x="935" y="238" font-size="18" text-anchor="middle" style="fill:var(--p16-g-giallo)">rastrelliera</text>
+      <rect x="150" y="422" width="130" height="40" rx="6" fill="var(--p16-inchiostro)" stroke="var(--p16-g-arancio)" stroke-width="3"/>
+      <text x="215" y="449" font-size="20" text-anchor="middle">bar</text>
       <rect x="560" y="422" width="160" height="40" rx="6" fill="var(--p16-inchiostro)" stroke="var(--p16-g-rosa)" stroke-width="3"/>
       <text x="640" y="449" font-size="20" text-anchor="middle">gelateria</text>
-      <text x="30" y="458" font-size="16">Schema, non in scala.</text>
+      <text x="880" y="452" font-size="19" text-anchor="middle">via Mazzini, incrocio ↓</text>
+      <text x="330" y="458" font-size="16">Schema, non in scala.</text>
     </svg>
     <div class="orari">
       <div class="passo"><b>Sabato</b><span>Piazza Trento e Trieste, Ferrara, la mattina.</span></div>
-      <div class="passo"><b>8.55</b><span>Marta lega la sua bici <span class="giallo">gialla</span>, con il cestino, alla rastrelliera in fondo al Listone, davanti alla libreria. Poi entra: il sabato lavora lì.</span></div>
+      <div class="passo"><b>8.55</b><span>Marta lega la sua vecchia bici <span class="giallo">gialla</span>, con il cestino, alla rastrelliera <b>a destra della libreria</b>. Poi entra: il sabato lavora lì.</span></div>
       <div class="passo"><b>9.40</b><span>Marta esce. La bici non c'è più.</span></div>
       <div class="passo"><b>E il lucchetto?</b><span>È aperto, appeso alla rastrelliera. <span class="giallo">Non è rotto.</span></span></div>
+      <div class="passo"><b>Voi?</b><span>Eravate in piazza, ognuno in un posto diverso.</span></div>
     </div>
   </div>
 </section>
 
+
+<!-- ================= LA PROVA DEGLI OCCHI (esperimento 1, B o 13) ================= -->
+
+<section class="slide" data-id="b13-regole" data-rumore="spento" data-fase="solo">
+  <div class="occhiello">La polizia locale controlla i testimoni · prova degli occhi</div>
+  <h2>Prima di ascoltarvi, la polizia controlla i vostri occhi.</h2>
+  <div class="giratevi passo"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="14" r="9" fill="currentColor"/><path d="M14 60c0-16 8-28 18-28s18 12 18 28z" fill="currentColor"/><path d="M26 14h12" stroke="var(--p16-carta)" stroke-width="3" stroke-linecap="round"/></svg><span>Quando chiamo il vostro gruppo: <b>giratevi con tutto il corpo</b> verso il fondo dell'aula e <b>chiudete gli occhi</b>.</span></div>
+  <p class="consegna passo">Funziona solo se nessuno sbircia. Chi tiene gli occhi chiusi fa un regalo agli altri, e al turno dopo il regalo lo riceve.</p>
+  <p class="consegna passo">Chi guarda: <b>punto 1</b> del foglietto, scrivi che cosa c'era <b>in mezzo</b>. Senza parlare. Tienilo per te: servirà.</p>
+</section>
+
+<section class="slide scena" data-id="b13-turno1" data-rumore="silenzio" data-fase="solo">
+  <div class="occhiello">Prova degli occhi · turno 1</div>
+  <div class="lampo" id="b13-1"></div>
+</section>
+
+<section class="slide scena" data-id="b13-turno2" data-rumore="silenzio" data-fase="solo">
+  <div class="occhiello">Prova degli occhi · turno 2</div>
+  <div class="lampo" id="b13-2"></div>
+</section>
+
+
+<!-- ================= IL BOTTO DELLE 9.17 (esperimento 2, la domanda del vigile) ================= -->
+
+<section class="slide centro" data-id="auto-intro" data-rumore="spento" data-fase="solo">
+  <div class="occhiello">Il caso della bici gialla · ore 9.17</div>
+  <h1>Alle 9.17, all'incrocio in fondo a via Mazzini: <span style="color:var(--p16-g-rosso)">un botto.</span></h1>
+  <p class="consegna passo">Tutta la piazza si gira. Anche voi. Lo vedrete <b>una volta sola</b>: sono pochi secondi.</p>
+  <p class="consegna passo">Poi arriva il vigile e fa il verbale. A ogni testimone fa <b>una domanda</b>.</p>
+</section>
+
+<section class="slide scena" data-id="auto-video" data-rumore="silenzio" data-fase="solo">
+  <div class="auto-wrap"><canvas id="auto-tela"></canvas><div class="auto-msg" id="auto-msg"></div></div>
+</section>
+
+<section class="slide" data-id="auto-domanda" data-rumore="silenzio" data-fase="solo" data-timer="90"
+  data-ruoli="F:Controlla che nessuno dica il suo numero.|C:Prende la carta del vigile alla cattedra e la riporta.|V:Controlla che la carta passi a tutti.|S:Aspetta: i numeri li raccoglierà più tardi.">
+  <div class="occhiello">Il botto delle 9.17 · da soli, in silenzio · 1 minuto e mezzo</div>
+  <h2>La domanda del vigile è scritta su una carta</h2>
+  <div class="passi-icone" style="--n:4">
+    <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="18" height="3" rx="1" fill="currentColor"/><path d="M5 13v7M19 13v7" stroke="currentColor" stroke-width="2"/><rect x="8" y="5" width="7" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>Il custode</b>viene alla cattedra e prende la carta del suo colore.</div>
+    <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 8h8M8 12h8M8 16h5" stroke="currentColor" stroke-width="2"/></svg><b>Ognuno la legge</b>in silenzio, poi la passa al compagno.</div>
+    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Punto 2</b>del foglietto: la tua risposta, un numero. Non dirlo a nessuno.</div>
+    <div class="passo"><i>4</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5M11 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><b>La carta torna</b>alla cattedra: la riporta il custode.</div>
+  </div>
+</section>
+
+
+<!-- ================= IL CASO: CHI C'ERA E LE CARTE ================= -->
+
 <section class="slide" data-id="bici-sospettati" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Il caso della bici gialla</div>
-  <h2>Sei persone erano lì intorno</h2>
-  <div class="sosp" id="sosp"></div>
-  <p class="consegna passo centrato">Chi ha preso la bici? Su ognuno di loro, qualcuno sa qualcosa.</p>
+  <div class="occhiello">Il caso della bici gialla · chi c'era in piazza</div>
+  <h2>Otto persone erano lì intorno. E c'eravate voi.</h2>
+  <div class="sosp due-righe" id="sosp" style="--n:4"></div>
+</section>
+
+<section class="slide scena" data-id="bici-prospettive" data-rumore="spento" data-fase="tutti">
+  <div class="occhiello">Il caso della bici gialla · ognuno dal suo posto</div>
+  <h2>Eravate in piazza. Ma ognuno in un posto diverso.</h2>
+  <div class="prospettive" id="prospettive" aria-hidden="true"></div>
+  <div class="riquadri" style="--col:2">
+    <div class="passo" style="--c:var(--p16-g-rosso)"><b>Le cose plateali le vedono tutti</b>Il botto, la piazza, chi passa e chi grida. Sono scritte in alto sulla vostra carta, uguali per tutti.</div>
+    <div class="passo" style="--c:var(--p16-g-giallo)"><b>I dettagli li vede solo chi è nel posto giusto</b>Un gesto, un biglietto, uno sguardo. Sono nel riquadro "Solo tu, da dove eri".</div>
+  </div>
 </section>
 
 <section class="slide" data-id="bici-come" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Il caso della bici gialla · come si gioca</div>
-  <h2>Ognuno riceve una carta diversa</h2>
-  <div class="passi-icone" style="--n:3">
-    <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 7h8M8 10h8M8 13h8" stroke="currentColor" stroke-width="1.6"/><rect x="7" y="15" width="10" height="4" rx="1" fill="currentColor"/></svg><b>Due parti</b>In alto, quello che <b>sanno tutti</b>. In basso, nel riquadro, quello che <b>sai solo tu</b>.</div>
-    <div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b>Si legge ad alta voce</b>Tutta la carta, <b>anche</b> il riquadro "Solo tu sai". Quante volte vuoi.</div>
-    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="6" fill="var(--p16-bianco)" stroke="var(--p16-blocco)" stroke-width="2"/><path d="M13 13l8 8" stroke="var(--p16-blocco)" stroke-width="2"/></svg><b>Resta in mano tua</b>La carta non si passa e non si fa leggere, nemmeno al verificatore: si racconta.</div>
-  </div>
-  <p class="consegna passo centrato">Gli indizi arrivano a <b>ondate</b>: le vostre carte, le notizie dell'ultima ora, il dettaglio del gruppo. Dopo ogni ondata, ci confrontiamo.</p>
+  <div class="occhiello">Il caso della bici gialla · la vostra carta</div>
+  <h2>Ognuno riceve una carta: è il posto dove eri</h2>
+  <div class="passi-icone" style="--n:3"><div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 7h8M8 10h8M8 13h8" stroke="currentColor" stroke-width="1.6"/><rect x="7" y="15" width="10" height="4" rx="1" fill="currentColor"/></svg><b>Due parti</b>In alto, quello che hanno visto <b>tutti</b>. Nel riquadro, quello che hai visto <b>solo tu</b>.</div><div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b>Si legge ad alta voce</b>Tutta la carta, <b>anche</b> il riquadro. Quante volte vuoi.</div><div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17" r="6" fill="var(--p16-bianco)" stroke="var(--p16-blocco)" stroke-width="2"/><path d="M13 13l8 8" stroke="var(--p16-blocco)" stroke-width="2"/></svg><b>Resta in mano tua</b>Non si passa e non si fa leggere, nemmeno al verificatore: si racconta.</div></div>
+  <p class="consegna passo centrato">Gli indizi arrivano a <b>ondate</b>: le vostre carte, le notizie dell'ultima ora, una deposizione anonima. Dopo ogni ondata, ci confrontiamo.</p>
 </section>
 
-<section class="slide" data-id="bici-materiale" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Il caso della bici gialla · il materiale</div>
-  <h2>Custodi: alla cattedra</h2>
-  <div class="passi-icone" style="--n:3">
-    <div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="12" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="3" width="12" height="15" rx="2" fill="var(--p16-bianco)" stroke="currentColor" stroke-width="2"/></svg><b>Le carte del vostro colore</b>e un biglietto PRIMA e DOPO per ognuno.</div>
-    <div class="passo"><i>2</i><b>Una carta a testa</b><span id="carte-ruoli"></span></div>
-    <div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.4-9.3-9A5.2 5.2 0 0 1 12 6a5.2 5.2 0 0 1 9.3 6C19 16.6 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Con cura</b>Le carte non si piegano e non si scrivono. Alla fine tornano alla cattedra, in ordine.</div>
-  </div>
-  <p class="consegna passo centrato">C'è anche una <b>carta 5</b>: la tiene il segretario, <b>coperta</b>, fino a quando lo dico. Gruppi da 3: carte 1, 2, 3 e 5; la carta 4 resta sulla cattedra. Chi è arrivato dopo ascolta e chiede: «Come lo sai?»</p>
+<section class="slide" data-id="bici-materiale" data-rumore="spento" data-fase="gruppo"
+  data-ruoli="F:Controlla che ognuno abbia la sua carta.|C:Va alla cattedra e porta il materiale al tavolo.|V:Controlla che nessuno legga la carta di un altro.|S:Tiene il foglio bianco: ci scriverà la linea del tempo.">
+  <div class="occhiello">Il caso della bici gialla · il materiale · 1 minuto</div>
+  <h2>Custodi: alla cattedra. Prendete il materiale del vostro colore.</h2>
+  <div class="passi-icone" style="--n:3"><div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="18" height="3" rx="1" fill="currentColor"/><path d="M5 13v7M19 13v7" stroke="currentColor" stroke-width="2"/><rect x="8" y="5" width="7" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>Il custode prende</b>le carte 1, 2, 3 e 4 del colore del gruppo, un biglietto PRIMA e DOPO per ognuno e un foglio bianco.</div><div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 7h8M8 10h8M8 13h8" stroke="currentColor" stroke-width="1.6"/><rect x="7" y="15" width="10" height="4" rx="1" fill="currentColor"/></svg><b>Una carta a testa</b><span id="carte-ruoli"></span></div><div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 15c-1.5-1-2.5-3-2.5-5.5a6.5 6.5 0 0 1 13 0c0 3-2 4-3 5s-1 3-3.5 3c-1.5 0-2-1-2-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b>Chi arriva dopo</b>non riceve una carta: quelle già date restano a chi le ha. Ascolta e chiede: «Come lo sai?»</div></div>
+  <p class="consegna passo centrato">Gruppi da 3: carte 1, 2 e 3. La carta 4 resta sulla cattedra. Le carte non si piegano e non si scrivono.</p>
 </section>
 
 <section class="slide centro" data-id="bici-leggi" data-rumore="silenzio" data-fase="solo" data-timer="90">
   <div class="occhiello">Da soli · un minuto e mezzo · in silenzio</div>
   <h1>Leggi tutta la tua carta.</h1>
   <p class="consegna passo">Con calma, anche due volte. Ancora niente da scrivere.</p>
-  <p class="consegna passo">Chiediti: <b>secondo la mia carta, chi ha preso la bici?</b></p>
+  <p class="consegna passo">Chiediti: <b>da dove ero, che cosa ho visto?</b> E secondo te, chi ha preso la bici?</p>
 </section>
 
 <section class="slide" data-id="bici-foglio" data-rumore="silenzio" data-fase="solo" data-timer="90" data-timer-auto>
   <div class="occhiello">Da soli · un minuto e mezzo</div>
-  <h2>Punto 3 del foglio: quello che pensi tu, adesso</h2>
+  <h2>Punto 3 del foglietto: quello che pensi tu, adesso</h2>
   <div class="foglio-oggi">
     <div class="carta-a4"><i>la data di oggi</i><b>1. B? 13?</b><b>2. ... km/h</b><b style="border-color:var(--p16-g-giallo);color:var(--p16-inchiostro)">3. Secondo me è stato ... perché ...</b><b>4.</b><b>5.</b></div>
     <ol class="elenco">
@@ -636,6 +681,9 @@ html,body{height:100%;background:var(--p16-carta)}
   </div>
 </section>
 
+
+<!-- ================= ONDATA 1: LE CARTE ================= -->
+
 <section class="slide" data-id="bici-gruppo" data-rumore="discussione" data-fase="gruppo" data-timer="300" data-ondata="1" data-ondata-testo="Le vostre carte"
   data-ruoli="F:Dà la parola a turno, con il maccherone. Se c'è silenzio: «Che cosa non ti torna?»|C:Guarda il tempo. A ogni nuova domanda: «Passiamo avanti».|V:A ogni accusa chiede: «Come lo sai? È scritto su una carta?»|S:Scrive orari e nomi, in colonna, sul foglio del gruppo.">
   <div class="occhiello">Ondata 1 · nel gruppo · 5 minuti · tre domande</div>
@@ -653,23 +701,38 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="voti" id="flash1"></div>
 </section>
 
-<section class="slide scena lente" data-id="lente-1" data-rumore="spento" data-fase="tutti">
+<section class="slide scena lente" data-id="lente-1" data-rumore="spento" data-fase="tutti" data-v="diversi">
   <div class="lente-sfondo" aria-hidden="true"></div>
   <div class="occhiello">Lente · una domanda aperta</div>
-  <h2 class="lente-domanda">Gruppi diversi, nomi diversi. Allora qualcuno sbaglia?</h2>
-  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>Sì: la bici l'ha presa qualcuno. La risposta giusta è una sola.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>Non per forza: ogni gruppo ha messo insieme pezzi diversi.</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Forse sbagliamo tutti: nessuno ha ancora tutti i pezzi.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>Forse abbiamo ragione tutti, ognuno su un pezzo.</div></div>
-  <p class="consegna passo centrato">Non c'è una risposta giusta. Quale ti convince di più? Tienila a mente: fra poco arrivano notizie nuove.</p>
+  <div class="variante" data-v="diversi">
+    <h2 class="lente-domanda">Gruppi diversi, nomi diversi. Allora qualcuno sbaglia?</h2>
+    <div class="interpretazioni"><div class="passo-v" style="--c:var(--p16-g-giallo)"><i>1</i>Sì: la bici l'ha presa qualcuno. La risposta giusta è una sola.</div><div class="passo-v" style="--c:var(--p16-g-azzurro)"><i>2</i>Non per forza: ogni gruppo ha messo insieme pezzi diversi.</div><div class="passo-v" style="--c:var(--p16-g-rosa)"><i>3</i>Forse sbagliamo tutti: nessuno ha ancora tutti i pezzi.</div><div class="passo-v" style="--c:var(--p16-g-verde)"><i>4</i>Forse abbiamo ragione tutti, ognuno su un pezzo.</div></div>
+  </div>
+  <div class="variante" data-v="uguali">
+    <h2 class="lente-domanda">Tutti i gruppi dicono la stessa cosa. Allora è sicuro?</h2>
+    <div class="interpretazioni"><div class="passo-v" style="--c:var(--p16-g-giallo)"><i>1</i>Sì: se lo pensano tutti i gruppi, sarà vero.</div><div class="passo-v" style="--c:var(--p16-g-azzurro)"><i>2</i>Non per forza: abbiamo letto tutti le stesse cose plateali.</div><div class="passo-v" style="--c:var(--p16-g-rosa)"><i>3</i>Forse a tutti manca lo stesso pezzo.</div><div class="passo-v" style="--c:var(--p16-g-verde)"><i>4</i>Forse è vero, ma è solo una parte della storia.</div></div>
+  </div>
+  <p class="consegna passo centrato">Non c'è una risposta giusta. Quale ti convince di più? Tienila a mente: arrivano notizie nuove.</p>
 </section>
+
+
+<!-- ================= ONDATA 2: ULTIM'ORA ================= -->
 
 <section class="slide scena" data-id="bici-ultimora" data-rumore="spento" data-fase="tutti" data-ondata="2" data-ondata-testo="Notizie dell'ultima ora">
   <div class="ultimora"><span class="bollino">ULTIM'ORA</span><h2>Bici gialla: arrivano nuove voci</h2></div>
   <div class="notizie">
-    <div class="passo" style="--c:var(--p16-g-azzurro)"><small>Un ragazzo che passava in bici in via Mazzini</small>«Alle 9.15 uno vestito di scuro armeggiava con una bici gialla. Sembrava che la stesse forzando. Io andavo veloce.»</div>
-    <div class="passo" style="--c:var(--p16-g-verde)"><small>Un vigile</small>«Alle 9.19 un furgoncino bianco è ripartito dalla fine del Listone. Dal vetro dietro si vedeva qualcosa di giallo.»</div>
-    <div class="passo" style="--c:var(--p16-g-viola)"><small>L'amica di Marta, alle 9.25</small>«Alla finestra di Franco c'era qualcuno. Guardava giù, verso la rastrelliera, e rideva.»</div>
-    <div class="passo" style="--c:var(--p16-g-giallo)"><small>Una foto del lucchetto, alle 9.40</small>Il lucchetto è aperto, appeso alla rastrelliera. Qualcuno ci ha legato intorno un nastrino giallo.</div>
+    <div class="passo" style="--c:var(--p16-g-azzurro)"><small>Il vigile del botto</small>«Mentre parlavo con gli automobilisti, un furgoncino bianco è ripartito dalla fine del Listone. Sul fianco c'era un segno grande: <b>una B, o forse un 13</b>. Non sono sicuro.»</div>
+    <div class="passo" style="--c:var(--p16-g-verde)"><small>Il registro della ditta di consegne</small>Alle 9.17 Tommaso firmava una consegna in via Garibaldi, a 300 metri. Il suo furgone, quello con la B, era parcheggiato lì.</div>
+    <div class="passo nuovo" style="--c:var(--p16-g-rosso)"><small>Una persona nuova: Davide, il ciclista</small>Ha un negozio di bici in via Ripagrande, al numero 13. Il suo furgoncino è bianco, con <b>un 13 grande</b> sul fianco. Sabato il negozio è rimasto chiuso dalle 9 alle 10: «Torno subito».</div>
+    <div class="passo" style="--c:var(--p16-g-giallo)"><small>Una foto del lucchetto, alle 9.40</small>Il lucchetto è aperto, appeso alla rastrelliera. Qualcuno ci ha legato intorno <b>un nastrino giallo</b>.</div>
   </div>
-  <div class="ticker" aria-hidden="true"><span>FERRARA · PIAZZA TRENTO E TRIESTE · SPARITA UNA BICI GIALLA DAVANTI ALLA LIBRERIA · IL LUCCHETTO NON È ROTTO · NUOVE TESTIMONIANZE · LE INDAGINI CONTINUANO · </span></div>
+  <div class="ticker" aria-hidden="true"><span>FERRARA · PIAZZA TRENTO E TRIESTE · SPARITA UNA BICI GIALLA A DESTRA DELLA LIBRERIA · IL LUCCHETTO NON È ROTTO · NUOVE TESTIMONIANZE · LE INDAGINI CONTINUANO · </span></div>
+</section>
+
+<section class="slide centro" data-id="vetri" data-rumore="silenzio" data-fase="solo" data-timer="45" data-timer-auto>
+  <div class="occhiello">Il vigile vi richiama · da soli · 45 secondi</div>
+  <h1>«Nel botto delle 9.17, avete visto dei <span class="vetro">vetri rotti</span>?»</h1>
+  <p class="consegna"><b>Punto 4</b> del foglietto: sì o no. Senza parlare.</p>
 </section>
 
 <section class="slide" data-id="bici-gruppo2" data-rumore="discussione" data-fase="gruppo" data-timer="180"
@@ -685,28 +748,51 @@ html,body{height:100%;background:var(--p16-carta)}
 <section class="slide scena lente" data-id="lente-2" data-rumore="spento" data-fase="tutti" data-timer="120">
   <div class="lente-sfondo" aria-hidden="true"></div>
   <div class="occhiello">Lente · una domanda aperta</div>
-  <h2 class="lente-domanda">La signora: «apriva il lucchetto con calma, con una chiave». Il ragazzo in bici: «sembrava che la forzasse». Chi ha ragione?</h2>
-  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>La signora: era seduta, ferma, vicina.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>Il ragazzo: ha visto un gesto strano e l'ha detto.</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Tutti e due: hanno visto la stessa scena da posti diversi.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>Nessuno dei due: ognuno ci ha messo qualcosa di suo.</div></div>
+  <h2 class="lente-domanda">Il vigile ha visto sul furgoncino «una B, o forse un 13». E voi, nella prova degli occhi, che cosa avevate letto?</h2>
+  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>Era una B: allora c'entra il furgone di Tommaso.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>Era un 13: allora c'entra il furgoncino del ciclista.</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Non lo sappiamo: il vigile stesso non è sicuro.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>Dipende da che cosa ci aspettavamo di vedere.</div></div>
   <p class="consegna passo centrato">Per parlare, mano alzata. C'è un'altra interpretazione possibile?</p>
 </section>
 
-<section class="slide" data-id="bici-messaggeri" data-rumore="discussione" data-fase="gruppo" data-timer="150" data-ondata="3" data-ondata-testo="Il dettaglio del gruppo"
-  data-ruoli="F:Fa ascoltare il messaggero che arriva.|C:È il messaggero: racconta il vostro dettaglio al gruppo dopo.|V:Controlla che il messaggero abbia capito bene, prima che parta.|S:Gira la carta 5 e la legge al gruppo.">
-  <div class="occhiello">Ondata 3 · la carta 5 · 2 minuti e mezzo</div>
-  <h2>Ogni gruppo ha un dettaglio. E lo regala al gruppo dopo.</h2>
+
+<!-- ================= ONDATA 3: LA DEPOSIZIONE ANONIMA E I MESSAGGERI ================= -->
+
+<section class="slide" data-id="bici-deposizione" data-rumore="discussione" data-fase="gruppo" data-timer="60" data-ondata="3" data-ondata-testo="Una deposizione anonima"
+  data-ruoli="F:Fa sedere tutti: si ascolta.|C:Va alla cattedra e prende la carta 5 del vostro colore.|V:Controlla che sia la carta del colore giusto.|S:Riceve la carta 5 dal custode.">
+  <div class="occhiello">Ondata 3 · passo 1 di 3 · 1 minuto</div>
+  <h2>Custodi: alla cattedra. C'è una deposizione anonima per voi.</h2>
+  <div class="passi-icone" style="--n:3"><div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="18" height="3" rx="1" fill="currentColor"/><path d="M5 13v7M19 13v7" stroke="currentColor" stroke-width="2"/><rect x="8" y="5" width="7" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>Il custode</b>va alla cattedra e prende la <b>carta 5</b> del colore del gruppo.</div><div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 7h8M8 10h8M8 13h8" stroke="currentColor" stroke-width="1.6"/><rect x="7" y="15" width="10" height="4" rx="1" fill="currentColor"/></svg><b>La dà al segretario</b>che per ora la tiene coperta.</div><div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><circle cx="16" cy="8" r="3" fill="currentColor"/><path d="M2 20c0-4 3-7 6-7s6 3 6 7M10 20c0-4 3-7 6-7s6 3 6 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><b>Ogni gruppo</b>ha una deposizione diversa. Nessuno ce le ha tutte.</div></div>
+</section>
+
+<section class="slide" data-id="bici-deposizione-leggi" data-rumore="discussione" data-fase="gruppo" data-timer="60"
+  data-ruoli="F:Fa ripetere al custode la deposizione.|C:Ascolta e la impara: tra poco la racconta a un altro gruppo.|V:Controlla che il custode la ripeta giusta.|S:Legge la carta 5 ad alta voce, due volte.">
+  <div class="occhiello">Ondata 3 · passo 2 di 3 · 1 minuto</div>
+  <h2>Il segretario legge la deposizione. Il custode la impara.</h2>
+  <div class="passi-icone" style="--n:3"><div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b>Il segretario</b>gira la carta 5 e la legge ad alta voce, <b>due volte</b>.</div><div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 8h6M9 11h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 15l-1 6M16 15l1 6" stroke="currentColor" stroke-width="2"/></svg><b>Il custode</b>la impara: tra poco la racconterà <b>a voce</b> a un altro gruppo.</div><div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Prova</b>il custode la ripete. Il verificatore controlla che sia giusta.</div></div>
+</section>
+
+<section class="slide" data-id="bici-messaggeri" data-rumore="discussione" data-fase="gruppo" data-timer="150" data-ruoli="F:Accoglie il custode che arriva e fa ascoltare.|C:È il messaggero: racconta, risponde alle domande, torna.|V:Controlla che il messaggero che arriva sia ascoltato da tutti.|S:Scrive in due righe la deposizione che arriva.">
+  <div class="occhiello">Ondata 3 · passo 3 di 3 · i messaggeri · 2 minuti e mezzo</div>
+  <h2>I custodi portano la deposizione al gruppo dopo.</h2>
   <div class="messaggeri">
     <ol class="elenco">
-      <li class="passo">Il <b>segretario</b> gira la carta 5 e la legge al gruppo.</li>
-      <li class="passo">Il <b>custode</b> va al gruppo dopo (in senso orario) e racconta il dettaglio <b>a voce</b>, senza la carta. Poi torna.</li>
-      <li class="passo">Ora avete <b>due dettagli</b>: il vostro e quello arrivato.</li>
+      <li class="passo">Il <b>custode</b> si alza e va al gruppo dopo, seguendo la freccia (senso orario). La carta resta al tavolo.</li>
+      <li class="passo">Racconta la deposizione <b>a voce</b>. Il gruppo che lo riceve ascolta e può fare domande.</li>
+      <li class="passo">Poi <b>torna</b> al suo tavolo. Ora ogni gruppo ha <b>due deposizioni</b>: la sua e quella arrivata.</li>
     </ol>
     <div class="anello" id="anello"></div>
   </div>
 </section>
 
+<section class="slide" data-id="bici-verdetto-come" data-rumore="spento" data-fase="gruppo"
+  data-ruoli="F:Fa parlare uno alla volta, poi fa decidere.|C:Guarda il tempo: 3 minuti.|V:Chiede per ogni riga: «Qual è l'indizio?»|S:Scrive il verdetto sul retro della scheda del gruppo.">
+  <div class="occhiello">Il verdetto del gruppo · come si fa</div>
+  <h2>Fra poco il gruppo scrive il suo verdetto. Così:</h2>
+  <div class="passi-icone" style="--n:4"><div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><circle cx="16" cy="8" r="3" fill="currentColor"/><path d="M2 20c0-4 3-7 6-7s6 3 6 7M10 20c0-4 3-7 6-7s6 3 6 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><b>Il facilitatore</b>chiede a ognuno, a turno: «Chi è stato, secondo te? Perché?»</div><div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg><b>Si decide insieme</b>anche più nomi. Se non siete d'accordo, scrivete anche questo.</div><div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 L5 15 L16 4 L20 8 L9 19 Z M14 6 L18 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Il segretario scrive</b>sul retro della scheda del gruppo, al massimo 5 righe.</div><div class="passo"><i>4</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg><b>Il verificatore rilegge</b>e controlla che ogni riga abbia un indizio.</div></div>
+</section>
+
 <section class="slide" data-id="bici-verdetto" data-rumore="discussione" data-fase="gruppo" data-timer="180" data-timer-auto
   data-ruoli="F:Fa decidere il gruppo: chi e come.|C:Avvisa quando manca 1 minuto.|V:Controlla: ogni riga ha un indizio?|S:Scrive il verdetto, al massimo 5 righe.">
-  <div class="occhiello">Nel gruppo · 3 minuti · scrive il segretario</div>
+  <div class="occhiello">Nel gruppo · 3 minuti · scrive il segretario, rilegge il verificatore</div>
   <h2>Il verdetto del gruppo: al massimo 5 righe</h2>
   <div class="foglio-oggi">
     <div class="carta-a4" style="font-size:clamp(14px,1.2vw,21px);height:40vh"><i>Verdetto del gruppo ...</i><b>Chi: ...</b><b>Come è andata: ...</b><b>Perché: ...</b><b>L'indizio decisivo: ...</b><b>Che cosa non torna: ...</b></div>
@@ -730,49 +816,40 @@ html,body{height:100%;background:var(--p16-carta)}
   </ol>
 </section>
 
-
-
 <section class="slide" data-id="bici-voti" data-rumore="spento" data-fase="tutti">
   <div class="occhiello">Tutti insieme · il verdetto, un gruppo alla volta · 20 secondi</div>
   <div class="turno-gruppo" id="voti-turno"></div>
   <div class="voti" id="voti"></div>
 </section>
 
-<!-- ================= 2. L'INCIDENTE (seconda parte) ================= -->
-<section class="slide centro" data-id="vetri" data-rumore="silenzio" data-fase="solo" data-timer="45" data-timer-auto>
-  <div class="occhiello">Torniamo all'incidente · da soli</div>
-  <h1>Nell'incidente di prima, avete visto dei <span class="vetro">vetri rotti</span>?</h1>
-  <p class="consegna"><b>Punto 4</b> del foglio: sì o no.</p>
+
+<!-- ================= SOLUZIONE (riservata) ================= -->
+
+<!-- ================= SVELAMENTO: I TRE ESPERIMENTI (riservato) ================= -->
+
+<!-- ================= IL BOTTO: I NUMERI DEI GRUPPI ================= -->
+
+<section class="slide" data-id="auto-segretario" data-rumore="discussione" data-fase="gruppo" data-timer="120"
+  data-ruoli="F:Fa parlare uno alla volta.|C:Controlla che i foglietti restino sul tavolo.|V:Rifà la somma, per controllo.|S:Somma le velocità e conta i sì.">
+  <div class="occhiello">Esperimento 2 · il botto · nel gruppo · 2 minuti</div>
+  <h2>Due numeri dal foglietto. Il segretario fa i conti.</h2>
+  <div class="conti" id="conti">
+    <div class="riga-c"><span class="et">Punto 2<small>km/h</small></span><span class="gett">40</span><span class="gett">55</span><span class="gett">30</span><span class="gett">60</span><span class="uguale">=</span><span class="tot">185</span></div>
+    <div class="riga-c"><span class="et">Punto 4<small>vetri?</small></span><span class="gett si">sì</span><span class="gett">no</span><span class="gett si">sì</span><span class="gett">no</span><span class="uguale">=</span><span class="tot">2 sì</span></div>
+    <div class="fumetto">Il segretario dirà: <b>«185 e 2»</b></div>
+  </div>
+  <p class="consegna centrato">Spazio: parte il tempo. Quando chiamo il vostro colore, il segretario dice i due numeri.</p>
 </section>
 
-<section class="slide" data-id="auto-raccolta" data-rumore="spento" data-fase="tutti">
-  <div class="occhiello">Torniamo all'incidente · che cosa facciamo adesso</div>
-  <h2>Mettiamo insieme le risposte di tutti</h2>
-  <div class="passi-icone" style="--n:3">
-    <div class="passo"><i>1</i><b>Sul foglio avete già</b>il punto 2, la velocità (dopo la carta-domanda), e il punto 4, sì o no.</div>
-    <div class="passo"><i>2</i><b>Nel gruppo</b>il segretario fa due conti: la somma delle velocità, e quanti hanno detto sì.</div>
-    <div class="passo"><i>3</i><b>Tutti insieme</b>chiamo i gruppi uno alla volta e metto i numeri sullo schermo.</div>
-  </div>
-  <div class="cura passo" style="background:var(--p16-bianco);color:var(--p16-inchiostro);box-shadow:0 4px 18px rgba(13,19,34,.12)"><span><b>Esempio</b> di un gruppo da 4: velocità 40, 55, 30, 60. Somma: <b>185</b>. Due sì e due no: <b>2</b>. Il segretario dirà: "185 e 2".</span></div>
-</section>
-
-<section class="slide" data-id="auto-segretario" data-rumore="discussione" data-fase="gruppo" data-timer="120" data-timer-auto
-  data-ruoli="F:Fa parlare uno alla volta.|C:Controlla che i fogli restino sul tavolo.|V:Rifà la somma, per controllo.|S:Somma le velocità e conta i sì.">
-  <div class="occhiello">Nel gruppo · 2 minuti · guida il segretario</div>
-  <h2>Il segretario raccoglie due numeri</h2>
-  <div class="passi-icone" style="--n:3">
-    <div><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/></svg><b>Ognuno legge</b>al segretario il suo punto 2 (la velocità) e il suo punto 4 (sì o no).</div>
-    <div><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><b>Il segretario</b>somma le velocità del gruppo e conta i sì.</div>
-    <div><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 11v8M11 8v11M15 5v14M19 9v10" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><b>Poi li dice a me</b>quando chiamo il vostro colore: prima la somma, poi i sì.</div>
-  </div>
-</section>
+<!-- ================= LA MORALE DELLE CARTE DIVISE (esperimento 3) ================= -->
 
 <!-- ================= CHIUSURA ================= -->
+
 <section class="slide scena lente" data-id="lente-fine" data-rumore="spento" data-fase="tutti">
   <div class="lente-sfondo" aria-hidden="true"></div>
   <div class="occhiello">Lente · una domanda aperta</div>
   <h2 class="lente-domanda">Quattro versioni, tutte vere. Allora la verità non esiste?</h2>
-  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>Esiste: chi ha preso la bici è un fatto, e lo abbiamo trovato.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>Esistono i fatti, ma il significato cambia: furto o regalo?</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Ognuno ha la sua verità, e vale quanto quella degli altri.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>La verità si costruisce insieme, mettendo in fila i pezzi.</div></div>
+  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>Esiste: chi ha preso la bici è un fatto, e lo abbiamo trovato insieme.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>Esistono i fatti, ma il significato cambia: furto o regalo?</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Ognuno ha la sua verità, e vale quanto quella degli altri.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>La verità si costruisce insieme, mettendo in fila i pezzi.</div></div>
   <p class="consegna passo centrato">Nessuna è la risposta giusta. Quale ti convince oggi? Ce lo richiederemo nei prossimi incontri.</p>
 </section>
 
@@ -780,33 +857,31 @@ html,body{height:100%;background:var(--p16-carta)}
   <div class="occhiello">Che cosa abbiamo visto oggi</div>
   <div class="riquadri tesi2" style="--col:3">
     <div class="passo" style="--c:var(--p16-g-azzurro)"><b>Il segno</b>Il contesto decide che cosa vediamo.</div>
-    <div class="passo" style="--c:var(--p16-g-rosso)"><b>L'incidente</b>Una parola può cambiare un ricordo.</div>
-    <div class="passo" style="--c:var(--p16-g-giallo)"><b>La bici</b>Quattro versioni, tutte vere: nessuna completa.</div>
+    <div class="passo" style="--c:var(--p16-g-rosso)"><b>Il vigile</b>Una parola può cambiare un ricordo.</div>
+    <div class="passo" style="--c:var(--p16-g-giallo)"><b>La bici</b>Tante versioni, tutte vere: nessuna completa.</div>
   </div>
   <p class="consegna passo centrato">Per vedere la storia intera servono <b>gli altri</b>: soprattutto quelli che hanno visto un'altra parte.</p>
 </section>
 
 <section class="slide" data-id="rituale" data-rumore="silenzio" data-fase="solo" data-timer="120" data-timer-auto>
-  <div class="occhiello">Da soli · 2 minuti · punto 5 del foglio</div>
-  <h2>Rileggi il tuo punto 3: quello che pensavi prima del gruppo.</h2>
+  <div class="occhiello">Da soli · 2 minuti · punto 5 del foglietto</div>
+  <h2>Rileggi il tuo punto 3: quello che pensavi prima delle ondate.</h2>
   <ol class="elenco">
     <li class="passo">Che cosa ti ha fatto <b>cambiare idea</b>?</li>
     <li class="passo">Oppure: che cosa <b>sapevi solo tu</b>, e sei riuscito a dirlo?</li>
   </ol>
 </section>
 
-<section class="slide" data-id="riordino" data-rumore="discussione" data-fase="gruppo" data-timer="60" data-timer-auto
-  data-ruoli="F:Controlla che tutti abbiano finito.|C:Riporta tutto alla cattedra.|V:Guarda il tavolo: nessuna carta?|S:Mette tessere e schede nella busta.">
-  <div class="occhiello">1 minuto · guida il custode</div>
-  <h2>Fine: tutto pronto per la prossima volta</h2>
-  <ul class="elenco">
-    <li>Il custode controlla: sul tavolo non resta <b>nessuna carta</b>. È tutto alla cattedra?</li>
-    <li>Tessere e schede nella busta del gruppo. Non togliete la linguetta dell'adesivo.</li>
-    <li>Maccherone e fogli a parte, come all'inizio.</li>
-  </ul>
+<section class="slide" data-id="riordino" data-rumore="discussione" data-fase="gruppo" data-timer="90" data-timer-auto
+  data-ruoli="F:Controlla che tutti abbiano finito.|C:Riporta carte e foglietti alla cattedra.|V:Guarda il tavolo e il pavimento: niente in giro?|S:Mette tessere e schede nella busta.">
+  <div class="occhiello">1 minuto e mezzo · tutti insieme, ognuno il suo compito</div>
+  <h2>Fine: tutto a posto per la prossima volta</h2>
+  <div class="passi-icone" style="--n:3"><div class="passo"><i>1</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="18" height="3" rx="1" fill="currentColor"/><path d="M5 13v7M19 13v7" stroke="currentColor" stroke-width="2"/><rect x="8" y="5" width="7" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><b>Alla cattedra</b>carte, deposizioni e foglietti. Sul tavolo non resta niente.</div><div class="passo"><i>2</i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 7h8M8 10h8M8 13h8" stroke="currentColor" stroke-width="1.6"/><rect x="7" y="15" width="10" height="4" rx="1" fill="currentColor"/></svg><b>Nella busta</b>tessere e schede del gruppo. Non togliete la linguetta dell'adesivo.</div><div class="passo"><i>3</i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3" fill="currentColor"/><circle cx="16" cy="8" r="3" fill="currentColor"/><path d="M2 20c0-4 3-7 6-7s6 3 6 7M10 20c0-4 3-7 6-7s6 3 6 7" fill="none" stroke="currentColor" stroke-width="2"/></svg><b>Banchi a posto</b>come li abbiamo trovati, in file. Sedie sotto il banco.</div></div>
 </section>
 
+
 <!-- ================= RISERVA: se avanza tempo ================= -->
+
 <section class="slide" data-id="nomi-settimana" data-rumore="silenzio" data-fase="solo" data-timer="60">
   <div class="occhiello">Se c'è tempo · i nomi, una settimana dopo</div>
   <h2>Sul retro del foglio: i nomi dei compagni degli altri gruppi che ricordi</h2>
@@ -852,8 +927,9 @@ html,body{height:100%;background:var(--p16-carta)}
   <p class="fonte">Per chi vuole approfondire: L. A. Necker (1832); D. A. Leopold e N. K. Logothetis (1999), sulla percezione bistabile.</p>
 </section>
 
-<!-- RISERVA (D-94): il disegno resta fuori dai 75 minuti; candidato per un altro incontro. -->
-<!-- ================= 4. IL DISEGNO CHE PASSA DI MANO ================= -->
+
+<!-- ================= RISERVA (D-94): il disegno che passa di mano, fuori dai 75 minuti ================= -->
+
 <section class="slide" data-id="disegno-prep" data-rumore="spento" data-fase="gruppo">
   <div class="occhiello">Esperimento in più · il disegno che passa di mano · si prepara</div>
   <h2>Prima prepariamo il tavolo</h2>
@@ -2493,7 +2569,8 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   const segno = (ch, cls) => svgT(70, G[ch], cls);
   // numeri e segno ambiguo: asta a sinistra e cifra molto vicina, con le stesse misure
   const numero = c => svgT(78, '<path d="M12 6V94"/><g transform="translate(25 0)">' + G[c] + "</g>");
-  const ambiguo = () => numero("3");
+  // segno ambiguo (D-98): le tre barre del 3 arrivano quasi all'asta, così in mezzo ad A e C si legge B
+  const ambiguo = () => svgT(78, '<path d="M12 6V94"/><g transform="translate(25 0)"><path d="M-4 6H18C34 6 38 19 38 27C38 39 30 47 18 47H-4M18 47C34 47 40 56 40 69C40 83 32 94 18 94H-4"/></g>');
   let metaA = C.presenti.filter(p => C.meta(p.g) === "A"), metaB = C.presenti.filter(p => C.meta(p.g) === "B");
   const unSolo = metaB.length === 0;                                  // un solo gruppo: si divide per ruoli
   const chiChiude = (lista, k) => unSolo ? `<p class="consegna"><b>${k === 1 ? "Facilitatore e custode" : "Verificatore e segretario"}</b></p>` : chips(lista);
@@ -2510,7 +2587,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
             if (n > 0) { box.innerHTML = `<div class="conto">${n}</div>`; n--; tt.push(setTimeout(conta, 800)); return; }
             box.innerHTML = `<div class="seq ${verticale ? "verticale" : ""}">${sequenza.map(s => s === "?" ? ambiguo() : (/\d/.test(s) ? numero(s) : segno(s))).join("")}</div>`;
             Motore.evento("lampo", { slide: id });
-            tt.push(setTimeout(() => { box.innerHTML = `<h2>Punto 1: che cosa c'era in mezzo?</h2><p class="consegna">Ora tutti possono girarsi e aprire gli occhi.</p>`; fase = 2; }, 1000));
+            tt.push(setTimeout(() => { box.innerHTML = `<h2>Punto 1: che cosa c'era in mezzo?</h2><p class="consegna">Scrivilo e tienilo per te. Ora tutti possono girarsi e aprire gli occhi.</p>`; fase = 2; }, 1000));
           };
           conta(); return true;
         }
@@ -2619,10 +2696,17 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     sergio: { nome: "Sergio", c: col("petrolio"), cosa: "il postino della zona",
       acc: '<path d="M32 22h36l-2 8H34z" fill="var(--p16-inchiostro)"/><path d="M30 64l40 40" stroke="var(--p16-inchiostro)" stroke-width="4"/><rect x="58" y="86" width="22" height="18" rx="3" fill="var(--p16-inchiostro)"/>' },
   };
-  const ORDINE_SOSP = ["matteo", "elena", "chiara", "tommaso", "franco", "sergio"];
+  AVATAR.paolo = { nome: "Paolo", c: col("azzurro"), cosa: "gira in monopattino intorno alle bici",
+    acc: '<path d="M30 30c2-14 38-14 40 0" fill="var(--p16-inchiostro)"/><path d="M62 104l14-32M70 72h12" stroke="var(--p16-inchiostro)" stroke-width="4" stroke-linecap="round"/><circle cx="62" cy="104" r="5" fill="var(--p16-inchiostro)"/>' };
+  AVATAR.irene = { nome: "Irene", c: col("giallo"), cosa: "fotografa le bici della piazza",
+    acc: '<path d="M28 30c2-16 42-16 44 0v22c-4-16-40-16-44 0z" fill="var(--p16-inchiostro)"/><rect x="54" y="78" width="28" height="18" rx="3" fill="var(--p16-inchiostro)"/><circle cx="68" cy="87" r="5" fill="var(--p16-bianco)"/>' };
+  AVATAR.davide = { nome: "Davide", c: col("rosso"), cosa: "ciclista di via Ripagrande 13",
+    acc: '<path d="M30 30a20 16 0 0 1 40 0z" fill="var(--p16-inchiostro)"/><path d="M58 98l16-16M70 78l8-4 4 4-4 8" fill="none" stroke="var(--p16-inchiostro)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>' };
+  const PIAZZA = ["matteo", "elena", "chiara", "tommaso", "franco", "sergio", "paolo", "irene"];   // chi c'era (ondata 1)
+  const ORDINE_SOSP = PIAZZA.concat(["davide"]);                                                   // con l'ultim'ora
   const avatar = k => { const a = AVATAR[k]; return `<svg class="av" viewBox="0 0 100 110" aria-hidden="true"><circle cx="50" cy="36" r="20" fill="#E8C9A8"/><path d="M14 110c0-26 16-44 36-44s36 18 36 44z" fill="${a.c}"/>${a.acc}</svg>`; };
   const scheda = (k, cls) => `<div class="${cls || ""}" data-s="${k}" style="--c:${AVATAR[k].c}">${avatar(k)}<b>${AVATAR[k].nome}</b><span>${AVATAR[k].cosa}</span><span class="timbro"></span></div>`;
-  if ($("sosp")) $("sosp").innerHTML = ORDINE_SOSP.map(k => scheda(k, "passo")).join("");
+  if ($("sosp")) $("sosp").innerHTML = PIAZZA.map(k => scheda(k, "passo")).join("");
   {
     const R = C.ICONE_RUOLO, ic = s => `<svg viewBox="0 0 24 24" style="width:1.1em;height:1.1em;vertical-align:-.15em">${R[s]}</svg>`;
     if ($("carte-ruoli")) $("carte-ruoli").innerHTML = `<b>1</b> ${ic("F")} facilitatore<br><b>2</b> ${ic("C")} custode<br><b>3</b> ${ic("V")} verificatore<br><b>4</b> ${ic("S")} segretario`;
@@ -2653,13 +2737,14 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
 
   // ---------- la risposta di ogni gruppo: tasti 1-6 accendono o spengono un nome; → gruppo dopo
   {
-    const creaVoti = (idSlide, idBox, idTurno, sec, frase, evento) => {
+    const creaVoti = (idSlide, idBox, idTurno, sec, frase, evento, lista, dopo) => {
     const box = $(idBox), turno = $(idTurno);
     if (!box) return;
+    box.style.gridTemplateColumns = `repeat(${lista.length},minmax(0,1fr))`;
     let k = 0;
     const risposte = C.presenti.map(() => []);
     function disegna() {
-      box.innerHTML = ORDINE_SOSP.map((s, n) => `<div class="${(risposte[k] || []).includes(s) ? "scelto" : ""}" style="--c:${AVATAR[s].c}">${avatar(s)}<b>${n + 1}. ${AVATAR[s].nome}</b><div class="pila">${C.presenti.map((p, j) => (j <= k && risposte[j].includes(s)) ? C.chip(p.g) : "").join("")}</div></div>`).join("");
+      box.innerHTML = lista.map((s, n) => `<div class="${(risposte[k] || []).includes(s) ? "scelto" : ""}" style="--c:${AVATAR[s].c}">${avatar(s)}<b>${n + 1}. ${AVATAR[s].nome}</b><div class="pila">${C.presenti.map((p, j) => (j <= k && risposte[j].includes(s)) ? C.chip(p.g) : "").join("")}</div></div>`).join("");
       const g = C.presenti[k];
       turno.innerHTML = g ? `Gruppo ${C.chip(g.g)}: ${frase}` : "Tutti i gruppi hanno parlato.";
       Motore.timer.imposta(g ? sec : 0, false);
@@ -2667,23 +2752,34 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     Motore.registra(idSlide, {
       entra() { disegna(); },
       tasto(t) {
-        const n = "123456".indexOf(t);
+        const n = "123456789".slice(0, lista.length).indexOf(t);
         if (n < 0 || k >= C.presenti.length) return false;
-        const r = risposte[k], s = ORDINE_SOSP[n];
+        const r = risposte[k], s = lista[n];
         r.includes(s) ? r.splice(r.indexOf(s), 1) : r.push(s);
-        disegna(); return true;
+        disegna(); if (dopo) dopo(risposte, k); return true;
       },
       avanti() {
         if (k >= C.presenti.length) return false;
-        k++; disegna();
+        k++; disegna(); if (dopo) dopo(risposte, k);
         if (k === C.presenti.length) Motore.evento(evento, { risposte: C.presenti.map((p, j) => ({ gruppo: p.g.id, risposta: risposte[j].slice().sort() })) });
         return true;
       },
       indietro() { if (k > 0) { k--; disegna(); return true; } return false; },
     });
     };
-    creaVoti("bici-voti", "voti", "voti-turno", 20, "il segretario legge il verdetto.", "bici-risposte-gruppi");
-    creaVoti("bici-flash1", "flash1", "flash1-turno", 15, "un nome (o più) e un perché, in una frase.", "bici-flash1-gruppi");
+    creaVoti("bici-voti", "voti", "voti-turno", 20, "il segretario legge il verdetto.", "bici-risposte-gruppi", ORDINE_SOSP);
+    // giro veloce dopo l'ondata 1: se tutti i gruppi dicono gli stessi nomi, la lente 1 cambia domanda (Pietro, 20/10)
+    const scegliLente = v => {
+      const l = document.querySelector('section[data-id="lente-1"]'); if (!l) return;
+      l.dataset.v = v;
+      l.querySelectorAll(".variante").forEach(x => { const on = x.dataset.v === v; x.hidden = !on;
+        x.querySelectorAll(".interpretazioni>div").forEach(d => { d.classList.toggle("passo", on); d.classList.remove("visto"); }); });
+    };
+    scegliLente("diversi");
+    creaVoti("bici-flash1", "flash1", "flash1-turno", 15, "un nome (o più) e un perché, in una frase.", "bici-flash1-gruppi", PIAZZA, (ris, k) => {
+      const dati = ris.slice(0, Math.max(k, 1)).filter(x => x.length).map(x => x.slice().sort().join(","));
+      scegliLente(dati.length > 1 && dati.every(x => x === dati[0]) ? "uguali" : "diversi");
+    });
   }
 
   // ---------- ondate (D-97): velo animato all'ingresso della prima slide di ogni ondata
@@ -2706,7 +2802,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     Motore.registra("bici-ultimora", { avanti() { if (document.querySelector('section.attiva .notizie .passo:not(.visto)')) { flash.classList.remove("on"); void flash.offsetWidth; flash.classList.add("on"); } return false; } });
     // lenti: la domanda si scrive lettera per lettera
     osserva("section.lente", sl => {
-      const h = sl.querySelector(".lente-domanda"); if (!h) return;
+      const h = [...sl.querySelectorAll(".lente-domanda")].find(x => !x.closest("[hidden]")); if (!h) return;
       const testo = h.dataset.testo || (h.dataset.testo = h.textContent);
       clearInterval(h._t); let n = 0; h.innerHTML = '<span class="cursore"></span>';
       h._t = setInterval(() => { n += 2; h.innerHTML = testo.slice(0, n) + '<span class="cursore"></span>'; if (n >= testo.length) { clearInterval(h._t); h.textContent = testo; } }, 28);
@@ -2723,6 +2819,23 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
           + pres.map((p, k) => C.chip(p.g).replace('class="chip"', `class="chip" style="left:${pos[k][0]}%;top:${pos[k][1]}%"`)).join("");
       }
     }
+  }
+
+  // ---------- il botto: i conti del segretario si animano all'ingresso
+  Motore.registra("auto-segretario", { entra() { const c = $("conti"); c.classList.remove("on"); void c.offsetWidth; c.classList.add("on"); } });
+  // ---------- ognuno dal suo posto: quattro occhi, il botto lo vedono tutti, i dettagli solo uno
+  if ($("prospettive")) {
+    const occhi = [[140, 150, "1", "bar"], [400, 110, "2", "Listone"], [650, 160, "3", "libreria"], [860, 110, "4", "fermata"]];
+    const dett = [[90, 60], [330, 40], [560, 70], [790, 40]];
+    const B = [930, 205];
+    $("prospettive").innerHTML = `<svg viewBox="0 0 1000 260" preserveAspectRatio="xMidYMid meet">
+      <rect x="10" y="10" width="980" height="240" rx="14" fill="var(--p16-inchiostro)"/>
+      ${occhi.map(([x, y]) => `<path class="raggio tutti" d="M${x} ${y}L${B[0]} ${B[1]}" stroke="var(--p16-g-rosso)" stroke-width="3" stroke-dasharray="8 8"/>`).join("")}
+      <g class="botto"><circle cx="${B[0]}" cy="${B[1]}" r="30" fill="var(--p16-g-rosso)"/><text x="${B[0]}" y="${B[1] + 7}" font-size="19" font-weight="700" text-anchor="middle" fill="var(--p16-bianco)">botto</text></g>
+      ${occhi.map(([x, y], k) => `<path class="raggio uno" style="animation-delay:${1.6 + k * .5}s" d="M${x} ${y}L${dett[k][0]} ${dett[k][1]}" stroke="var(--p16-g-giallo)" stroke-width="4"/><circle class="dett" style="animation-delay:${1.6 + k * .5}s" cx="${dett[k][0]}" cy="${dett[k][1]}" r="10" fill="var(--p16-g-giallo)"/>`).join("")}
+      ${occhi.map(([x, y, n, nome]) => `<g><circle cx="${x}" cy="${y}" r="24" fill="var(--p16-bianco)"/><text x="${x}" y="${y + 8}" font-size="24" font-weight="700" text-anchor="middle" fill="var(--p16-inchiostro)">${n}</text><text x="${x}" y="${y + 50}" font-size="20" text-anchor="middle" fill="var(--p16-carta)">${nome}</text></g>`).join("")}
+    </svg>`;
+    Motore.registra("bici-prospettive", { entra() { const p = $("prospettive"); p.classList.remove("on"); void p.offsetWidth; p.classList.add("on"); } });
   }
 
   // ---------- la soluzione minuto per minuto
@@ -2761,7 +2874,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     const tb = $("pezzi"), COL = tb.dataset.col.split("|"), TINTE = tb.dataset.colori.split("|").map(col);
     const CARTE = tb.dataset.carte.split("|").map(x => x.split(",").map(Number));
     const riga = (nome, ha, cls) => `<tr class="passo ${cls || ""}"><td>${nome}</td>${COL.map((_, j) => `<td><i class="${ha.includes(j) ? "si" : ""}" style="--c:${TINTE[j]};animation-delay:${j * .12}s"></i></td>`).join("")}</tr>`;
-    tb.innerHTML = `<tr><th></th>${COL.map(x => `<th>${x}</th>`).join("")}</tr>` + CARTE.map((v, k) => riga("Carta " + (k + 1), v)).join("") + riga("Insieme", COL.map((_, j) => j), "insieme");
+    tb.innerHTML = `<tr><th></th>${COL.map(x => `<th>${x}</th>`).join("")}</tr>` + CARTE.map((v, k) => riga((tb.dataset.righe ? tb.dataset.righe.split("|")[k] : "Carta " + (k + 1)), v)).join("") + riga("Insieme", COL.map((_, j) => j), "insieme");
   }
   if ($("conta-n")) {
     $("conta-n").value = C.presenti.reduce((a, p) => a + p.n, 0);
