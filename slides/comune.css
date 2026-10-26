@@ -1,0 +1,98 @@
+/* Progetto 16. Parti comuni delle lezioni, dall'incontro 2 in poi (l'incontro 1 ha una sua copia).
+   Accoglienza, pianta dell'aula, busta del gruppo, elenchi, griglie di sintesi, spiegazioni, animazioni. */
+@keyframes p16-pop{to{opacity:1;transform:none}}
+@keyframes p16-boom{0%{transform:scale(.1) rotate(-30deg);opacity:0}100%{transform:none;opacity:1}}
+@keyframes p16-timbro{0%{transform:scale(3) rotate(-25deg);opacity:0}60%{transform:scale(.9) rotate(-12deg);opacity:1}100%{transform:scale(1) rotate(-12deg);opacity:1}}
+.centrato{text-align:center;margin-left:auto;margin-right:auto}
+.fonte{margin-top:auto;font-size:clamp(12px,.95vw,16px);color:var(--p16-grigio)}
+.scena .fonte{color:#9AA3B2}
+.demo{font-size:13px;color:var(--p16-grigio)}
+.elenco{font-size:clamp(22px,2.3vw,42px);line-height:1.45;margin:0;padding-left:1.2em;max-width:30em}
+.elenco li{margin-bottom:.4em}
+
+/* accoglienza */
+.acc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.4vw;margin:auto 0}
+.acc-v{display:flex;flex-direction:column;align-items:center;text-align:center;gap:1.6vh;opacity:0;transform:scale(.4);animation:p16-pop .7s cubic-bezier(.2,1.6,.4,1) forwards}
+.acc-v:nth-child(2){animation-delay:.5s}.acc-v:nth-child(3){animation-delay:1s}
+.acc-v svg{width:clamp(90px,10vw,190px);height:auto;color:var(--p16-inchiostro)}
+.acc-v b{font-size:clamp(26px,2.8vw,52px);line-height:1.1}
+
+/* pianta dell'aula */
+.pianta{position:relative;flex:1;min-height:0;border:4px solid var(--p16-inchiostro);border-radius:10px;background:var(--p16-bianco);margin-top:.5vh}
+.lavagna{position:absolute;left:30%;right:30%;top:-4px;height:18px;background:var(--p16-inchiostro);color:var(--p16-bianco);font-size:16px;text-align:center;line-height:18px;border-radius:0 0 6px 6px;letter-spacing:.1em;text-transform:uppercase}
+.isola-p{position:absolute;transform:translate(-50%,-50%) scale(calc(var(--k,1)*.6));opacity:0;transition:opacity .5s,transform .6s cubic-bezier(.2,1.6,.4,1);display:grid;grid-template-columns:max-content auto max-content;align-items:center;gap:6px;width:max-content}
+.isola-p .lato{display:flex;flex-direction:column;gap:clamp(14px,3vh,34px)}
+.isola-p .lato.sx .nome{justify-content:flex-end}
+.isola-p.on{opacity:1;transform:translate(-50%,-50%) scale(var(--k,1))}
+.isola-p .nome{display:flex;align-items:center;gap:4px;font-size:clamp(15px,1.2vw,26px);font-weight:700;white-space:nowrap;opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .4s}
+.isola-p .nome.on{opacity:1;transform:none}
+.isola-p .nome svg{width:.95em;height:.95em;flex:none;color:var(--p16-inchiostro)}
+.banchi{position:relative;display:grid;grid-template-rows:1fr 1fr;gap:3px;width:clamp(56px,4.4vw,96px);height:clamp(90px,15vh,170px);border-radius:6px;padding:3px;background:var(--g)}
+.banchi i{border:2px solid rgba(255,255,255,.55);border-radius:4px}
+.banchi .etg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--p16-bianco);font-weight:700;font-size:clamp(13px,1.05vw,22px);z-index:1;text-align:center}
+.banchi .etg svg{width:1.2em;height:1.2em;fill:var(--p16-bianco)}
+
+/* riquadri che compaiono con un salto */
+.riquadri{display:grid;grid-template-columns:repeat(var(--col,3),minmax(0,1fr));gap:1.8vh 1.6vw}
+.riquadri>div{background:var(--p16-bianco);color:var(--p16-inchiostro);border-radius:16px;padding:2.4vh 1.4vw;box-shadow:0 4px 18px rgba(13,19,34,.12);display:flex;flex-direction:column;gap:1vh;font-size:clamp(18px,1.6vw,30px);border-top:10px solid var(--c,var(--p16-inchiostro))}
+.riquadri>div b{font-size:clamp(24px,2.3vw,42px);line-height:1.1}
+.riquadri>div svg{width:clamp(56px,5vw,96px);height:auto;color:var(--c,var(--p16-inchiostro))}
+.riquadri>div.passo{transform:scale(.5) rotate(-4deg);transition:opacity .4s,transform .6s cubic-bezier(.2,1.6,.4,1)}
+.riquadri>div.passo.visto{transform:none}
+
+/* spiegazione: figura a sinistra, testo a destra */
+.spiega{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:3vw;align-items:center;flex:1;min-height:0}
+.spiega .testo{display:flex;flex-direction:column;gap:2vh;font-size:clamp(20px,2vw,36px);line-height:1.35}
+
+/* barre animate */
+.barre{display:flex;align-items:flex-end;justify-content:center;gap:4vw;height:38vh;width:100%}
+.barre .col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:1vh;height:100%;width:clamp(120px,14vw,260px)}
+.barre .col i{display:block;width:100%;height:0;border-radius:12px 12px 0 0;background:var(--c,var(--p16-inchiostro));transition:height 1.4s cubic-bezier(.2,1.2,.4,1)}
+.barre .col b{font-size:clamp(28px,3vw,56px)}
+.barre .col span{font-size:clamp(16px,1.4vw,26px);text-align:center;font-weight:700}
+
+/* timbro */
+.timbro{position:absolute;padding:.2em .5em;border:5px solid var(--p16-blocco);color:var(--p16-blocco);font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:8px;background:rgba(255,255,255,.85);transform:rotate(-12deg);opacity:0}
+.timbro.on{animation:p16-timbro .45s cubic-bezier(.2,1.4,.4,1) forwards}
+
+/* tabella dei dati dei gruppi */
+.dati{border-collapse:collapse;font-size:clamp(16px,1.4vw,26px)}
+.dati th,.dati td{padding:.35em .8em;border-bottom:1px solid var(--p16-linea);text-align:center}
+.dati th{font-size:.8em;color:var(--p16-grigio);font-weight:700}
+.dati input{font:inherit;width:4.2em;text-align:center;border:2px solid var(--p16-linea);border-radius:8px;padding:.15em}
+.dati .chip{font-size:.9em}
+
+/* promemoria dei ruoli (D-96): banda in basso nelle slide di gruppo, icona del ruolo che guida */
+.slide.con-ruoli{padding-bottom:16vh}
+.ruoli-banda{position:absolute;left:6vw;right:130px;bottom:2.2vh;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1vw}
+.ruoli-banda>div{display:flex;align-items:center;gap:.7vw;background:var(--p16-bianco);border:3px solid var(--p16-inchiostro);border-radius:12px;padding:.9vh .8vw;min-height:9vh;box-sizing:border-box}
+.ruoli-banda svg{flex:none;width:clamp(26px,2.4vw,46px);height:auto;color:var(--p16-inchiostro)}
+.ruoli-banda span{font-size:clamp(14px,1.15vw,22px);line-height:1.2;color:var(--p16-inchiostro)}
+.ruoli-banda b{display:block;font-size:clamp(15px,1.25vw,24px);text-transform:uppercase;letter-spacing:.04em}
+.scena .ruoli-banda>div{background:#1B2130;border-color:var(--p16-carta)}
+.scena .ruoli-banda span,.scena .ruoli-banda svg{color:var(--p16-carta)}
+.guida{display:inline-flex;align-items:center;gap:.3em;margin-right:.6em;padding:.1em .5em;border-radius:999px;background:var(--p16-inchiostro);color:var(--p16-carta);font-size:.62em;vertical-align:.12em;text-transform:uppercase;letter-spacing:.04em}
+.guida svg{width:1.2em;height:1.2em}
+.legenda-ruoli{display:flex;flex-wrap:wrap;justify-content:center;gap:.6vh 2.4vw;font-size:clamp(16px,1.4vw,28px);font-weight:700;color:var(--p16-inchiostro)}
+.legenda-ruoli span{display:inline-flex;align-items:center;gap:.35em}
+.legenda-ruoli svg{width:1.3em;height:1.3em}
+
+/* pirotecnia d'ingresso per tutte le slide (D-99): occhiello che scorre, titolo che arriva, icone che rimbalzano */
+@keyframes p16-occhiello{from{opacity:0;transform:translateX(-40px);letter-spacing:.4em}to{opacity:1;transform:none}}
+@keyframes p16-titolo{from{opacity:0;transform:translateY(26px) scale(.96);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes p16-rimbalzo{0%{transform:scale(.4) rotate(-15deg)}60%{transform:scale(1.15) rotate(4deg)}100%{transform:none}}
+.slide.attiva>.occhiello{animation:p16-occhiello .6s cubic-bezier(.2,1,.3,1) both}
+.slide.attiva>h2:not(.lente-domanda),.slide.attiva>h1:not(.titolone){animation:p16-titolo .7s .1s cubic-bezier(.2,1.2,.4,1) both}
+.passi-icone>div.passo.visto svg{animation:p16-rimbalzo .6s cubic-bezier(.2,1.6,.4,1) both}
+@media (prefers-reduced-motion:reduce){.slide.attiva>.occhiello,.slide.attiva>h2,.slide.attiva>h1,.passi-icone svg{animation:none!important}}
+
+/* pirotecnia in più (27/10, Pietro: niente linea gialla sotto i titoli; più movimento senza cambiare i contenuti) */
+@keyframes p16-bagliore{0%{box-shadow:0 0 0 0 rgba(226,176,7,.75)}100%{box-shadow:0 0 0 18px rgba(226,176,7,0)}}
+@keyframes p16-scatto{0%{transform:scale(.6) rotate(-6deg);opacity:0}55%{transform:scale(1.08) rotate(1deg);opacity:1}100%{transform:none;opacity:1}}
+@keyframes p16-respiro{50%{transform:scale(1.035)}}
+.passi-icone>div.passo.visto,.riquadri>div.passo.visto,.rilanci li.passo.visto:not(.vecchio){animation:p16-bagliore 1s ease-out}
+.passi-icone>div>i{animation:p16-scatto .55s .15s cubic-bezier(.2,1.6,.4,1) both}
+.slide.attiva .ruoli-banda>div{animation:p16-scatto .5s cubic-bezier(.2,1.6,.4,1) both}
+.slide.attiva .ruoli-banda>div:nth-child(2){animation-delay:.1s}.slide.attiva .ruoli-banda>div:nth-child(3){animation-delay:.2s}.slide.attiva .ruoli-banda>div:nth-child(4){animation-delay:.3s}
+.slide.attiva .ruoli-banda svg{animation:p16-respiro 2.4s 1s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.passi-icone>div,.riquadri>div,.rilanci li,.passi-icone>div>i,.ruoli-banda>div,.ruoli-banda svg{animation:none!important}}

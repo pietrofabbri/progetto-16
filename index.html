@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Progetto 16</title>
+<link rel="stylesheet" href="design/palette.css">
+<style>
+@font-face{font-family:"Atkinson Hyperlegible";src:url("design/fonts/AtkinsonHyperlegible-Regular.ttf");font-weight:400}
+@font-face{font-family:"Atkinson Hyperlegible";src:url("design/fonts/AtkinsonHyperlegible-Bold.ttf");font-weight:700}
+body{margin:0;background:var(--p16-carta);color:var(--p16-inchiostro);font-family:var(--p16-font)}
+main{max-width:44rem;margin:0 auto;padding:12vh 20px}
+.occhiello{font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:var(--p16-grigio)}
+h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.05;margin:.3em 0 .6em;text-wrap:balance}
+p{font-size:1.1rem;line-height:1.5}
+ul{list-style:none;padding:0;display:grid;gap:12px;margin:2rem 0}
+a.voce{display:block;padding:16px 18px;border:1.5px solid var(--p16-inchiostro);border-radius:10px;
+  color:var(--p16-inchiostro);text-decoration:none;background:var(--p16-bianco)}
+a.voce:hover,a.voce:focus-visible{background:var(--p16-inchiostro);color:var(--p16-bianco);outline:none}
+a.voce b{display:block;font-size:1.15rem}
+a.voce span{font-size:.95rem;opacity:.8}
+.strisce{display:flex;height:6px;border-radius:3px;overflow:hidden}
+.strisce i{flex:1}
+</style>
+</head>
+<body>
+<main>
+  <div class="strisce" aria-hidden="true">
+    <i style="background:var(--p16-g-rosso)"></i><i style="background:var(--p16-g-arancio)"></i><i style="background:var(--p16-g-giallo)"></i>
+    <i style="background:var(--p16-g-verde)"></i><i style="background:var(--p16-g-petrolio)"></i><i style="background:var(--p16-g-azzurro)"></i>
+    <i style="background:var(--p16-g-blu)"></i><i style="background:var(--p16-g-viola)"></i><i style="background:var(--p16-g-rosa)"></i>
+  </div>
+  <p class="occhiello">Progetto 16 · Psicologia e dati</p>
+  <h1>Quanto sono veramente tue le scelte che fai?</h1>
+  <p>Strumenti per le lezioni. Funzionano anche offline, scaricando la repo.</p>
+  <ul>
+    <li><a class="voce" href="semaforo/demo.html"><b>Il barattolo del rumore</b><span>Con il microfono vero. Premi B per attivarlo e tarare.</span></a></li>
+    <li><a class="voce" href="semaforo/demo.html?simula"><b>Il barattolo, in prova</b><span>Senza microfono: il rumore si regola con un cursore.</span></a></li>
+  </ul>
+  <p>Le slide degli incontri.</p>
+  <ul id="incontri">
+    <li><a class="voce" href="incontri/incontro-01/"><b>Incontro 1. Il cervello indovina</b><span>Le slide dell'incontro: frecce per scorrere, H per l'aiuto.</span></a></li>
+    <li><a class="voce" href="incontri/incontro-02/"><b>Incontro 2. Sotto pressione: decido ancora bene?</b><span>Le slide dell'incontro. Le soluzioni arrivano dopo l'incontro.</span></a></li>
+    <li><a class="voce" href="incontri/incontro-03/"><b>Incontro 3. Perché facciamo cose che non vorremmo fare?</b><span>Le slide dell'incontro. Le soluzioni arrivano dopo l'incontro.</span></a></li>
+    <li><a class="voce" href="incontri/incontro-04/"><b>Incontro 4. Sabato mattina in piazza</b><span>Le slide dell'incontro. Le soluzioni arrivano dopo l'incontro.</span></a></li>
+  </ul>
+</main>
+</body>
+</html>
