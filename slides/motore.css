@@ -1,0 +1,71 @@
+/* Progetto 16. Motore delle slide: stile comune.
+   Fondo chiaro (carta), testo inchiostro, colori dei gruppi come accenti.
+   Le slide "scena" (classe .scena) hanno fondo notte per gli effetti visivi. */
+@font-face{font-family:"Atkinson Hyperlegible";src:url("../design/fonts/AtkinsonHyperlegible-Regular.ttf");font-weight:400}
+@font-face{font-family:"Atkinson Hyperlegible";src:url("../design/fonts/AtkinsonHyperlegible-Bold.ttf");font-weight:700}
+html,body{height:100%;margin:0}
+body{background:var(--p16-carta);color:var(--p16-inchiostro);font-family:var(--p16-font);overflow:hidden}
+.slide{position:fixed;inset:0;box-sizing:border-box;padding:6vh 130px 7vh 6vw;display:none;flex-direction:column;gap:2.6vh}
+.slide.attiva{display:flex;animation:p16m-entra .35s ease}
+@keyframes p16m-entra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.attiva{animation:none}}
+.slide.scena{background:var(--p16-notte);color:var(--p16-carta)}
+.slide.centro{justify-content:center;align-items:center;text-align:center}
+
+/* tipografia */
+.occhiello{font-size:clamp(14px,1.3vw,22px);letter-spacing:.12em;text-transform:uppercase;color:var(--p16-grigio)}
+.scena .occhiello{color:#9AA3B2}
+h1{font-size:clamp(36px,5vw,92px);line-height:1.03;margin:0;max-width:15em;text-wrap:balance}
+h2{font-size:clamp(28px,3.4vw,60px);line-height:1.08;margin:0;max-width:18em;text-wrap:balance}
+.consegna{font-size:clamp(22px,2.4vw,44px);line-height:1.3;max-width:28em}
+.piccolo{font-size:clamp(16px,1.4vw,24px);color:var(--p16-grigio);max-width:42em;line-height:1.4}
+.scena .piccolo{color:#C9CFDA}
+.grande{font-size:clamp(60px,9vw,180px);font-weight:700;line-height:1}
+
+/* frammenti: compaiono uno alla volta con la freccia */
+.passo{opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease}
+.passo.visto{opacity:1;transform:none}
+
+/* testata: icona della fase + timer */
+.p16m-testata{position:fixed;top:2.4vh;right:110px;display:flex;align-items:center;gap:16px;z-index:50;pointer-events:none}
+.p16m-fase{display:flex;align-items:center;gap:10px;font-size:clamp(14px,1.2vw,20px);font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;padding:8px 14px;border-radius:999px;background:var(--p16-bianco);color:var(--p16-inchiostro);
+  box-shadow:0 2px 10px rgba(13,19,34,.12)}
+.p16m-fase svg{width:28px;height:28px}
+.p16m-fase[hidden]{display:none}
+.p16m-timer{position:relative;width:clamp(84px,8vw,140px);height:clamp(84px,8vw,140px)}
+.p16m-timer[hidden]{display:none}
+.p16m-timer svg{width:100%;height:100%;transform:rotate(-90deg)}
+.p16m-timer .fondo{fill:var(--p16-bianco);stroke:var(--p16-linea);stroke-width:8}
+.p16m-timer .arco{fill:none;stroke:var(--p16-calma);stroke-width:8;stroke-linecap:round;transition:stroke .3s}
+.p16m-timer.fine .arco{stroke:var(--p16-blocco)}
+.p16m-timer.pausa{opacity:.55}
+.p16m-timer .cifre{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:clamp(22px,2.2vw,40px);font-weight:700;font-variant-numeric:tabular-nums;color:var(--p16-inchiostro)}
+.p16m-timer.fine{animation:p16m-pulsa 1s ease-in-out infinite}
+@keyframes p16m-pulsa{50%{transform:scale(1.07)}}
+
+/* barra di avanzamento */
+.p16m-barra{position:fixed;left:0;bottom:0;height:4px;background:var(--p16-inchiostro);opacity:.25;z-index:40;transition:width .3s}
+.scena ~ .p16m-barra{background:var(--p16-carta)}
+
+/* bottoni dentro le slide */
+.p16-bottone{font:inherit;font-size:clamp(16px,1.3vw,22px);padding:10px 18px;border-radius:10px;border:2px solid currentColor;
+  background:transparent;color:inherit;cursor:pointer}
+.p16-bottone:focus-visible{outline:3px solid var(--p16-g-azzurro);outline-offset:3px}
+.p16-bottone.pieno{background:var(--p16-inchiostro);color:var(--p16-bianco);border-color:var(--p16-inchiostro)}
+
+/* chip dei gruppi */
+.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 8px;border-radius:999px;background:var(--p16-bianco);
+  font-weight:700;font-size:clamp(16px,1.4vw,24px);box-shadow:0 1px 6px rgba(13,19,34,.1);color:var(--p16-inchiostro)}
+.chip svg{width:1.3em;height:1.3em}
+.chip.spento{opacity:.35}
+.chip.acceso{outline:4px solid var(--p16-inchiostro);outline-offset:2px}
+
+/* aiuto tastiera */
+.p16m-aiuto{position:fixed;left:16px;bottom:14px;font-size:13px;color:var(--p16-grigio);z-index:60;background:var(--p16-bianco);
+  padding:8px 12px;border-radius:8px;box-shadow:0 2px 10px rgba(13,19,34,.15);line-height:1.6}
+.p16m-aiuto[hidden]{display:none}
+.p16m-aiuto kbd{border:1px solid var(--p16-linea);border-bottom-width:2px;border-radius:4px;padding:0 5px;font-family:inherit}
+.p16m-avviso{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:var(--p16-inchiostro);color:var(--p16-bianco);
+  padding:10px 16px;border-radius:8px;font-size:16px;z-index:9950}
