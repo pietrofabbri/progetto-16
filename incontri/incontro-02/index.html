@@ -198,6 +198,17 @@ h2{font-size:clamp(28px,3.4vw,60px);line-height:1.08;margin:0;max-width:18em;tex
 .passi-icone>div.passo.visto svg{animation:p16-rimbalzo .6s cubic-bezier(.2,1.6,.4,1) both}
 @media (prefers-reduced-motion:reduce){.slide.attiva>.occhiello,.slide.attiva>h2,.slide.attiva>h1,.passi-icone svg{animation:none!important}}
 
+/* modifica a mano dei gruppi sulla pianta (D-103) */
+.pianta.modificabile .isola-p{cursor:pointer}
+.pianta.modificabile .isola-p:hover{filter:drop-shadow(0 0 10px var(--p16-g-giallo))}
+.pianta.modificabile .nome[data-num]:hover{text-decoration:underline}
+.p16-modifica{position:fixed;z-index:200;width:360px;max-height:70vh;overflow:auto;background:var(--p16-bianco);color:var(--p16-inchiostro);border:3px solid var(--p16-inchiostro);border-radius:14px;padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.35);font-size:16px;display:flex;flex-direction:column;gap:8px}
+.p16-modifica p{margin:4px 0 0;color:var(--p16-grigio);font-size:14px}
+.p16-modifica .scelte{display:flex;flex-wrap:wrap;gap:6px}
+.p16-modifica button{font:inherit;cursor:pointer;border:2px solid var(--p16-linea);background:var(--p16-carta);border-radius:999px;padding:4px 10px}
+.p16-modifica button:hover{border-color:var(--p16-inchiostro)}
+.p16-modifica .togli{border-color:var(--p16-blocco);color:var(--p16-blocco)}
+.p16-modifica .x{position:absolute;top:6px;right:8px;border:none;background:none;font-size:22px;padding:0 6px}
 /* pirotecnia in più (27/10, Pietro: niente linea gialla sotto i titoli; più movimento senza cambiare i contenuti) */
 @keyframes p16-bagliore{0%{box-shadow:0 0 0 0 rgba(226,176,7,.75)}100%{box-shadow:0 0 0 18px rgba(226,176,7,0)}}
 @keyframes p16-scatto{0%{transform:scale(.6) rotate(-6deg);opacity:0}55%{transform:scale(1.08) rotate(1deg);opacity:1}100%{transform:none;opacity:1}}
@@ -2349,7 +2360,42 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     }
   });
 
-  window.Gruppi = { apri, chiudi, nome: num => nome(num), dimensioni, descrivi, colori: COLORI, nomiRuoli: RUOLI, _forma: forma, _statistiche: statistiche };
+  // ------------------------------------------------------------ modifica a mano dei gruppi di oggi (D-103)
+  // Dalla pianta (tasto P) il docente aggiunge, sposta o toglie persone. Si aggiornano i gruppi di oggi,
+  // lo storico della giornata e il riepilogo (solo numeri), poi le slide si ricaricano sulla pianta.
+  const SIGLA_DA_NOME = Object.fromEntries(Object.entries(RUOLI).map(([k, v]) => [v, k]));
+  function oggiSalvato() { const o = leggi(K.oggi, null); return (o && o.data === oggiData() && o.gruppi && o.gruppi[0] && o.gruppi[0].membri) ? o : null; }
+  function liberi() {
+    const o = oggiSalvato(); if (!o) return [];
+    const dentro = new Set(o.gruppi.flatMap(g => g.membri.map(m => m.num)));
+    return numeri().filter(n => !dentro.has(n)).map(n => ({ num: n, nome: nome(n) }));
+  }
+  function modifica(fn) {
+    const o = oggiSalvato(); if (!o) return false;
+    const gruppi = o.gruppi.map(g => ({ id: g.id, membri: g.membri.map(m => ({ num: m.num, ruolo: SIGLA_DA_NOME[m.ruolo] || "X" })) }));
+    if (fn(gruppi) === false) return false;
+    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4, X: 5 };
+    gruppi.forEach(g => g.membri.sort((a, b) => ORD[a.ruolo] - ORD[b.ruolo]));
+    const pieni = gruppi.filter(g => g.membri.length);
+    const data = o.data;
+    storico.lezioni = storico.lezioni.filter(l => l.data !== data);
+    storico.lezioni.push({ data, gruppi: pieni.map(g => ({ id: g.id, membri: g.membri.map(m => ({ num: m.num, ruolo: m.ruolo })) })) });
+    storico.lezioni.sort((a, b) => a.data < b.data ? -1 : 1);
+    scrivi(K.storico, storico);
+    scrivi(K.oggi, { data, gruppi: pieni.map(g => ({ id: g.id, n: g.membri.length, membri: g.membri.map(m => ({ num: m.num, nome: nome(m.num), ruolo: RUOLI[m.ruolo] })) })) });
+    const r = leggi(K.riep, {});
+    scrivi(K.riep, Object.assign(r, { data, presenti: pieni.reduce((t, g) => t + g.membri.length, 0), gruppi: pieni.map(g => ({ id: g.id, n: g.membri.length, ruoli: g.membri.map(m => m.ruolo) })) }));
+    try { sessionStorage.setItem("p16-vai", "gruppi"); } catch (e) {}
+    location.reload();
+    return true;
+  }
+  const aggiungiA = (id, num, ruolo) => modifica(gs => { const g = gs.find(x => x.id === id); if (!g || gs.some(x => x.membri.some(m => m.num === num))) return false; g.membri.push({ num, ruolo: ruolo || "X" }); });
+  const sposta = (num, id) => modifica(gs => { const da = gs.find(x => x.membri.some(m => m.num === num)), a = gs.find(x => x.id === id); if (!da || !a || da === a) return false; const m = da.membri.find(x => x.num === num); da.membri = da.membri.filter(x => x.num !== num); a.membri.push({ num, ruolo: "X" }); });
+  const togli = num => modifica(gs => { const da = gs.find(x => x.membri.some(m => m.num === num)); if (!da) return false; da.membri = da.membri.filter(x => x.num !== num); });
+  const cambiaRuolo = (num, ruolo) => modifica(gs => { const m = gs.flatMap(g => g.membri).find(x => x.num === num); if (!m) return false; m.ruolo = ruolo; });
+
+  window.Gruppi = { apri, chiudi, nome: num => nome(num), dimensioni, descrivi, colori: COLORI, nomiRuoli: RUOLI, _forma: forma, _statistiche: statistiche,
+    oggiSalvato: () => !!oggiSalvato(), liberi, aggiungiA, sposta, togli, cambiaRuolo };
 })();
 
 </script>
@@ -2418,7 +2464,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       membri.forEach(x => {
         const el = document.createElement("div"); el.className = "isola-p"; el.dataset.g = x.g.id;
         el.style.setProperty("--g", x.g.hex);
-        const nome = m => `<span class="nome">${m.nome ? `<svg viewBox="0 0 24 24">${ICONE_RUOLO[SIGLA(m.ruolo)]}</svg>${m.nome}` : ""}</span>`;
+        const nome = m => `<span class="nome"${m.num ? ` data-num="${m.num}"` : ""}>${m.nome ? `<svg viewBox="0 0 24 24">${ICONE_RUOLO[SIGLA(m.ruolo)]}</svg>${m.nome}` : ""}</span>`;
         const sx = x.m.filter((_, j) => j % 2 === 0), dx = x.m.filter((_, j) => j % 2 === 1);
         el.innerHTML = `<div class="lato sx">${sx.map(nome).join("")}</div><div class="banchi"><i></i><i></i><span class="etg"><svg viewBox="0 0 24 24">${P.forme_svg_24[x.g.forma]}</svg>${x.g.nome}</span></div><div class="lato dx">${dx.map(nome).join("")}</div>`;
         pianta.appendChild(el);
@@ -2453,6 +2499,36 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       pianta.insertAdjacentHTML("afterend", `<div class="legenda-ruoli">${NR.map(([r, n]) => `<span><svg viewBox="0 0 24 24" aria-hidden="true">${ICONE_RUOLO[r]}</svg>${n}</span>`).join("")}</div>`);
       const demo = document.getElementById("gruppi-demo");
       if (demo) demo.textContent = veri && oggi.gruppi[0].membri ? "" : "Dati di prova.";
+      // Modifica a mano (D-103): clic su un gruppo per aggiungere qualcuno, clic su un nome per spostarlo, cambiargli ruolo o toglierlo.
+      if (veri && window.Gruppi && Gruppi.oggiSalvato && Gruppi.oggiSalvato()) {
+        if (demo) demo.textContent = "Clic su un gruppo: aggiungi una persona. Clic su un nome: sposta, cambia ruolo o togli.";
+        const pop = document.createElement("div"); pop.className = "p16-modifica"; pop.hidden = true; document.body.appendChild(pop);
+        const chiudi = () => { pop.hidden = true; pop.innerHTML = ""; };
+        const apriPop = (html, x, y) => { pop.innerHTML = `<button type="button" class="x" aria-label="Chiudi">×</button>${html}`; pop.hidden = false; pop.style.left = Math.min(x, innerWidth - 380) + "px"; pop.style.top = Math.min(y, innerHeight - 320) + "px"; pop.querySelector(".x").onclick = chiudi; };
+        const RS = [["F", "Facilitatore"], ["C", "Custode"], ["V", "Verificatore"], ["S", "Segretario"], ["X", "Senza ruolo"]];
+        pianta.addEventListener("click", e => {
+          const isola = e.target.closest(".isola-p"); if (!isola) return;
+          e.stopPropagation();
+          const n = e.target.closest(".nome[data-num]"), gid = isola.dataset.g;
+          if (n) {
+            const num = +n.dataset.num, altri = membri.filter(x => x.g.id !== gid);
+            apriPop(`<b>${n.textContent}</b><p>Sposta in:</p><div class="scelte">${altri.map(x => `<button type="button" data-sposta="${x.g.id}">${chip(x.g)}</button>`).join("")}</div>
+              <p>Ruolo:</p><div class="scelte">${RS.map(([r, t]) => `<button type="button" data-ruolo="${r}">${t}</button>`).join("")}</div>
+              <p><button type="button" class="togli" data-togli="1">Togli dai gruppi di oggi</button></p>`, e.clientX, e.clientY);
+            pop.querySelectorAll("[data-sposta]").forEach(b => b.onclick = () => Gruppi.sposta(num, b.dataset.sposta));
+            pop.querySelectorAll("[data-ruolo]").forEach(b => b.onclick = () => Gruppi.cambiaRuolo(num, b.dataset.ruolo));
+            pop.querySelector("[data-togli]").onclick = () => Gruppi.togli(num);
+          } else {
+            const lib = Gruppi.liberi(), g = membri.find(x => x.g.id === gid).g;
+            apriPop(`<b>Aggiungi al gruppo ${chip(g)}</b>${lib.length ? `<div class="scelte nomi">${lib.map(p => `<button type="button" data-num="${p.num}">${p.nome}</button>`).join("")}</div>` : "<p>Tutti sono già in un gruppo.</p>"}
+              <p>Entra senza ruolo; il ruolo si cambia poi con un clic sul nome.</p>`, e.clientX, e.clientY);
+            pop.querySelectorAll("[data-num]").forEach(b => b.onclick = () => Gruppi.aggiungiA(gid, +b.dataset.num, "X"));
+          }
+        });
+        document.addEventListener("click", e => { if (!pop.hidden && !pop.contains(e.target) && !e.target.closest(".isola-p")) chiudi(); });
+        document.addEventListener("keydown", e => { if (e.key === "Escape") chiudi(); });
+        pianta.classList.add("modificabile");
+      }
     }
     // ---------- promemoria dei ruoli (D-96)
     // Ogni slide con data-ruoli="F:...|C:...|V:...|S:..." mostra in basso che cosa fa ogni ruolo adesso.
@@ -2471,6 +2547,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     // Tasto P: si torna alla pianta con i nomi e i ruoli; premuto di nuovo, si torna dov'eravamo (D-96).
     {
       let ritorno = null;
+      try { const r = sessionStorage.getItem("p16-ritorno"); if (r != null) ritorno = +r; } catch (e) {}
       document.addEventListener("keydown", e => {
         if (e.key !== "p" && e.key !== "P") return;
         if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
@@ -2479,8 +2556,8 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
         const ora = tutte.findIndex(x => x.classList.contains("attiva")), dove = tutte.findIndex(x => x.dataset.id === "gruppi");
         if (dove < 0) return;
         e.preventDefault();
-        if (ora === dove && ritorno != null) { const r = ritorno; ritorno = null; Motore.vai(r); }
-        else if (ora !== dove) { ritorno = ora; Motore.vai(dove); }
+        if (ora === dove && ritorno != null) { const r = ritorno; ritorno = null; try { sessionStorage.removeItem("p16-ritorno"); } catch (e) {} Motore.vai(r); }
+        else if (ora !== dove) { ritorno = ora; try { sessionStorage.setItem("p16-ritorno", ora); } catch (e) {} Motore.vai(dove); }
       });
     }
     return { P, G, forma, chip, oggi, presenti, membri, prova: !veri, meta: g => META_A.includes(g.id) ? "A" : "B", ICONE_RUOLO, SIGLA };

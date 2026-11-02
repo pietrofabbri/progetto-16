@@ -62,7 +62,7 @@
       membri.forEach(x => {
         const el = document.createElement("div"); el.className = "isola-p"; el.dataset.g = x.g.id;
         el.style.setProperty("--g", x.g.hex);
-        const nome = m => `<span class="nome">${m.nome ? `<svg viewBox="0 0 24 24">${ICONE_RUOLO[SIGLA(m.ruolo)]}</svg>${m.nome}` : ""}</span>`;
+        const nome = m => `<span class="nome"${m.num ? ` data-num="${m.num}"` : ""}>${m.nome ? `<svg viewBox="0 0 24 24">${ICONE_RUOLO[SIGLA(m.ruolo)]}</svg>${m.nome}` : ""}</span>`;
         const sx = x.m.filter((_, j) => j % 2 === 0), dx = x.m.filter((_, j) => j % 2 === 1);
         el.innerHTML = `<div class="lato sx">${sx.map(nome).join("")}</div><div class="banchi"><i></i><i></i><span class="etg"><svg viewBox="0 0 24 24">${P.forme_svg_24[x.g.forma]}</svg>${x.g.nome}</span></div><div class="lato dx">${dx.map(nome).join("")}</div>`;
         pianta.appendChild(el);
@@ -97,6 +97,36 @@
       pianta.insertAdjacentHTML("afterend", `<div class="legenda-ruoli">${NR.map(([r, n]) => `<span><svg viewBox="0 0 24 24" aria-hidden="true">${ICONE_RUOLO[r]}</svg>${n}</span>`).join("")}</div>`);
       const demo = document.getElementById("gruppi-demo");
       if (demo) demo.textContent = veri && oggi.gruppi[0].membri ? "" : "Dati di prova.";
+      // Modifica a mano (D-103): clic su un gruppo per aggiungere qualcuno, clic su un nome per spostarlo, cambiargli ruolo o toglierlo.
+      if (veri && window.Gruppi && Gruppi.oggiSalvato && Gruppi.oggiSalvato()) {
+        if (demo) demo.textContent = "Clic su un gruppo: aggiungi una persona. Clic su un nome: sposta, cambia ruolo o togli.";
+        const pop = document.createElement("div"); pop.className = "p16-modifica"; pop.hidden = true; document.body.appendChild(pop);
+        const chiudi = () => { pop.hidden = true; pop.innerHTML = ""; };
+        const apriPop = (html, x, y) => { pop.innerHTML = `<button type="button" class="x" aria-label="Chiudi">×</button>${html}`; pop.hidden = false; pop.style.left = Math.min(x, innerWidth - 380) + "px"; pop.style.top = Math.min(y, innerHeight - 320) + "px"; pop.querySelector(".x").onclick = chiudi; };
+        const RS = [["F", "Facilitatore"], ["C", "Custode"], ["V", "Verificatore"], ["S", "Segretario"], ["X", "Senza ruolo"]];
+        pianta.addEventListener("click", e => {
+          const isola = e.target.closest(".isola-p"); if (!isola) return;
+          e.stopPropagation();
+          const n = e.target.closest(".nome[data-num]"), gid = isola.dataset.g;
+          if (n) {
+            const num = +n.dataset.num, altri = membri.filter(x => x.g.id !== gid);
+            apriPop(`<b>${n.textContent}</b><p>Sposta in:</p><div class="scelte">${altri.map(x => `<button type="button" data-sposta="${x.g.id}">${chip(x.g)}</button>`).join("")}</div>
+              <p>Ruolo:</p><div class="scelte">${RS.map(([r, t]) => `<button type="button" data-ruolo="${r}">${t}</button>`).join("")}</div>
+              <p><button type="button" class="togli" data-togli="1">Togli dai gruppi di oggi</button></p>`, e.clientX, e.clientY);
+            pop.querySelectorAll("[data-sposta]").forEach(b => b.onclick = () => Gruppi.sposta(num, b.dataset.sposta));
+            pop.querySelectorAll("[data-ruolo]").forEach(b => b.onclick = () => Gruppi.cambiaRuolo(num, b.dataset.ruolo));
+            pop.querySelector("[data-togli]").onclick = () => Gruppi.togli(num);
+          } else {
+            const lib = Gruppi.liberi(), g = membri.find(x => x.g.id === gid).g;
+            apriPop(`<b>Aggiungi al gruppo ${chip(g)}</b>${lib.length ? `<div class="scelte nomi">${lib.map(p => `<button type="button" data-num="${p.num}">${p.nome}</button>`).join("")}</div>` : "<p>Tutti sono già in un gruppo.</p>"}
+              <p>Entra senza ruolo; il ruolo si cambia poi con un clic sul nome.</p>`, e.clientX, e.clientY);
+            pop.querySelectorAll("[data-num]").forEach(b => b.onclick = () => Gruppi.aggiungiA(gid, +b.dataset.num, "X"));
+          }
+        });
+        document.addEventListener("click", e => { if (!pop.hidden && !pop.contains(e.target) && !e.target.closest(".isola-p")) chiudi(); });
+        document.addEventListener("keydown", e => { if (e.key === "Escape") chiudi(); });
+        pianta.classList.add("modificabile");
+      }
     }
     // ---------- promemoria dei ruoli (D-96)
     // Ogni slide con data-ruoli="F:...|C:...|V:...|S:..." mostra in basso che cosa fa ogni ruolo adesso.
@@ -115,6 +145,7 @@
     // Tasto P: si torna alla pianta con i nomi e i ruoli; premuto di nuovo, si torna dov'eravamo (D-96).
     {
       let ritorno = null;
+      try { const r = sessionStorage.getItem("p16-ritorno"); if (r != null) ritorno = +r; } catch (e) {}
       document.addEventListener("keydown", e => {
         if (e.key !== "p" && e.key !== "P") return;
         if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
@@ -123,8 +154,8 @@
         const ora = tutte.findIndex(x => x.classList.contains("attiva")), dove = tutte.findIndex(x => x.dataset.id === "gruppi");
         if (dove < 0) return;
         e.preventDefault();
-        if (ora === dove && ritorno != null) { const r = ritorno; ritorno = null; Motore.vai(r); }
-        else if (ora !== dove) { ritorno = ora; Motore.vai(dove); }
+        if (ora === dove && ritorno != null) { const r = ritorno; ritorno = null; try { sessionStorage.removeItem("p16-ritorno"); } catch (e) {} Motore.vai(r); }
+        else if (ora !== dove) { ritorno = ora; try { sessionStorage.setItem("p16-ritorno", ora); } catch (e) {} Motore.vai(dove); }
       });
     }
     return { P, G, forma, chip, oggi, presenti, membri, prova: !veri, meta: g => META_A.includes(g.id) ? "A" : "B", ICONE_RUOLO, SIGLA };

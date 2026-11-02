@@ -86,6 +86,17 @@
 .passi-icone>div.passo.visto svg{animation:p16-rimbalzo .6s cubic-bezier(.2,1.6,.4,1) both}
 @media (prefers-reduced-motion:reduce){.slide.attiva>.occhiello,.slide.attiva>h2,.slide.attiva>h1,.passi-icone svg{animation:none!important}}
 
+/* modifica a mano dei gruppi sulla pianta (D-103) */
+.pianta.modificabile .isola-p{cursor:pointer}
+.pianta.modificabile .isola-p:hover{filter:drop-shadow(0 0 10px var(--p16-g-giallo))}
+.pianta.modificabile .nome[data-num]:hover{text-decoration:underline}
+.p16-modifica{position:fixed;z-index:200;width:360px;max-height:70vh;overflow:auto;background:var(--p16-bianco);color:var(--p16-inchiostro);border:3px solid var(--p16-inchiostro);border-radius:14px;padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.35);font-size:16px;display:flex;flex-direction:column;gap:8px}
+.p16-modifica p{margin:4px 0 0;color:var(--p16-grigio);font-size:14px}
+.p16-modifica .scelte{display:flex;flex-wrap:wrap;gap:6px}
+.p16-modifica button{font:inherit;cursor:pointer;border:2px solid var(--p16-linea);background:var(--p16-carta);border-radius:999px;padding:4px 10px}
+.p16-modifica button:hover{border-color:var(--p16-inchiostro)}
+.p16-modifica .togli{border-color:var(--p16-blocco);color:var(--p16-blocco)}
+.p16-modifica .x{position:absolute;top:6px;right:8px;border:none;background:none;font-size:22px;padding:0 6px}
 /* pirotecnia in più (27/10, Pietro: niente linea gialla sotto i titoli; più movimento senza cambiare i contenuti) */
 @keyframes p16-bagliore{0%{box-shadow:0 0 0 0 rgba(226,176,7,.75)}100%{box-shadow:0 0 0 18px rgba(226,176,7,0)}}
 @keyframes p16-scatto{0%{transform:scale(.6) rotate(-6deg);opacity:0}55%{transform:scale(1.08) rotate(1deg);opacity:1}100%{transform:none;opacity:1}}

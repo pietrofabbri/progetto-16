@@ -420,5 +420,40 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
     }
   });
 
-  window.Gruppi = { apri, chiudi, nome: num => nome(num), dimensioni, descrivi, colori: COLORI, nomiRuoli: RUOLI, _forma: forma, _statistiche: statistiche };
+  // ------------------------------------------------------------ modifica a mano dei gruppi di oggi (D-103)
+  // Dalla pianta (tasto P) il docente aggiunge, sposta o toglie persone. Si aggiornano i gruppi di oggi,
+  // lo storico della giornata e il riepilogo (solo numeri), poi le slide si ricaricano sulla pianta.
+  const SIGLA_DA_NOME = Object.fromEntries(Object.entries(RUOLI).map(([k, v]) => [v, k]));
+  function oggiSalvato() { const o = leggi(K.oggi, null); return (o && o.data === oggiData() && o.gruppi && o.gruppi[0] && o.gruppi[0].membri) ? o : null; }
+  function liberi() {
+    const o = oggiSalvato(); if (!o) return [];
+    const dentro = new Set(o.gruppi.flatMap(g => g.membri.map(m => m.num)));
+    return numeri().filter(n => !dentro.has(n)).map(n => ({ num: n, nome: nome(n) }));
+  }
+  function modifica(fn) {
+    const o = oggiSalvato(); if (!o) return false;
+    const gruppi = o.gruppi.map(g => ({ id: g.id, membri: g.membri.map(m => ({ num: m.num, ruolo: SIGLA_DA_NOME[m.ruolo] || "X" })) }));
+    if (fn(gruppi) === false) return false;
+    const ORD = { F: 0, FC: 0, C: 1, V: 2, V2: 3, S: 4, X: 5 };
+    gruppi.forEach(g => g.membri.sort((a, b) => ORD[a.ruolo] - ORD[b.ruolo]));
+    const pieni = gruppi.filter(g => g.membri.length);
+    const data = o.data;
+    storico.lezioni = storico.lezioni.filter(l => l.data !== data);
+    storico.lezioni.push({ data, gruppi: pieni.map(g => ({ id: g.id, membri: g.membri.map(m => ({ num: m.num, ruolo: m.ruolo })) })) });
+    storico.lezioni.sort((a, b) => a.data < b.data ? -1 : 1);
+    scrivi(K.storico, storico);
+    scrivi(K.oggi, { data, gruppi: pieni.map(g => ({ id: g.id, n: g.membri.length, membri: g.membri.map(m => ({ num: m.num, nome: nome(m.num), ruolo: RUOLI[m.ruolo] })) })) });
+    const r = leggi(K.riep, {});
+    scrivi(K.riep, Object.assign(r, { data, presenti: pieni.reduce((t, g) => t + g.membri.length, 0), gruppi: pieni.map(g => ({ id: g.id, n: g.membri.length, ruoli: g.membri.map(m => m.ruolo) })) }));
+    try { sessionStorage.setItem("p16-vai", "gruppi"); } catch (e) {}
+    location.reload();
+    return true;
+  }
+  const aggiungiA = (id, num, ruolo) => modifica(gs => { const g = gs.find(x => x.id === id); if (!g || gs.some(x => x.membri.some(m => m.num === num))) return false; g.membri.push({ num, ruolo: ruolo || "X" }); });
+  const sposta = (num, id) => modifica(gs => { const da = gs.find(x => x.membri.some(m => m.num === num)), a = gs.find(x => x.id === id); if (!da || !a || da === a) return false; const m = da.membri.find(x => x.num === num); da.membri = da.membri.filter(x => x.num !== num); a.membri.push({ num, ruolo: "X" }); });
+  const togli = num => modifica(gs => { const da = gs.find(x => x.membri.some(m => m.num === num)); if (!da) return false; da.membri = da.membri.filter(x => x.num !== num); });
+  const cambiaRuolo = (num, ruolo) => modifica(gs => { const m = gs.flatMap(g => g.membri).find(x => x.num === num); if (!m) return false; m.ruolo = ruolo; });
+
+  window.Gruppi = { apri, chiudi, nome: num => nome(num), dimensioni, descrivi, colori: COLORI, nomiRuoli: RUOLI, _forma: forma, _statistiche: statistiche,
+    oggiSalvato: () => !!oggiSalvato(), liberi, aggiungiA, sposta, togli, cambiaRuolo };
 })();
