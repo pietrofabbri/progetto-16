@@ -923,6 +923,48 @@ section[data-id="sinapsi"] .sn-due{align-items:start}
   </div>
 </section>
 
+<section class="slide" data-id="ora-o-dopo-mani" data-peso="3" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Ora o dopo? · mani alzate</div>
+  <h2 class="senza-linea">Le vostre scelte</h2>
+  <div class="due-col mani-col">
+    <table class="conta-tab">
+      <tr><td class="q">a<small>20 € adesso</small></td><td><input type="number" min="0" id="m-a20" aria-label="Mani 20 euro adesso"></td><td class="q">a<small>30 € tra due settimane</small></td><td><input type="number" min="0" id="m-a30" aria-label="Mani 30 euro tra due settimane"></td></tr>
+      <tr><td class="q">Presenti<small>si calcola da solo</small></td><td colspan="3"><output id="m-presenti" class="presenti-auto">?</output></td></tr>
+      <tr><td class="q">b<small>20 € tra un anno</small></td><td><input type="number" min="0" id="m-b20" aria-label="Mani 20 euro tra un anno"></td><td class="q">Hanno cambiato<small>20 nella a, 30 nella b</small></td><td><input type="number" min="0" id="m-cambio" aria-label="Mani di chi ha cambiato"></td></tr>
+      <tr><td class="q">c<small>cioccolato adesso</small></td><td><input type="number" min="0" id="m-c" aria-label="Mani cioccolato adesso"></td><td class="q">d<small>cioccolato martedì prossimo</small></td><td><input type="number" min="0" id="m-d" aria-label="Mani cioccolato martedì prossimo"></td></tr>
+    </table>
+    <div class="barre-h">
+      <div class="barra-h"><span>20 € adesso</span><div class="trac"><div class="riemp" id="b-a" style="background-color:var(--p16-g-giallo)"></div></div><output id="o-a">?</output></div>
+      <div class="barra-h"><span>20 € tra un anno</span><div class="trac"><div class="riemp" id="b-b" style="background-color:var(--p16-g-azzurro)"></div></div><output id="o-b">?</output></div>
+      <div class="barra-h"><span>Cioccolato adesso</span><div class="trac"><div class="riemp" id="b-c" style="background-color:var(--p16-g-rosso)"></div></div><output id="o-c">?</output></div>
+      <div class="barra-h"><span>Cioccolato martedì</span><div class="trac"><div class="riemp" id="b-d" style="background-color:var(--p16-g-rosa)"></div></div><output id="o-d">?</output></div>
+    </div>
+  </div>
+  <p class="verdetto" id="m-verdetto"></p>
+</section>
+
+<section class="slide scena" data-id="presente" data-peso="2" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Perché succede</div>
+  <h2 class="senza-linea">Il presente pesa di più</h2>
+  <div class="bilancia-due">
+    <svg class="bilancia" viewBox="0 0 320 220" aria-hidden="true">
+      <path class="b-base" d="M160 200 V60 M120 205 H200"/>
+      <g class="b-braccio">
+        <path d="M50 60 H270" class="b-asta"/>
+        <path d="M50 60 L25 120 H75 Z" class="b-filo"/><path d="M270 60 L245 120 H295 Z" class="b-filo"/>
+        <rect x="15" y="120" width="70" height="44" rx="10" class="b-piatto ora"/><text x="50" y="148">adesso</text>
+        <rect x="235" y="120" width="70" height="44" rx="10" class="b-piatto dopo"/><text x="270" y="148">dopo</text>
+      </g>
+    </svg>
+    <div class="riquadri" style="--col:1">
+      <div class="passo" style="--c:var(--p16-g-giallo)"><b>Lo stesso tempo, due pesi</b>Due settimane sembrano tante se si parte da adesso. Tra un anno e un anno e due settimane, quasi non si vedono.</div>
+      <div class="passo" style="--c:var(--p16-g-verde)"><b>Succede anche con il cibo</b>Chi sceglie uno spuntino per la settimana dopo prende più spesso la frutta; chi sceglie per subito, più spesso il dolce.</div>
+      <div class="passo" style="--c:var(--p16-g-azzurro)"><b>Non è un difetto di qualcuno</b>Capita a quasi tutti: è il modo in cui il cervello pesa il tempo.</div>
+    </div>
+  </div>
+  <p class="fonte">Per chi vuole approfondire: R. H. Thaler (1981), Economics Letters; D. Read e B. van Leeuwen (1998), Organizational Behavior and Human Decision Processes.</p>
+</section>
+
 <section class="slide scena domanda-s" data-id="d-cambiato" data-peso="3" data-rumore="discussione" data-fase="tutti">
   <div class="occhiello">In cerchio · 30 secondi per pensarci, poi si parla</div>
   <h2 class="domanda-grande">Chi ha cambiato: che cosa vi ha fatto cambiare? E chi non ha cambiato, come ha ragionato?</h2>
@@ -1104,6 +1146,83 @@ section[data-id="sinapsi"] .sn-due{align-items:start}
 </section>
 
 <!-- ================= LO STUDIO, CON CAUTELA ================= -->
+
+<section class="slide scena" data-id="studio-chi" data-peso="2" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Uno studio vero · 1 · chi</div>
+  <h2 class="senza-linea">96 volontari, 12 settimane</h2>
+  <div class="studio-due">
+    <div class="persone" id="persone" aria-hidden="true"></div>
+    <div class="riquadri" style="--col:1">
+      <div class="passo" style="--c:var(--p16-g-giallo)"><b>Ognuno sceglie la sua azione</b>Un frutto a pranzo, una bottiglia d'acqua a pranzo, 15 minuti di corsa prima di cena.</div>
+      <div class="passo" style="--c:var(--p16-g-azzurro)"><b>Ogni giorno, nello stesso momento</b>Sempre dopo la stessa cosa: dopo colazione, a pranzo, prima di cena.</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide scena" data-id="studio-misura" data-peso="2" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Uno studio vero · 2 · come si misura</div>
+  <h2 class="senza-linea">Ogni giorno, le stesse frasi: un segno su una linea</h2>
+  <div class="studio-due">
+    <div class="questionario" id="questionario">
+      <div class="q-giorno">giorno <span id="q-giorno">1</span></div>
+      <div class="q-riga"><span>«Lo faccio senza pensarci»</span><div class="q-cursore"><i data-f="8|45|88|90"></i></div></div>
+      <div class="q-riga"><span>«Lo faccio prima di accorgermene»</span><div class="q-cursore"><i data-f="5|35|82|85"></i></div></div>
+      <div class="q-riga"><span>«Mi sembrerebbe strano non farlo»</span><div class="q-cursore"><i data-f="5|30|78|80"></i></div></div>
+      <div class="q-scala"><span>per niente</span><span>del tutto</span></div>
+    </div>
+    <ol class="passi-cerchio" data-giorni="1|20|66|84">
+      <li class="passo"><i>1</i><span><b>Giorno 1.</b> Serve il promemoria: i segni stanno quasi tutti a sinistra.</span></li>
+      <li class="passo"><i>2</i><span><b>Giorno 20.</b> A volte viene da solo: i segni si spostano verso destra.</span></li>
+      <li class="passo"><i>3</i><span><b>Giorno 66.</b> Viene quasi sempre da solo: i segni sono quasi in fondo.</span></li>
+      <li class="passo"><i>4</i><span><b>Giorno 84.</b> I segni non si spostano più: la curva si è appiattita.</span></li>
+    </ol>
+  </div>
+  <p class="consegna">Esempio di una persona, inventato per mostrare come funziona: ognuno aveva i suoi tempi.</p>
+</section>
+
+<section class="slide scena" data-id="abitudine-curva" data-peso="3" data-rumore="spento" data-fase="tutti" data-riservata data-giorni="66">
+  <div class="occhiello">Uno studio vero · 3 · che cosa è venuto fuori</div>
+  <div class="curva-due">
+    <div class="curva-testo">
+      <div class="contatore piccolo"><span><em class="circa">circa</em> <b id="giorni">0</b></span><small>giorni: il valore più tipico</small></div>
+      <ol class="passi-cerchio">
+        <li class="passo"><i>1</i><span>All'inizio la curva <b>sale in fretta</b>, poi <b>si appiattisce</b>: quando smette di salire, l'azione è diventata automatica.</span></li>
+        <li class="passo"><i>2</i><span>Solo per <b>39 persone su 96</b> la curva era abbastanza regolare da misurarla. Il «circa 66» viene da loro.</span></li>
+        <li class="passo"><i>3</i><span><b>Uno studio solo, e piccolo</b>: una stima, non una legge.</span></li>
+      </ol>
+    </div>
+    <svg class="grafico-curva" viewBox="0 0 420 300" aria-hidden="true">
+      <path class="assi" d="M50 20 V250 H400"/>
+      <text class="et" x="225" y="285">giorni</text>
+      <text class="et" x="18" y="140" transform="rotate(-90 18 140)">senza pensarci</text>
+      <text class="et piccola" x="50" y="268">0</text><text class="et piccola" x="210" y="268">60</text><text class="et piccola" x="370" y="268">120</text>
+      <path class="curva" d="M50 245 C 90 150, 150 95, 226 66 S 340 48, 400 46"/>
+      <line class="guida" x1="226" y1="66" x2="226" y2="250"/>
+      <circle class="punto" cx="226" cy="66" r="9"/>
+      <text class="et-66" x="236" y="58">66</text>
+      
+    </svg>
+  </div>
+  <p class="nota-curva">Il disegno mostra la forma tipica della curva di una persona: non sono i dati dello studio.</p>
+  <p class="fonte">Per chi vuole approfondire: P. Lally, C. van Jaarsveld, H. Potts e J. Wardle (2010), European Journal of Social Psychology.</p>
+</section>
+
+<section class="slide scena" data-id="abitudine-tempi" data-peso="2" data-rumore="spento" data-fase="tutti" data-riservata data-min="18" data-max="254">
+  <div class="occhiello">Uno studio vero · 4 · ognuno ha i suoi tempi</div>
+  <h2 class="senza-linea">Per qualcuno 18 giorni, per qualcuno 254</h2>
+  <div class="scala" id="scala">
+    <div class="scala-barra"></div>
+    <div class="tacca mito"><b>21</b><span>il numero che gira in rete: non ha basi</span></div>
+    <div class="tacca" data-v="18"><b>18</b><span>il più veloce</span></div>
+    <div class="tacca media" data-v="66"><b>66</b><span>il più tipico</span></div>
+    <div class="tacca" data-v="254"><b>254</b><span>il più lento</span></div>
+  </div>
+  <div class="riquadri">
+    <div class="passo" style="--c:var(--p16-g-verde)"><b>Dipende dall'azione</b>Le azioni più semplici tendevano a diventare automatiche prima.</div>
+    <div class="passo" style="--c:var(--p16-g-azzurro)"><b>Saltare un giorno</b>ogni tanto non rovinava l'abitudine.</div>
+    <div class="passo" style="--c:var(--p16-g-rosa)"><b>Stesso momento, stesso posto</b>Il contesto che si ripete fa da segnale.</div>
+  </div>
+</section>
 
 <section class="slide scena domanda-s" data-id="d-21" data-peso="1" data-rumore="discussione" data-fase="tutti">
   <div class="occhiello">In cerchio · se c'è tempo</div>

@@ -1024,7 +1024,94 @@ section[data-id="bici-deposizione-leggi"] .trucchi>div{padding:1.1vh 1.1vw;font-
 
 <!-- ================= SOLUZIONE (riservata) ================= -->
 
+<section class="slide scena" data-id="bici-bacheca" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">La soluzione, minuto per minuto</div>
+  <div class="sosp stretta" id="bacheca" style="--n:13"></div>
+  <div class="linea-ora" id="linea-ora"></div>
+  <ol class="fatti" id="fatti" data-dentro="complice">
+    <li data-ora="9.18" data-azione="dentro:ottavio">Il furgoncino che ha visto Nadia: non una B, ma il 13 della bottega. Ottavio, il biciclaro, carica una bici gialla con un nastrino e riparte verso via Ripagrande.<small>Nadia aveva appena guardato le insegne dei negozi, piene di lettere: il 13 le è sembrato una B.</small></li>
+    <li data-ora="" data-azione="fuori:tommaso">E Tommaso, quello con la B sul furgone? Alle 9.17 firmava una consegna in via Garibaldi.</li>
+    <li data-ora="9.17" data-azione="dentro:matteo">Il lucchetto non è rotto: qualcuno l'ha aperto con una chiave e ha legato il nastrino giallo, il segnale per Ottavio. È Matteo, il barista.<small>E il botto? Una coincidenza. Il piano era per le 9.15; Matteo era in ritardo di due minuti. Proprio allora due auto si toccano all'incrocio, per conto loro: tutta la piazza si gira, e a Matteo fa comodo.</small></li>
+    <li data-ora="" data-azione="fuori:franco">Franco era dal medico.<small>A lamentarsi delle bici, in libreria, era sua moglie.</small></li>
+    <li data-ora="" data-azione="fuori:ivan">Ivan, il fattorino, sistemava la catena della sua bici, che gli era saltata.</li>
+    <li data-ora="9.16" data-azione="dentro:chiara">Chi ha dato il via? Chiara, sulla porta della gelateria, alza il pollice verso Matteo: libero.<small>La gelateria apre alle 11: Chiara non aveva clienti.</small></li>
+    <li data-ora="" data-azione="fuori:nadia">Nadia correva a portare un vestito a una cliente, nel sacchetto giallo del negozio.</li>
+    <li data-ora="9.10" data-azione="dentro:elena">E Marta, la padrona della bici, dov'era? Elena la porta nel magazzino della libreria, che non ha finestre.<small>Alle 9.15, dalla cassa, scrive nella chat: «Ok, adesso.»</small></li>
+    <li data-ora="8.45" data-azione="">E la chiave del lucchetto? Al bar, Elena l'aveva lasciata a Matteo, sotto il piattino.<small>A lei l'aveva data la mamma di Marta, venerdì sera: sapeva tutto.</small></li>
+    <li data-ora="" data-azione="fuori:paolo">Paolo aveva un regalo per Marta: anche lui sapeva del compleanno.</li>
+    <li data-ora="" data-azione="fuori:aldo">Aldo «aveva visto tutto»? Al botto si era girato anche lui.<small>Luca faceva la sua pausa; Irene cancellava le foto del botto venute mosse; Sergio cercava l'indirizzo di un pacco.</small></li>
+    <li data-ora="" data-azione="">Non è stato uno solo. Sono stati in quattro.<small>Ogni carta diceva una parte vera della storia. Nessuna da sola bastava.</small></li>
+  </ol>
+</section>
+
+<section class="slide scena" data-id="bici-sorpresa" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="sorpresa" id="sorpresa">
+    <div class="occhiello">E perché l'hanno fatto?</div>
+    <h2 class="passo">Alle 18, davanti a casa di Marta...</h2>
+    <div class="biglietto-auguri passo">la sua vecchia bici gialla, rimessa a nuovo dal biciclaro: freni, luci, sella e un cestino nuovo. Nel cestino, una scatola con la torta. E i palloncini.<br>«Buon compleanno, Marta! 18 anni!»<small>Elena, Matteo, Chiara e Ottavio. E la mamma, che sapeva tutto.</small></div>
+    <p class="consegna passo">Ognuno aveva visto una parte vera. Nessuno aveva tutta la storia.</p>
+  </div>
+</section>
+
+<section class="slide scena lente" data-id="lente-3" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="lente-sfondo" aria-hidden="true"></div>
+  <div class="occhiello">Lente · una domanda aperta</div>
+  <h2 class="lente-domanda">Hanno preso una bici che non era loro, senza chiederlo a Marta. È un furto?</h2>
+  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-giallo)"><i>1</i>Sì: la bici non era loro, e Marta non lo sapeva.</div><div class="passo" style="--c:var(--p16-g-azzurro)"><i>2</i>No: la mamma aveva dato la chiave, e la bici è tornata a Marta più bella.</div><div class="passo" style="--c:var(--p16-g-rosa)"><i>3</i>Dipende da Marta: se per lei è un regalo, non è un furto.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>4</i>Dipende da chi guardava: per chi passava alle 9.17, lo era.</div></div>
+  <p class="consegna passo centrato">Stessi fatti, quattro giudizi. Che cosa cambia il giudizio: i fatti, le intenzioni o chi guarda?</p>
+</section>
+
+<section class="slide" data-id="bici-conta" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Da soli e dopo il gruppo · mani alzate</div>
+  <h2>Chi aveva scritto Elena, Matteo e Chiara?</h2>
+  <div class="conta-in">
+    <label>Quanti siamo<input id="conta-n" type="number" min="0" max="40"></label>
+    <label>Sul PRIMA<input id="conta-prima" type="number" min="0" max="40"></label>
+    <label>Sul DOPO<input id="conta-dopo" type="number" min="0" max="40"></label>
+  </div>
+  <div class="barre">
+    <div class="col" style="--c:var(--p16-grigio)"><b id="conta-p1">?</b><i id="conta-b1"></i><span>Da soli</span></div>
+    <div class="col" style="--c:var(--p16-g-verde)"><b id="conta-p2">?</b><i id="conta-b2"></i><span>Dopo il gruppo</span></div>
+  </div>
+</section>
+
+
 <!-- ================= SVELAMENTO: I TRE ESPERIMENTI (riservato) ================= -->
+
+<section class="slide scena" data-id="svela-esperimenti" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Ora possiamo dirlo</div>
+  <h2 class="svela-tit">Siete stati testimoni. E anche dentro <span class="giallo">tre esperimenti</span>.</h2>
+  <div class="riquadri">
+    <div class="passo esp" style="--c:var(--p16-g-azzurro)"><i>1</i><b>La prova degli occhi</b>Metà di voi ha visto il segno in mezzo a 12 e 14. L'altra metà, in mezzo ad A e C.</div>
+    <div class="passo esp" style="--c:var(--p16-g-rosso)"><i>2</i><b>La domanda del vigile</b>Le carte del vigile non erano tutte uguali. Cambiava una parola sola.</div>
+    <div class="passo esp" style="--c:var(--p16-g-giallo)"><i>3</i><b>Le carte divise</b>Ognuno aveva un pezzo diverso. Nessuno, da solo, poteva arrivare in fondo.</div>
+  </div>
+</section>
+
+<section class="slide scena centro" data-id="b13-svela" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Esperimento 1 · la prova degli occhi · che cosa c'era in mezzo?</div>
+  <div class="glifo-solo" id="b13-solo"></div>
+  <p class="consegna passo">Alzi la mano chi ha scritto <b>B</b>. Ora chi ha scritto <b>13</b>.</p>
+</section>
+
+<section class="slide scena centro" data-id="b13-croce" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Lo stesso segno</div>
+  <div class="croce" id="b13-croce"></div>
+  <p class="consegna passo">Avete ragione tutti. Il segno era <b>identico</b>: è cambiato solo quello che c'era intorno.</p>
+</section>
+
+<section class="slide" data-id="b13-spiega" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Che cosa è successo</div>
+  <h2>Il cervello vede quello che si aspetta</h2>
+  <div class="riquadri">
+    <div class="passo" style="--c:var(--p16-g-azzurro)"><b>Prima si aspetta</b>Dopo A, il cervello si prepara a una lettera. Dopo 12, a un numero.</div>
+    <div class="passo" style="--c:var(--p16-g-arancio)"><b>Poi vede</b>Il segno ambiguo diventa quello che si aspettava. In meno di un secondo, senza che ce ne accorgiamo.</div>
+    <div class="passo" style="--c:var(--p16-g-verde)"><b>Due realtà vere</b>Nessuno ha guardato male. Lo stesso segno, in due contesti, è davvero due cose diverse.</div>
+  </div>
+  <p class="consegna passo">E Nadia? Aveva appena guardato le insegne dei negozi, piene di lettere: il 13 del furgoncino le è sembrato una B.</p>
+  <p class="fonte">Per chi vuole approfondire: J. S. Bruner e A. L. Minturn (1955): lo stesso segno, mostrato per un istante, viene letto B dopo delle lettere e 13 dopo dei numeri.</p>
+</section>
+
 
 <!-- ================= IL BOTTO: I NUMERI DEI GRUPPI ================= -->
 
@@ -1040,7 +1127,47 @@ section[data-id="bici-deposizione-leggi"] .trucchi>div{padding:1.1vh 1.1vw;font-
   <p class="consegna centrato">Spazio: parte il tempo. Quando chiamo il vostro colore, il segretario dice i due numeri.</p>
 </section>
 
+<section class="slide" data-id="auto-dati" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Esperimento 2 · la domanda del vigile · i numeri dei gruppi</div>
+  <h2>A che velocità andavano? E i vetri?</h2>
+  <div class="auto-dati" id="auto-dati">
+    <table class="dati" id="auto-tabella"></table>
+    <div>
+      <div class="barre">
+        <div class="col" style="--c:var(--p16-g-rosso)"><b id="av-a">?</b><i id="avb-a"></i><span>carta A<span class="versione"><br>«si sono schiantate»</span></span></div>
+        <div class="col" style="--c:var(--p16-g-azzurro)"><b id="av-b">?</b><i id="avb-b"></i><span>carta B<span class="versione"><br>«si sono urtate»</span></span></div>
+      </div>
+      <p class="consegna centrato" id="auto-vetri"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="auto-spiega" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Esperimento 2 · che cosa è successo</div>
+  <h2>Una parola sola ha cambiato il ricordo</h2>
+  <div class="riquadri">
+    <div class="passo" style="--c:var(--p16-g-rosso)"><b>Due domande</b>Metà delle carte del vigile diceva «si sono <b>schiantate</b>», l'altra metà «si sono <b>urtate</b>».</div>
+    <div class="passo" style="--c:var(--p16-g-giallo)"><b>Nessun vetro</b>Nel botto non c'era nessun vetro rotto. Chi l'ha visto, l'ha aggiunto la memoria.</div>
+    <div class="passo" style="--c:var(--p16-g-azzurro)"><b>L'esperimento originale</b>Con "schiantate", in media 66 km/h; con "urtate", 55. Una settimana dopo, vetri rotti: 32 persone su 100 con "schiantate", 14 con "urtate".</div>
+  </div>
+  <p class="consegna passo">Da noi i numeri sono pochi: l'effetto può vedersi o no. Ma ora sappiamo dove guardare.</p>
+  <p class="fonte">Per chi vuole approfondire: E. F. Loftus e J. C. Palmer (1974).</p>
+</section>
+
+
 <!-- ================= LA MORALE DELLE CARTE DIVISE (esperimento 3) ================= -->
+
+<section class="slide" data-id="morale" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Esperimento 3 · le carte divise · la morale</div>
+  <h2>Perché discutere?</h2>
+  <div class="riquadri">
+    <div class="passo" style="--c:var(--p16-g-giallo)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v2a2 2 0 1 0 4 0V4h6v6h-2a2 2 0 1 0 0 4h2v6h-6v-2a2 2 0 1 0-4 0v2H4v-6h2a2 2 0 1 0 0-4H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><b>Ognuno aveva un pezzo.</b>Da soli, ognuno era sicuro di un nome. Ed era vero: ma era solo un pezzo.</div>
+    <div class="passo" style="--c:var(--p16-g-azzurro)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12c3-6 6-6 9 0s6 6 9 0" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 18c3-6 6-6 9 0s6 6 9 0M3 6c3-6 6-6 9 0s6 6 9 0" fill="none" stroke="currentColor" stroke-width="2" opacity=".5"/></svg><b>Nei gruppi si parla soprattutto di quello che sanno tutti.</b>È più facile: tutti annuiscono. Così il dettaglio che ha visto uno solo rischia di non essere mai detto.</div>
+    <div class="passo" style="--c:var(--p16-g-rosa)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 15c-1.5-1-2.5-3-2.5-5.5a6.5 6.5 0 0 1 13 0c0 3-2 4-3 5s-1 3-3.5 3c-1.5 0-2-1-2-1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1.5 2-1.5 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><b>Il pezzo che manca ce l'ha spesso chi parla meno.</b>Ascoltarlo non è solo gentilezza: è l'unico modo per vedere tutta la storia.</div>
+  </div>
+  <div class="dato passo"><b>83%</b> dei gruppi sceglie bene quando tutti hanno tutte le informazioni. <b>18%</b> quando le informazioni sono divise tra i membri.</div>
+  <p class="fonte">Per chi vuole approfondire: G. Stasser e W. Titus (1985), il "profilo nascosto".</p>
+</section>
 
 <!-- ================= CHIUSURA ================= -->
 
@@ -1052,6 +1179,19 @@ section[data-id="bici-deposizione-leggi"] .trucchi>div{padding:1.1vh 1.1vw;font-
   <p class="consegna passo centrato">Nessuna è la risposta giusta. Quale ti convince oggi? Ce lo richiederemo nei prossimi incontri.</p>
 </section>
 
+<section class="slide scena" data-id="egoismi" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Ultimo colpo di scena</div>
+  <h2 class="senza-linea">Un regalo generoso. Solo generoso?</h2>
+  <div class="egoismi">
+    <div class="passo" style="--c:var(--p16-g-viola)"><b>Elena</b>La settimana prima aveva rotto il cestino della bici di Marta, senza dirglielo. Con il cestino nuovo, la faccenda era chiusa.</div>
+    <div class="passo" style="--c:var(--p16-g-arancio)"><b>Matteo</b>Sperava che Marta, per ringraziarlo, accettasse finalmente di uscire con lui.</div>
+    <div class="passo" style="--c:var(--p16-g-rosa)"><b>Chiara</b>La torta veniva dalla sua gelateria, con il nome sulla scatola, davanti a tutti gli invitati: pubblicità gratis.</div>
+    <div class="passo" style="--c:var(--p16-g-rosso)"><b>Ottavio</b>Il lavoro se l'è fatto pagare dalla mamma. E la foto della bici rimessa a nuovo ora è in vetrina: «Guardate che cosa sappiamo fare».</div>
+    <div class="passo" style="--c:var(--p16-g-verde)"><b>La mamma</b>Così Marta avrebbe smesso di chiederle una bici nuova da 500 euro.</div>
+  </div>
+  <p class="consegna passo centrato">Un gesto generoso, fatto anche per sé: vale di meno? Cambia il giudizio di prima?</p>
+</section>
+
 <section class="slide" data-id="riordino" data-rumore="discussione" data-fase="gruppo" data-timer="90" data-timer-auto
   data-ruoli="F:Controlla che tutti abbiano finito.|C:Riporta carte e foglietti alla cattedra.|V:Guarda il tavolo e il pavimento: niente in giro?|S:Mette tessere, maccherone e foglio grande nella busta.">
   <div class="occhiello">1 minuto e mezzo · tutti insieme, ognuno il suo compito</div>
@@ -1061,6 +1201,48 @@ section[data-id="bici-deposizione-leggi"] .trucchi>div{padding:1.1vh 1.1vw;font-
 
 
 <!-- ================= RISERVA: esempi e lenti in più (D-99) ================= -->
+
+<section class="slide" data-id="b13-esempi" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Succede tutti i giorni</div>
+  <h2>Leggete queste due parole</h2>
+  <div class="parole" id="the-cat"></div>
+  <p class="consegna passo">La lettera rossa è <b>la stessa</b>. Nella prima parola la leggiamo H, nella seconda A.</p>
+  <ul class="elenco passo">
+    <li>Leggiamo anche la calligrafia peggiore: indoviniamo dal resto della parola.</li>
+    <li>Il correttore del telefono fa lo stesso: sceglie la parola che si aspetta.</li>
+  </ul>
+  <p class="fonte">Per chi vuole approfondire: O. Selfridge (1955), la figura "THE CAT".</p>
+</section>
+
+<section class="slide scena lente" data-id="lente-b13" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="lente-sfondo" aria-hidden="true"></div>
+  <div class="occhiello">Lente · una domanda aperta</div>
+  <h2 class="lente-domanda">Il segno in mezzo: era una B o un 13?</h2>
+  <div class="interpretazioni"><div class="passo" style="--c:var(--p16-g-rosa)"><i>1</i>Era tutti e due: dipende da dove guardavi.</div><div class="passo" style="--c:var(--p16-g-verde)"><i>2</i>Non era né l'una né l'altro: era un segno. Il resto l'abbiamo messo noi.</div></div>
+  <p class="consegna passo centrato">Lo stesso segno, due risposte sensate. E il furgoncino del vigile?</p>
+</section>
+
+<section class="slide" data-id="auto-esempi" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Perché è importante</div>
+  <h2>I ricordi si possono costruire</h2>
+  <div class="riquadri">
+    <div class="passo" style="--c:var(--p16-g-blu)"><b>Quasi 7 su 10</b>Negli Stati Uniti, tra le persone condannate e poi scagionate dal DNA, quasi 7 su 10 erano state accusate da un testimone sicuro, ma sbagliato.</div>
+    <div class="passo" style="--c:var(--p16-g-viola)"><b>Perso al centro commerciale</b>In un esperimento, circa 1 persona su 4 "ricordò" di essersi persa da bambina in un centro commerciale. Non era mai successo.</div>
+    <div class="passo" style="--c:var(--p16-g-verde)"><b>Per questo</b>chi interroga un testimone deve fare domande neutre: "Che cosa hai visto?", non "Hai visto il coltello?".</div>
+  </div>
+  <p class="fonte">Per chi vuole approfondire: Innocence Project (condanne annullate grazie al DNA); E. F. Loftus e J. E. Pickrell (1995).</p>
+</section>
+
+<section class="slide" data-id="morale-esempi" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Non solo nei giochi</div>
+  <h2>Quando il pezzo di uno solo cambia tutto</h2>
+  <div class="riquadri">
+    <div class="passo" style="--c:var(--p16-g-rosso)"><b>Lo Space Shuttle Challenger, 1986</b>Un ingegnere aveva avvertito: con il freddo, le guarnizioni possono non tenere. Non fu ascoltato. 73 secondi dopo il lancio, la navetta esplose.</div>
+    <div class="passo" style="--c:var(--p16-g-verde)"><b>In sala operatoria</b>Prima di operare, l'équipe segue una lista di controllo: ognuno dice il suo nome, il suo ruolo e i suoi dubbi. Così nessuna informazione resta in tasca.</div>
+    <div class="passo" style="--c:var(--p16-g-blu)"><b>La parola ai giurati</b>Un film del 1957: dodici giurati, undici sicuri. Uno solo ha un dubbio, e chiede di riguardare i fatti uno per uno.</div>
+  </div>
+</section>
+
 
 <!-- ================= RISERVA: se avanza tempo ================= -->
 
@@ -1089,6 +1271,23 @@ section[data-id="bici-deposizione-leggi"] .trucchi>div{padding:1.1vh 1.1vw;font-
 <section class="slide scena centro" data-id="drm-lista" data-rumore="silenzio" data-fase="solo">
   <div class="occhiello">Se c'è tempo · ricordate queste parole, senza scriverle</div>
   <div class="parola-drm" id="drm-parola">Pronti?</div>
+</section>
+
+<section class="slide" data-id="drm-domanda" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Mani alzate: c'era questa parola?</div>
+  <h2>Chi ricorda di aver visto...</h2>
+  <div class="riquadri" style="--col:4">
+    <div class="passo" style="--c:var(--p16-inchiostro)"><b>letto</b><span class="passo si-c">c'era</span></div>
+    <div class="passo" style="--c:var(--p16-inchiostro)"><b>tavolo</b><span class="passo no-c">non c'era</span></div>
+    <div class="passo" style="--c:var(--p16-inchiostro)"><b>sogno</b><span class="passo si-c">c'era</span></div>
+    <div class="passo" style="--c:var(--p16-inchiostro)"><b>finestra</b><span class="passo no-c">non c'era</span></div>
+    <div class="passo" style="--c:var(--p16-inchiostro)"><b>pigiama</b><span class="passo si-c">c'era</span></div>
+    <div class="passo" style="--c:var(--p16-inchiostro)"><b>telefono</b><span class="passo no-c">non c'era</span></div>
+    <div class="passo" style="--c:var(--p16-inchiostro)"><b>buio</b><span class="passo si-c">c'era</span></div>
+    <div class="passo" style="--c:var(--p16-inchiostro)"><b>dormire</b><span class="passo no-c">non c'era! Ma molti la "ricordano".</span></div>
+  </div>
+  <p class="consegna passo">Tutte le parole della lista erano legate a "dormire". La memoria ha aggiunto la parola che le teneva insieme.</p>
+  <p class="fonte">Per chi vuole approfondire: H. L. Roediger e K. B. McDermott (1995).</p>
 </section>
 
 <section class="slide" data-id="necker" data-rumore="spento" data-fase="tutti">

@@ -645,6 +645,58 @@ section[data-id="occhi"] .consegna{font-size:clamp(16px,1.5vw,28px)}
   </ol>
 </section>
 
+<section class="slide" data-id="lampo-conta" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Giro 1, il tempo · le risposte</div>
+  <h2>Mani alzate: chi ha scritto la risposta giusta?</h2>
+  <div class="due-col">
+    <table class="conta-tab" id="conta-1" data-lettere="abcd" data-col="corsa|calma" data-titoli="Mani di corsa|Mani con calma"
+      data-giuste="5 minuti|47 giorni|4 biglie|nessuno: l'arca era di Noè" data-esche="50|24|6|due"><thead></thead><tbody></tbody></table>
+    <div>
+      <div class="barre-h">
+        <div class="barra-h"><span>Di corsa</span><div class="trac"><div class="riemp" id="b-corsa" style="background-color:var(--p16-blocco)"></div></div><output id="o-corsa">?</output></div>
+        <div class="barra-h"><span>Con calma</span><div class="trac"><div class="riemp" id="b-calma" style="background-color:var(--p16-calma)"></div></div><output id="o-calma">?</output></div>
+      </div>
+      <p class="nota-dati" id="nota-1"></p>
+      <p class="consegna passo">E chi ha sbagliato, che cosa ha scritto? Quasi sempre <b>la stessa risposta</b>: quella che arriva per prima.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="lampo-conta-2" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Giri 2 e 3, la testa piena e il rumore · le risposte</div>
+  <h2>E con la testa piena? E nel rumore?</h2>
+  <div class="due-col">
+    <div>
+      <table class="conta-tab compatta" id="conta-2" data-lettere="efgh" data-col="piena|libera" data-titoli="Testa piena|Testa libera"
+        data-giuste="una volta: poi non è più 25|nessuna: il treno elettrico non fa fumo|2: quelle che hai preso|2 chili" data-esche="5|sud|1|1 chilo e mezzo"><thead></thead><tbody></tbody></table>
+      <table class="conta-tab compatta" id="conta-3" data-lettere="ijkl" data-col="rumore" data-titoli="Mani, nel rumore"
+        data-giuste="secondo|tutti e 12|Maria|11 secondi" data-esche="primo|uno|Lulu|10"><thead></thead><tbody></tbody></table>
+    </div>
+    <div>
+      <div class="barre-h">
+        <div class="barra-h"><span>Testa libera</span><div class="trac"><div class="riemp" id="b-libera" style="background-color:var(--p16-calma)"></div></div><output id="o-libera">?</output></div>
+        <div class="barra-h"><span>Testa piena</span><div class="trac"><div class="riemp" id="b-piena" style="background-color:var(--p16-g-azzurro)"></div></div><output id="o-piena">?</output></div>
+        <div class="barra-h"><span>Nel rumore</span><div class="trac"><div class="riemp" id="b-rumore" style="background-color:var(--p16-g-verde)"></div></div><output id="o-rumore">?</output></div>
+      </div>
+      <p class="regola-in" style="font-size:clamp(15px,1.3vw,24px)">Chi ricordava tutto il numero? Mani: <input type="number" min="0" id="numero-giusti" style="max-width:4em" aria-label="Mani di chi ricordava il numero"> <output id="o-numero"></output></p>
+      <p class="nota-dati" id="nota-2"></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide scena" data-id="lampo-spiega" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Perché succede</div>
+  <h2>La prima risposta arriva da sola. Controllarla costa.</h2>
+  <div class="riquadri" style="--col:2">
+    <div class="passo" style="--c:var(--p16-g-giallo)"><b>Una risposta pronta</b>"50", "24", "primo", "Lulu": arrivano subito e sembrano giuste. Per scartarle serve un secondo passaggio: "e se fosse sbagliata?".</div>
+    <div class="passo" style="--c:var(--p16-g-rosso)"><b>Il tempo</b>Con la fretta il secondo passaggio salta: chi deve rispondere in pochi secondi segue di più la prima impressione.</div>
+    <div class="passo" style="--c:var(--p16-g-azzurro)"><b>La testa piena</b>Con un numero da tenere a mente, la memoria è occupata: anche così si segue di più la prima risposta.</div>
+    <div class="passo" style="--c:var(--p16-g-verde)"><b>Il rumore</b>Basta sentire arrivare una notifica, anche senza leggerla, per sbagliare di più in un compito di attenzione.</div>
+  </div>
+  <p class="fonte">Non è questione di intelligenza: domande così le sbagliano spesso anche gli universitari (su 143, a seconda della domanda, rispondeva giusto da 16 a 83 su 100). Per chi vuole approfondire: S. Frederick (2005); K. S. Thomson e D. M. Oppenheimer (2016); J. S. B. T. Evans e J. Curtis-Holmes (2005); W. De Neys (2006); C. Stothart e colleghi (2015).</p>
+</section>
+
+
 <!-- ================= DUE ENIGMI: UNO DI CORSA, UNO CON CALMA ================= -->
 
 <section class="slide" data-id="ricordiamo" data-rumore="spento" data-fase="tutti">
@@ -759,6 +811,31 @@ section[data-id="occhi"] .consegna{font-size:clamp(16px,1.5vw,28px)}
     </div>
   </div>
 </section>
+
+<section class="slide" data-id="enigmi-risposte" data-rumore="spento" data-fase="tutti" data-riservata data-giusta1="Ada" data-giusta2="Gino"
+  data-sol1="Ada|verde;Dina|nero;Carlo|rosso;Bruno|blu" data-sol2="Ines|calcio;Elio|pallavolo;Fede|basket;Gino|nuoto">
+  <div class="occhiello">Tutti insieme · un gruppo alla volta, il segretario legge le due risposte</div>
+  <h2>Le risposte dei gruppi</h2>
+  <div class="due-col">
+    <table class="conta-tab compatta" id="enigmi-tab"><thead><tr><th>Gruppo</th><th>Giro 1: il verde</th><th></th><th>Giro 2: il nuoto</th><th></th></tr></thead><tbody></tbody></table>
+    <div class="passo" style="display:flex;flex-direction:column;gap:1.4vh">
+      <b>Giro 1: il verde è di <span style="color:var(--p16-calma)">Ada</span></b><div class="soluz" id="sol1"></div>
+      <b>Giro 2: il nuoto lo fa <span style="color:var(--p16-calma)">Gino</span></b><div class="soluz" id="sol2"></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" data-id="corsa-calma" data-rumore="spento" data-fase="tutti" data-riservata>
+  <div class="occhiello">Che cosa è cambiato con la fretta?</div>
+  <h2>Gruppi con la risposta giusta: di corsa e con calma</h2>
+  <div class="barre-h" style="max-width:60em">
+    <div class="barra-h"><span>Di corsa</span><div class="trac"><div class="riemp" id="eb-corsa" style="background-color:var(--p16-blocco)"></div></div><output id="eo-corsa">?</output></div>
+    <div class="barra-h"><span>Con calma</span><div class="trac"><div class="riemp" id="eb-calma" style="background-color:var(--p16-calma)"></div></div><output id="eo-calma">?</output></div>
+  </div>
+  <p class="nota-dati" id="corsa-nota"></p>
+  <p class="consegna passo">Pochi gruppi, un solo pomeriggio: non dimostra niente. Può suggerire una tendenza, oppure no. Che cosa vi aspettavate?</p>
+</section>
+
 
 <!-- ================= CHE COSA SALTA SOTTO PRESSIONE ================= -->
 
@@ -894,6 +971,27 @@ section[data-id="occhi"] .consegna{font-size:clamp(16px,1.5vw,28px)}
   </div>
   <p class="consegna passo">Perché potrebbe funzionare? Le preoccupazioni scritte non occupano più la memoria che serve al compito.</p>
   <p class="fonte">Per chi vuole approfondire: G. Ramirez e S. L. Beilock (2011), Science.</p>
+</section>
+
+<section class="slide" data-id="enigma-3" data-rumore="discussione" data-fase="gruppo" data-timer="360" data-riservata
+  data-ruoli="F:Un indizio a testa, con il maccherone.|C:Guarda il tempo: 6 minuti.|V:Ogni posto: quale indizio lo dice?|S:Disegna le caselle e scrive la risposta.">
+  <div class="occhiello">Nel gruppo · 6 minuti, con il vostro piano anti-pressione</div>
+  <div class="pratiche"><span>la nostra regola anti-pressione</span><span>maccherone</span><span>come lo sai?</span></div>
+  <div class="enigma">
+    <ol class="indizi">
+      <li>Lia e Otto sono seduti vicini.</li>
+      <li>Chi mangia sushi è al posto 1.</li>
+      <li>Nora mangia kebab.</li>
+      <li>La pizza è subito a destra di Lia.</li>
+      <li>Max non è al posto 1.</li>
+      <li>Nora non è all'ultimo posto.</li>
+    </ol>
+    <div class="enigma-lato">
+      <p class="enigma-intro">Quattro amici al bancone, posti 1, 2, 3, 4 da sinistra: <b>Lia, Max, Nora, Otto</b>. Mangiano <b>pizza, sushi, kebab, piadina</b>.</p>
+      <div class="domanda-e">Chi mangia la piadina?</div>
+      <p class="consegna passo">Soluzione: <b>Max</b>. Lia sushi, Otto pizza, Nora kebab, Max piadina.</p>
+    </div>
+  </div>
 </section>
 
 <section class="slide" data-id="esempi-lista" data-rumore="spento" data-fase="tutti">
