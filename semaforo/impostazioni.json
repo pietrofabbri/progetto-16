@@ -1,0 +1,14 @@
+{
+  "base": -60,
+  "discussione": -35,
+  "soglie": {
+    "silenzio": { "giallo": 20, "blocco": 26 },
+    "discussione": { "giallo": 34, "blocco": 39 }
+  },
+  "quiete": 9,
+  "tenuta": 3,
+  "perSbloccare": 10,
+  "pausa": 60,
+  "suono": true,
+  "volume": 0.5
+}
