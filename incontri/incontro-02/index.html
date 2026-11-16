@@ -2217,6 +2217,10 @@ window.P16_PALETTE = {
   // (vale anche per le slide aperte dal sito, dove classe.js non c'è: il 26 compare come "N. 26" finché il nome non arriva).
   const ISCRITTI = 26;
   if ((classe.iscritti || 0) < ISCRITTI) { classe.iscritti = ISCRITTI; scrivi(K.classe, classe); }
+  // D-117 (16/11/2026): unica eccezione alla regola "nessun nome nella repo pubblica", con il consenso della studentessa
+  // dato a Pietro: il nome del numero 26 si aggiunge al browser se manca, così compare anche aprendo le slide dal sito.
+  // Da togliere a fine progetto insieme a classe.js (anche dalla storia della repo pubblica).
+  { classe.nomi = classe.nomi || {}; if (!classe.nomi[26]) { classe.nomi[26] = "Noemi E."; scrivi(K.classe, classe); } }
   let storico = leggi(K.storico, { lezioni: [] });
   let appello = leggi(K.appello, null);
   if (!appello || appello.data !== oggiData()) {   // stato[num] = "assente" | "esce"; chi esce sempre prima parte già segnato (D-95)
