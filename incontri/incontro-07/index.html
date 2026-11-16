@@ -3131,6 +3131,10 @@ window.P16_PALETTE = {
   // ------------------------------------------------------------ stato
   const oggiData = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
   let classe = leggi(K.classe, { iscritti: 26, nomi: {} });   // iscritti del corso 2026/27 (D-91; 26 dall'incontro 5, D-115); i nomi si incollano nel pannello, mai in una repo
+  // D-115: dal 12/11 la classe ha 26 iscritti. Un browser che aveva salvato la classe a 25 passa da solo a 26
+  // (vale anche per le slide aperte dal sito, dove classe.js non c'è: il 26 compare come "N. 26" finché il nome non arriva).
+  const ISCRITTI = 26;
+  if ((classe.iscritti || 0) < ISCRITTI) { classe.iscritti = ISCRITTI; scrivi(K.classe, classe); }
   let storico = leggi(K.storico, { lezioni: [] });
   let appello = leggi(K.appello, null);
   if (!appello || appello.data !== oggiData()) {   // stato[num] = "assente" | "esce"; chi esce sempre prima parte già segnato (D-95)
