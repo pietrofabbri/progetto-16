@@ -5,7 +5,7 @@
  *    Tre clic: di nuovo presente.
  * 2. "Forma i gruppi". Due misure, si sceglie nel pannello (D-93, D-95):
  *    - da 4 (predefinita): massimo numero di gruppi da 4, il resto da 3 (16: 4x4; 17: 2x4 + 3x3;
- *      20: 5x4; 21: 3x4 + 3x3; 25: 4x4 + 3x3).
+ *      20: 5x4; 21: 3x4 + 3x3; 25: 4x4 + 3x3; 26: 5x4 + 2x3).
  *    - da 3: massimo numero di gruppi da 3, il resto da 4 (21: 7x3; 22: 6x3 + 1x4).
  *    Fino a 30 persone, al massimo 9 gruppi.
  *    Ritardatari (D-95): "Aggiungi a un gruppo" li mette in più, SENZA RUOLO, nel gruppo più piccolo;
