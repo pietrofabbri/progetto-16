@@ -174,7 +174,7 @@
 
   // ------------------------------------------------------------ stato
   const oggiData = () => { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
-  let classe = leggi(K.classe, { iscritti: 25, nomi: {} });   // iscritti del corso 2026/27 (D-91); i nomi si incollano nel pannello, mai in una repo
+  let classe = leggi(K.classe, { iscritti: 26, nomi: {} });   // iscritti del corso 2026/27 (D-91; 26 dall'incontro 5, D-115); i nomi si incollano nel pannello, mai in una repo
   let storico = leggi(K.storico, { lezioni: [] });
   let appello = leggi(K.appello, null);
   if (!appello || appello.data !== oggiData()) {   // stato[num] = "assente" | "esce"; chi esce sempre prima parte già segnato (D-95)
@@ -216,9 +216,15 @@
     } else if (!localStorage.getItem("p16-pulizia-prove")) localStorage.setItem("p16-pulizia-prove", "1");
   } catch (e) {}
   if (window.P16_STORICO) { daFile = (window.P16_STORICO.lezioni || []).length; unisci(window.P16_STORICO); }
-  // nomi della classe dal file della repo privata (D-92): valgono se nel browser non ci sono nomi
-  if (window.P16_CLASSE && window.P16_CLASSE.nomi && !Object.keys(classe.nomi || {}).length) {
-    classe = { iscritti: window.P16_CLASSE.iscritti || classe.iscritti, nomi: window.P16_CLASSE.nomi }; scrivi(K.classe, classe);
+  // nomi della classe dal file della repo privata (D-92): valgono se nel browser non ci sono nomi;
+  // se il file ha più iscritti (per esempio una nuova studentessa), si aggiungono i numeri mancanti senza toccare gli altri
+  if (window.P16_CLASSE && window.P16_CLASSE.nomi) {
+    const pc = window.P16_CLASSE;
+    if (!Object.keys(classe.nomi || {}).length) { classe = { ...classe, iscritti: pc.iscritti || classe.iscritti, nomi: pc.nomi }; scrivi(K.classe, classe); }
+    else { let cambia = false; classe.nomi = classe.nomi || {};
+      if ((pc.iscritti || 0) > (classe.iscritti || 0)) { classe.iscritti = pc.iscritti; cambia = true; }
+      for (const [n, v] of Object.entries(pc.nomi)) if (!classe.nomi[n]) { classe.nomi[n] = v; cambia = true; }
+      if (cambia) scrivi(K.classe, classe); }
   }
   if (window.P16_STORICO_URL) {
     fetch(window.P16_STORICO_URL, { cache: "no-store" }).then(r => r.ok ? r.json() : null)
