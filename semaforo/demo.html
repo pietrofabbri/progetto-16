@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Barattolo del rumore · prova</title>
+<link rel="stylesheet" href="../design/palette.css">
+<style>
+@font-face{font-family:"Atkinson Hyperlegible";src:url("../design/fonts/AtkinsonHyperlegible-Regular.ttf");font-weight:400}
+@font-face{font-family:"Atkinson Hyperlegible";src:url("../design/fonts/AtkinsonHyperlegible-Bold.ttf");font-weight:700}
+html,body{height:100%}
+body{margin:0;background:var(--p16-carta);color:var(--p16-inchiostro);font-family:var(--p16-font)}
+.slide{box-sizing:border-box;height:100%;padding:7vh 140px 7vh 7vw;display:flex;flex-direction:column;gap:3vh}
+.occhiello{font-size:clamp(14px,1.3vw,22px);letter-spacing:.1em;text-transform:uppercase;color:var(--p16-grigio)}
+h1{font-size:clamp(34px,4.6vw,80px);line-height:1.05;margin:0;max-width:16em;text-wrap:balance}
+.consegna{font-size:clamp(22px,2.4vw,42px);max-width:28em;line-height:1.3}
+.modi{margin-top:auto;display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:16px}
+.modi button{font:inherit;padding:10px 16px;border-radius:8px;border:1.5px solid var(--p16-inchiostro);background:var(--p16-bianco);color:var(--p16-inchiostro);cursor:pointer}
+.modi button[aria-pressed="true"]{background:var(--p16-inchiostro);color:var(--p16-bianco)}
+.tasti{font-size:15px;color:var(--p16-grigio)}
+kbd{border:1px solid var(--p16-linea);border-bottom-width:2px;border-radius:4px;padding:1px 6px;background:var(--p16-bianco);font-family:inherit}
+.gruppi{display:flex;gap:10px;flex-wrap:wrap}
+.gruppi span{display:inline-flex;align-items:center;gap:6px;font-size:15px}
+.gruppi i{width:14px;height:14px;border-radius:3px;display:inline-block}
+</style>
+</head>
+<body>
+<section class="slide" data-rumore="discussione">
+  <div class="occhiello">Incontro 7 · I numeri dicono sempre la verità?</div>
+  <h1>Due grafici, gli stessi dati.</h1>
+  <div class="consegna">Nel gruppo: quale dei due grafici fa sembrare il problema più grave? Perché? Scrivete una sola ragione nella scheda.</div>
+  <div class="gruppi" aria-label="Colori dei gruppi">
+    <span><i style="background:var(--p16-g-rosso)"></i>Rosso</span><span><i style="background:var(--p16-g-arancio)"></i>Arancio</span>
+    <span><i style="background:var(--p16-g-giallo)"></i>Giallo</span><span><i style="background:var(--p16-g-verde)"></i>Verde</span>
+    <span><i style="background:var(--p16-g-petrolio)"></i>Petrolio</span><span><i style="background:var(--p16-g-azzurro)"></i>Azzurro</span>
+    <span><i style="background:var(--p16-g-blu)"></i>Blu</span><span><i style="background:var(--p16-g-viola)"></i>Viola</span>
+    <span><i style="background:var(--p16-g-rosa)"></i>Rosa</span>
+  </div>
+  <div class="modi">
+    <span>Modalità di questa slide:</span>
+    <button data-m="silenzio">silenzio</button>
+    <button data-m="discussione">discussione</button>
+    <button data-m="spento">spento</button>
+  </div>
+  <div class="tasti"><kbd>B</kbd> attiva o spegne · <kbd>T</kbd> taratura · <kbd>U</kbd> sblocca subito · aggiungi <code>?simula</code> all'indirizzo per provare senza microfono</div>
+</section>
+<script src="barattolo.js"></script>
+<script>
+  Barattolo.monta({ modalita: "discussione" });
+  const bott = document.querySelectorAll(".modi button");
+  const segna = m => bott.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.m === m)));
+  bott.forEach(b => b.addEventListener("click", () => { Barattolo.modalita(b.dataset.m); segna(b.dataset.m); b.blur(); }));
+  segna("discussione");
+</script>
+</body>
+</html>
