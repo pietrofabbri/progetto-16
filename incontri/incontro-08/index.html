@@ -1981,6 +1981,11 @@ svg.faccia.mini{background:none;box-shadow:none;padding:0;border-radius:0;aspect
 .cometa{position:fixed;top:0;left:-30vw;width:30vw;height:6px;border-radius:6px;pointer-events:none;z-index:50;background:linear-gradient(90deg,transparent,var(--c));box-shadow:0 0 22px var(--c);animation:cometa .9s cubic-bezier(.4,0,.2,1) forwards}
 @keyframes cometa{to{left:110vw;top:var(--y)}}
 .slide.attiva .kit-5>div.visto>i,.slide.attiva .storia4>div.visto>i,.slide.attiva .giro-passi>div.visto>i{animation:pill 1.8s ease-in-out infinite}
+/* costruisci: consegna e dato più compatti, così il dato sta sopra la banda dei ruoli (23/11) */
+section[data-id="costruisci"] .consegna{font-size:clamp(17px,min(1.6vw,2.9vh),30px);margin:.4vh auto}
+section[data-id="costruisci"] .spunti-tre{margin:1vh 0}
+section[data-id="costruisci"] .dato{font-size:clamp(14px,min(1.3vw,2.3vh),25px);padding:1vh 1.6vw}
+section[data-id="costruisci"] .dato b{font-size:1.3em}
 </style>
 
 
