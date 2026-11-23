@@ -534,7 +534,7 @@ section[data-id="occhi"] .consegna{font-size:clamp(16px,1.5vw,28px)}
 <section class="slide" data-id="appello" data-rumore="spento">
   <div class="occhiello">Slide 0 · solo per il prof, proiettore scollegato</div>
   <h2>Appello e gruppi</h2>
-  <p class="consegna">Il pannello si apre da solo. Dopo "Conferma e mostra" le slide ripartono dalla slide 1.</p>
+  <p class="consegna">Il pannello si apre da solo. "Forma i gruppi" li salva subito (vale l'ultimo gruppo creato); con "Mostra nella slide" o Esc le slide ripartono dalla slide 1.</p>
   <p class="consegna"><button class="p16-bottone" type="button" id="apri-appello">Apri appello e gruppi</button></p>
 </section>
 
@@ -2053,7 +2053,10 @@ window.P16_PALETTE = {
  * 3. Ruoli sempre coperti. Ognuno cambia ruolo rispetto alla volta prima e capita il meno
  *    possibile con le stesse persone. Chi esce prima non fa il custode (riordino finale)
  *    e, se si può, nemmeno il segretario o il facilitatore; mai due nello stesso gruppo.
- * 4. "Conferma e mostra": salva i gruppi del giorno nello storico e li mostra nella slide.
+ * 4. Salvataggio automatico (23/11/2026, Pietro): appena si formano (o rifanno) i gruppi, sono già
+ *    confermati e salvati nello storico; vale l'ultimo gruppo creato. "Mostra nella slide" (o la
+ *    chiusura del pannello) ricarica le slide con i gruppi nuovi. Riaprendo il pannello, i gruppi
+ *    di oggi ricompaiono e si possono aggiungere i ritardatari.
  *
  * Storico persistente (D-76): oltre al browser, lo storico (solo numeri, nessun nome) entra nel
  * file di "Fine lezione"; nella repo privata un'azione di GitHub lo raccoglie in
@@ -2229,6 +2232,7 @@ window.P16_PALETTE = {
   }
   let proposta = null;
   let daFile = 0;
+  let daRicaricare = false;   // gruppi salvati da quando il pannello è aperto: alla chiusura si ricaricano le slide
 
   function unisci(altro) {
     // unione per data; a parità di data vale quella del browser
@@ -2320,11 +2324,15 @@ window.P16_PALETTE = {
     if (!document.getElementById("p16g-stile")) { const s = document.createElement("style"); s.id = "p16g-stile"; s.textContent = css; document.head.appendChild(s); }
     pann = document.createElement("div"); pann.className = "p16g-pann"; pann.setAttribute("role", "dialog"); pann.setAttribute("aria-label", "Appello e gruppi");
     document.body.appendChild(pann);
-    pann.addEventListener("keydown", e => { if (e.key === "Escape") chiudi(); });
     disegna();
     const b = pann.querySelector("#p16g-appello button"); if (b) b.focus();
   }
-  function chiudi() { if (pann) { pann.remove(); pann = null; } }
+  // Esc chiude il pannello anche quando il fuoco non è dentro (dopo "Forma i gruppi" il pannello si ridisegna)
+  document.addEventListener("keydown", e => { if (pann && e.key === "Escape") { e.preventDefault(); chiudi(); } });
+  function chiudi() {
+    if (pann) { pann.remove(); pann = null; }
+    if (daRicaricare) { daRicaricare = false; try { sessionStorage.setItem("p16-vai", window.P16_DOPO_GRUPPI || "gruppi"); } catch (e) {} location.reload(); }
+  }
 
   function disegna() {
     if (!pann) return;
@@ -2343,7 +2351,7 @@ window.P16_PALETTE = {
 <div class="p16g-riga"><span class="p16g-conta">${pres} presenti${usc ? ", " + usc + " esce prima" : ""}: ${descrivi(pres)}</span><button type="button" id="p16g-escono">Ricorda chi esce prima</button><span class="nota" style="margin:0">${(classe.escono || []).length ? "Escono sempre prima: " + classe.escono.map(n => nome(n)).join(", ") : ""}</span></div>
 <div class="p16g-riga">
   <button class="prim" type="button" id="p16g-forma">${proposta ? "Rifai i gruppi" : "Forma i gruppi"}</button>
-  ${proposta ? '<button class="prim" type="button" id="p16g-conferma">Conferma e mostra</button>' : ""}
+  ${proposta ? '<button class="prim" type="button" id="p16g-conferma">Mostra nella slide</button><span class="nota" style="margin:0">Gruppi già salvati: vale l\'ultimo creato.</span>' : ""}
   <span class="nota" style="margin:0">Lezioni nello storico: ${storico.lezioni.length}${ultimaVolta ? " (ultima: " + ultimaVolta + ")" : ""}${daFile ? "; nel file della repo: " + daFile : ""}</span>
 </div>
 <div class="p16g-msg" id="p16g-msg"></div>
@@ -2381,7 +2389,8 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       if (!pr.length) { msg("Nessun presente."); return; }
       if (dimensioni(pr.length).length > COLORI.length) { msg("Troppi gruppi per i colori disponibili."); return; }
       proposta = forma(pr, uscite(), statistiche(storico, oggiData()));
-      disegna();
+      salva(); daRicaricare = true;   // già confermati (23/11): vale l'ultimo gruppo creato
+      disegna(); msg("Gruppi salvati. Valgono questi finché non li rifai.");
     };
     const conf = pann.querySelector("#p16g-conferma"); if (conf) conf.onclick = conferma;
     const agg = pann.querySelector("#p16g-agg"); if (agg) agg.onclick = () => {
@@ -2442,7 +2451,7 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
   }
   const salvatoOggi = () => storico.lezioni.some(l => l.data === oggiData());
 
-  function conferma() {
+  function salva() {
     const data = oggiData();
     storico.lezioni = storico.lezioni.filter(l => l.data !== data);
     storico.lezioni.push({ data, gruppi: proposta.map(g => ({ id: g.id, membri: g.membri.map(m => ({ num: m.num, ruolo: m.ruolo })) })) });
@@ -2453,11 +2462,19 @@ ${proposta ? `<div class="p16g-riga"><span class="nota" style="margin:0">Ritarda
       data, presenti: presenti().length, escono_prima: uscite().length,
       gruppi: proposta.map(g => ({ id: g.id, n: g.membri.length, ruoli: g.membri.map(m => m.ruolo) })),
     });
+  }
+  function conferma() {
+    salva(); daRicaricare = false;
     try { sessionStorage.setItem("p16-vai", window.P16_DOPO_GRUPPI || "gruppi"); } catch (e) {}   // le slide possono scegliere dove ripartire
     location.reload();                              // le slide rileggono i gruppi del giorno
   }
 
   // ------------------------------------------------------------ avvio
+  { const o = leggi(K.oggi, null);
+    if (o && o.data === oggiData() && o.gruppi && o.gruppi[0] && o.gruppi[0].membri) {
+      const sig = Object.fromEntries(Object.entries(RUOLI).map(([k, v]) => [v, k]));
+      proposta = o.gruppi.map(g => ({ id: g.id, membri: g.membri.map(m => ({ num: m.num, ruolo: sig[m.ruolo] || "X", esce: appello.stato[m.num] === "esce" || undefined })) }));
+    } }
   document.addEventListener("keydown", e => {
     if (pann) return;
     if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
